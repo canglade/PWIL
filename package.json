@@ -39,5 +39,8 @@
   },
   "scripts": {
     "test": "karma start test\\karma.conf.js"
+  },
+  "dependencies": {
+    "express": "^4.13.4"
   }
 }

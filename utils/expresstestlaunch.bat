@@ -1,3 +1,3 @@
 echo *** LAUNCHING NODE SERVER ***
 
-node ../server/bin/www.js
+node express.js&pause
