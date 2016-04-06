@@ -1,5 +1,0 @@
-Installer git : https://git-scm.com/download/win
- - Laisser les paramètre par défaut
-
-
-Installer package controller sur ST
