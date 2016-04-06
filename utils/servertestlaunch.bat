@@ -1,3 +1,3 @@
 echo *** LAUNCHING NODE SERVER ***
 
-node server.js
+node server.js&pause
