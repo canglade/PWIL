@@ -2,12 +2,12 @@
 
 /**
  * @ngdoc function
- * @name miageProjectApp.controller:MainCtrl
+ * @name pwilApp.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the miageProjectApp
+ * Controller of the pwilApp
  */
-angular.module('miageProjectApp')
+angular.module('pwiltApp')
   .controller('MainCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',

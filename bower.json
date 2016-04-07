@@ -1,5 +1,5 @@
 {
-  "name": "miage-project",
+  "name": "mpwil",
   "version": "0.0.0",
   "dependencies": {
     "angular": "^1.4.0",
@@ -11,7 +11,7 @@
     "angular-mocks": "^1.4.0"
   },
   "appPath": "app",
-  "moduleName": "miageProjectApp",
+  "moduleName": "pwilApp",
   "overrides": {
     "bootstrap": {
       "main": [

@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc overview
- * @name miageProjectApp
+ * @name pwilApp
  * @description
- * # miageProjectApp
+ * # pwilApp
  *
  * Main module of the application.
  */
 angular
-  .module('miageProjectApp', [
+  .module('pwilApp', [
     'ngAnimate',
     'ngRoute'
   ])
