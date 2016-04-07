@@ -1,0 +1,37 @@
+git config --global user.name "votre_pseudo_git"
+git config --global user.email moi@email.com
+git config --global merge.tool p4merge
+
+git clone adresse.git
+
+// Vérifier l'état des fichiers (nouveau, supprimé, modifié ...)
+git status
+
+git add * // Indexer tous les fichiers avec changement d'état
+git add *html
+git add -A
+
+git rm
+git rm -r
+
+git log
+git log --stat
+
+git mv origin cible
+
+git commit -m "Message"
+git commit --amend
+
+git reset HEAD fichier // désindexer un fichier
+
+git push
+
+git remote // afficher les dépôts distant
+
+git tag
+git show tag
+git tag -a monTag -m "message"
+git tag monTag -lw // etiquettes légères
+
+git branch maBranch
+git checkout maBranch // basculer vers une branche
