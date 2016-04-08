@@ -36,3 +36,8 @@ git tag monTag -lw // etiquettes légères
 
 git branch maBranch
 git checkout maBranch // basculer vers une branche
+
+//Overwrite to branch version
+git fetch --all
+git reset --hard origin/master
+git pull origin master
