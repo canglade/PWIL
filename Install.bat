@@ -9,6 +9,7 @@ call npm install -g generator-angular
 call npm install -g grunt
 call npm install grunt-karma --save-dev
 call npm install -g mongoose 
+call npm install mongoose 
 
 echo *** CLIENT INSTALLATION ***
 

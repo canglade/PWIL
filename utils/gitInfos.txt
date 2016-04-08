@@ -1,6 +1,7 @@
 git config --global user.name "votre_pseudo_git"
 git config --global user.email moi@email.com
-git config --global merge.tool p4merge
+// p4merge à installer
+git config --global merge.tool p4merge 
 
 git clone adresse.git
 
