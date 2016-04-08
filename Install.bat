@@ -1,5 +1,6 @@
 echo *** SERVER INSTALLATION ***
 
+call npm install -g npm
 call npm install angular
 call npm install express
 call npm install bower
