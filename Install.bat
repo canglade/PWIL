@@ -1,14 +1,12 @@
 echo *** SERVER INSTALLATION ***
 
-call npm install -g angular
-call npm install -g express
+call npm install angular
 call npm install express
-call npm install -g bower
-call npm install -g yo
-call npm install -g generator-angular
-call npm install -g grunt
+call npm install bower
+call npm install yo
+call npm install generator-angular
+call npm install grunt
 call npm install grunt-karma --save-dev
-call npm install -g mongoose 
 call npm install mongoose 
 
 echo *** CLIENT INSTALLATION ***
