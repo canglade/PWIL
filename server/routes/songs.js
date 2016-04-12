@@ -13,22 +13,11 @@ router.get('/', function(req, res, next) {
   query.limit(10);
   query.select({title:1, artist:1})
 
-
   query.exec (function(err,songs) {
     if (err)
       return next(err);
     res.json(songs);
   });
-
-
-  /*Songs.find(function (err, songs) {
-    if (err)
-      return next(err);
-    res.json(songs);
-  });*/
-
-
-
 });
 /*
 /* POST /projects
