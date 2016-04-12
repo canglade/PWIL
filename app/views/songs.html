@@ -1,14 +1,15 @@
 <section ng-controller="SongsCtrl">
 
-<ul class="songs">
-  <li ng-repeat="song in songs">
-    <div class="row">
-      <div class="col-md-8">
-          <p>{{song.title}}</p>
-      </div>
+  <div class="col-md-12">
 
-    </div>
+
+<ul class="songs">
+
+  <li ng-repeat="song in songs">
+    Artiste : {{song.artist}}
+    Titre : {{song.title}}
   </li>
-</ul>
+    </ul>
+  </div>
 
 </section>

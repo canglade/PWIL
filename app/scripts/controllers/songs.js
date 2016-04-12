@@ -18,7 +18,7 @@ angular.module('pwilApp')
       $scope.loading = true;
       serviceDb.songs().success(function (data) {
         $scope.loading = false;
-        $scope.songs = data.loadSongs;
+        $scope.songs = data;
       });
     };
 

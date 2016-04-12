@@ -8,11 +8,27 @@ var Songs = require('../database/model/songs')
 
 /* GET projects listing. */
 router.get('/', function(req, res, next) {
-  Songs.find(function (err, songs) {
+
+  var query = Songs.find();
+  query.limit(10);
+  query.select({title:1, artist:1})
+
+
+  query.exec (function(err,songs) {
     if (err)
       return next(err);
     res.json(songs);
   });
+
+
+  /*Songs.find(function (err, songs) {
+    if (err)
+      return next(err);
+    res.json(songs);
+  });*/
+
+
+
 });
 /*
 /* POST /projects
