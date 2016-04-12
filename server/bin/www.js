@@ -1,59 +1,89 @@
-var http = require('http');
-var url = require('url');
-// Inclusion de Mongoose
-var mongoose = require('mongoose');
+var express = require('express');
+var path = require('path');
+var favicon = require('static-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+var cors = require('cors');
+//var config =require('./config.json');
 
-// On se connecte à la base de données
-// N'oubliez pas de lancer ~/mongodb/bin/mongod dans un terminal !
-mongoose.connect('mongodb://localhost/playlist', function(err) {
-  if (err) { throw err; }
+// Variables de routes
+var songs = require('./../routes/songs');
+
+var app = express();
+
+// view engine setup
+app.set('views', path.join(__dirname, '../views'));
+app.set('view engine', 'ejs');
+
+app.use(favicon());
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(cors());
+
+app.use('/songs', songs);
+
+app.all('*', function(req, res, next) {
+  res.set('Access-Control-Allow-Origin', '*');
+  res.set('Access-Control-Allow-Credentials', true);
+  res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT');
+  res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
+  if ('OPTIONS' == req.method) return res.send(200);
+  next();
 });
 
-//crée un subSchéma pour le tableau de similaires
-var similSchema = new mongoose.Schema({id:String, percent:Number});
+/// catch 404 and forwarding to error handler
+app.use(function(req, res, next) {
 
-//On crée le schéma de la base
-var songSchema = new mongoose.Schema({
-  _id : String,
-  artist : String,
-  timestamp : String,
-  //similars : [similSchema]
-  similars : [String],
-  tags : [String],
-  track_id : String,
-  title : String
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
 });
 
-//on identifie la collection songs
-var songs = mongoose.model('songs', songSchema);
+/// error handlers
 
-//création de la fonction qui retourne les similaires
-function getSimilaires() {
-  var resultat = [];
-  //requete qui renvoit l'artiste, le titre et les similaires des 3 premières chansons
-  songs.find().select({artist: 1, title: 1, similars: 1}).limit(3).exec(function (err, chansons) {
-
-    //Pour chaque chanson
-    for (var i = 0, l = chansons.length; i < l; i++) {
-      var chanson = chansons[i];
-
-      var res=[];
-      var simils = chanson.similars;
-
-      //on récupère l'id de chaque similaire et on le met dans res
-      for (var k = 0, longueur = simils.length; k < longueur; k++) {
-        var tab = simils[k];
-        res.push(tab.substr(0, 18));
-
-      }
-      //on met res dans resultat
-      resultat.push(res);
-
-    }
-  })
-  return resultat;
+// development error handler
+if (app.get('env') === 'development') {
+  app.use(function(err, req, res, next) {
+    res.status(err.status || 500);
+    res.render('error', {
+      message: err.message,
+      error: err
+    });
+  });
 }
 
-//On affiche le tableau
-var tableau = getSimilaires();
-console.log(tableau);
+// production error handler
+app.use(function(err, req, res, next) {
+  res.status(err.status || 500);
+  res.render('error', {
+    message: err.message,
+    error: {}
+  });
+});
+
+
+module.exports = app;
+
+
+// Connexion BDD Mongo avec module mongoose
+var mongoose = require('mongoose');
+
+//mongoose.connect(config.connectionString, function(err) {
+mongoose.connect('mongodb://localhost/playlist', function(err) {
+  if(err) {
+    console.log('Connection error !', err);
+  } else {
+    console.log('Connection successful  !');
+  }
+});
+
+// start server
+var server = app.listen(3000, function () {
+  console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
+});

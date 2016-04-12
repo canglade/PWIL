@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the pwilApp
  */
-angular.module('pwiltApp')
+angular.module('pwilApp')
   .controller('MainCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',

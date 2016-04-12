@@ -1,0 +1,7 @@
+Service --> Utiliser pour envoyer les paramètres côtés serveur
+
+npm install static-favicon
+npm install morgan
+npm install cookie-parser
+npm install body-parser
+npm install cors
