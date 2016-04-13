@@ -3,6 +3,7 @@
   "private": true,
   "devDependencies": {
     "autoprefixer-core": "^5.2.1",
+    "generator-angular": "^0.15.1",
     "grunt": "^0.4.5",
     "grunt-angular-templates": "^0.5.7",
     "grunt-concurrent": "^1.0.0",
@@ -26,10 +27,22 @@
     "grunt-usemin": "^3.0.0",
     "grunt-wiredep": "^2.0.0",
     "jit-grunt": "^0.9.1",
-    "time-grunt": "^1.0.0",
-    "jshint-stylish": "^1.0.0"
+    "jshint-stylish": "^1.0.0",
+    "time-grunt": "^1.0.0"
   },
   "engines": {
     "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "angular": "^1.5.3",
+    "body-parser": "^1.15.0",
+    "bower": "^1.7.9",
+    "cookie-parser": "^1.4.1",
+    "cors": "^2.7.1",
+    "express": "^4.13.4",
+    "mongoose": "^4.4.12",
+    "morgan": "^1.7.0",
+    "static-favicon": "^2.0.0-alpha",
+    "yo": "^1.7.0"
   }
 }
