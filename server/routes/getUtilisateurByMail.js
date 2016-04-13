@@ -9,11 +9,14 @@ var bodyParser = require('body-parser');
 //var mongoose = require('mongoose');
 var Users = require('../database/model/users')
 
-// POST /users
- router.post('/:mail', function(req, res, next) {
-  Users.insert(req.body, function (err) {
+router.get('/:mail', function(req, res, next) {
+  var query = Users.findOne({'mail' : req.params.mail});
+  query.exec (function(err,users) {
     if (err)
       return next(err);
-    res.json(req.body);
+    res.json(users);
   });
- });
+});
+
+module.exports = router;
+
