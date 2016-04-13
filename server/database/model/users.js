@@ -31,4 +31,4 @@ var users = new mongoose.Schema({
   tab_histo : [Histo]
 });
 
-module.exports = mongoose.model('users', users);
+module.exports = mongoose.model('Users', users);

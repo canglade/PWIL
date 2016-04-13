@@ -9,6 +9,7 @@ var cors = require('cors');
 
 // Variables de routes
 var songs = require('./../routes/songs');
+var users = require('./../routes/getUsers');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 app.use('/songs', songs);
+app.use('/users', users);
 
 app.all('*', function(req, res, next) {
   res.set('Access-Control-Allow-Origin', '*');
