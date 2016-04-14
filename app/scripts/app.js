@@ -11,29 +11,36 @@
 angular
   .module('pwilApp', [
     'ngAnimate',
-    'ngRoute'
+    'ngRoute',
+    'ngMaterial',
+    'ngMessages'
   ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
         controller: 'MainCtrl',
-        controllerAs: 'main'
+        controllerAs: 'main',
       })
       .when('/about', {
         templateUrl: 'views/about.html',
         controller: 'AboutCtrl',
-        controllerAs: 'about'
-      })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
+        controllerAs: 'about',
       })
       .when('/songs', {
         templateUrl: 'views/songs.html',
         controller: 'SongsCtrl',
-        controllerAs: 'songs'
+        controllerAs: 'songs',
+      })
+      .when('/connection', {
+        templateUrl: 'views/connection.html',
+        controller: 'ConnectionCtrl',
+        controllerAs: 'connection',
+      })
+      .when('/users', {
+        templateUrl: 'views/users.html',
+        controller: 'UsersCtrl',
+        controllerAs: 'users'
       })
       .otherwise({
         redirectTo: '/'
