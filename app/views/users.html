@@ -1,0 +1,55 @@
+<md-card ng-controller="UsersCtrl">
+  <md-card-title>
+
+    <md-card-title-text>
+      <span class="md-headline">Création d'un nouvel utilisateur</span>
+    </md-card-title-text>
+
+  </md-card-title>
+
+  <md-card-content>
+
+    <form class="form-horizontal" >
+      <!-- Username -->
+      <div>
+        <md-input-container class="md-block">
+          <label>Username</label>
+          <input ng-model="user.username">
+        </md-input-container>
+      </div>
+      <!-- Name -->
+      <div>
+        <md-input-container class="md-block">
+          <label>Name</label>
+          <input ng-model="user.name">
+        </md-input-container>
+      </div>
+      <!-- Email -->
+      <div>
+        <md-input-container class="md-block">
+          <label>E-mail</label>
+          <input ng-model="user.email">
+        </md-input-container>
+      </div>
+    </form>
+
+  </md-card-content>
+
+  <md-card-actions layout="row" layout-align="end center">
+
+    <md-button class="md-raised" ui-sref="users">Annuler</md-button>
+    <md-button class="md-raised md-primary" ng-click="createUser()">Créer</md-button>
+
+  </md-card-actions>
+
+</md-card>
+
+<div class="col-md-12">
+  <ul class="songs">
+    <li ng-repeat="user in users">
+      Username : {{user.username}}
+      Name : {{user.name}}
+      Email : {{user.email}}
+    </li>
+  </ul>
+</div>

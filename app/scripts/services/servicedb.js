@@ -13,5 +13,19 @@ angular.module('pwilApp')
       songs: function(){
         return $http.get("http://localhost:3000/songs");
       },
+      getAllObjects: function(collection){
+        return  $http({
+          method: 'GET',
+          url: 'http://localhost:3000/' + collection
+        });
+      },
+      createObject: function(collection, data){
+        return  $http({
+          method: 'POST',
+          url: 'http://localhost:3000/' + collection + '/',
+          data: data,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }
     }
   });

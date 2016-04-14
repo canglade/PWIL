@@ -3,7 +3,7 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 
 //var mongoose = require('mongoose');
-var Songs = require('../database/model/songs')
+var Songs = require('../database/model/songs');
 
 
 /* GET projects listing. */
@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 
   var query = Songs.find();
   query.limit(10);
-  query.select({title:1, artist:1})
+  query.select({title:1, artist:1});
 
   query.exec (function(err,songs) {
     if (err)
