@@ -5,11 +5,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+var passport	= require('passport');
+var jwt         = require('jwt-simple');
 //var config =require('./config.json');
 
 // Variables de routes
 var songs = require('./../routes/songs');
-var users = require('./../routes/getUsers');
+var users = require('./../routes/users');
 
 var app = express();
 
@@ -20,9 +22,13 @@ app.set('view engine', 'ejs');
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded());
+app.use(bodyParser.urlencoded({ extended: false })); //modif
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+//log to console
+//app.use(morgan('dev'));
+// Use the passport package in our application
+app.use(passport.initialize());
 
 
 app.use(cors());

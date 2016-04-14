@@ -1,6 +1,6 @@
 var http = require('http');
-var test = require('./test'); // Fait appel à test.js (même dossier)
-// var test = require('../test'); // Fait appel à test.js (dossier parent)
+var test = require('./test'); // Fait appel à users.js (même dossier)
+// var test = require('../test'); // Fait appel à users.js (dossier parent)
 var url = require('url');
 var EventEmitter = require('events').EventEmitter;
 
