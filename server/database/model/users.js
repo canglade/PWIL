@@ -21,11 +21,10 @@ var Histo = new mongoose.Schema({
 
 var users = new mongoose.Schema({
   id : String,
-  nom : { type : String, match: /^[a-zA-Z0-9-_]+$/ },
-  prenom : { type : String, match: /^[a-zA-Z0-9-_]+$/ },
-  date : { type : Date},
-  mail : { type : String, match: /^[a-zA-Z0-9-_]+$/ },
-  password : { type : String, match: /^[a-zA-Z0-9-_]+$/ },
+  date : { type : String, required:true},
+  mail : { type : String, unique : true, required:true},
+  password : { type : String, required:true},
+  sexe : {type : String, required:true},
   tab_likes : [Likes],
   tab_tags : [Tags],
   tab_histo : [Histo]
