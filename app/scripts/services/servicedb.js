@@ -13,6 +13,9 @@ angular.module('pwilApp')
       songs: function(){
         return $http.get("http://localhost:3000/songs");
       },
+      randSong: function(){
+        return $http.get("http://localhost:3000/songs/rand");
+      },
       getAllObjects: function(collection){
         return  $http({
           method: 'GET',
@@ -23,6 +26,14 @@ angular.module('pwilApp')
         return  $http({
           method: 'POST',
           url: 'http://localhost:3000/' + collection + '/',
+          data: data,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      },
+      addLike: function(collection, data){
+        return $http({
+          method: 'PUT',
+          url: 'http://localhost:3000/' + collection,
           data: data,
           headers: { 'Content-Type': 'application/json' }
         });

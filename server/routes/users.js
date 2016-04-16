@@ -3,10 +3,11 @@ var router = express.Router();
 var bodyParser = require('body-parser');
 var _ = require('lodash');
 var bcrypt = require('bcryptjs');
-var User = require('../database/model/user');
+var User = require('../database/model/users');
 
 router.get('/', getAllUsers);
 router.post('/', createUser);
+router.put('/', addLike);
 
 /* GET users listing. */
 function getAllUsers(req, res, next) {
@@ -39,6 +40,15 @@ function createUser(req, res, next) {
     });
   }
 
+};
+
+/* POST /users */
+function addLike(req, res, next) {
+  console.log("chanson : " + req.body.track_id);
+  var track = req.body.track_id;
+  User.update({"nom" : "test"}, {$push:{tab_like:"track"}}, function(err){
+    if (err) return next(err);
+  });
 };
 
 

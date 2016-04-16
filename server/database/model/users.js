@@ -4,10 +4,10 @@
 var mongoose = require('mongoose');
 
 // Création du schéma pour les utilisateurs
-var Likes = new mongoose.Schema({
+/*var Likes = new mongoose.Schema({
   track_id : {type:String},
   freq : {type:Number}
-});
+});*/
 
 var Tags = new mongoose.Schema({
   style : {type:String},
@@ -26,7 +26,7 @@ var users = new mongoose.Schema({
   date : { type : Date},
   mail : { type : String, match: /^[a-zA-Z0-9-_]+$/ },
   password : { type : String, match: /^[a-zA-Z0-9-_]+$/ },
-  tab_likes : [Likes],
+  tab_likes : [String],
   tab_tags : [Tags],
   tab_histo : [Histo]
 });

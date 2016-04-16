@@ -7,6 +7,7 @@
  * # SongsCtrl
  * Controller of the pwilApp
  */
+
 angular.module('pwilApp')
   .controller('SongsCtrl', function ($scope,serviceDb) {
     $scope.currentPage = 1;
@@ -14,18 +15,31 @@ angular.module('pwilApp')
     $scope.loading = true;
     //$scope.orderByArtist = "artist";
 
-    $scope.loadSongs = function () {
+    $scope.loadSong = function () {
       $scope.loading = true;
-      serviceDb.songs().success(function (data) {
+      serviceDb.randSong().success(function (data) {
         $scope.loading = false;
-        $scope.songs = data;
+        $scope.song = data;
       });
     };
 
     $scope.pageChanged = function(){
-      $scope.loadSongs();
+      $scope.loadSong();
     };
 
-    $scope.loadSongs();
+    $scope.loadSong();
 
+    $scope.like = function(){
+      var song = $scope.song.track_id;
+
+      var data = "{\"track_id\": \"" + song + "\" } ";
+
+      serviceDb.addLike('users', data).success(function(data){
+        $route.reload();
+      });
+    };
+
+    $scope.dislike = function(){
+
+    }
 });

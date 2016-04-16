@@ -5,9 +5,11 @@ var bodyParser = require('body-parser');
 //var mongoose = require('mongoose');
 var Songs = require('../database/model/songs');
 
+router.get('/', getAllSongs);
+router.get('/rand', getRandSong);
 
 /* GET projects listing. */
-router.get('/', function(req, res, next) {
+function getAllSongs (req, res, next) {
 
   var query = Songs.find();
   query.limit(10);
@@ -18,7 +20,17 @@ router.get('/', function(req, res, next) {
       return next(err);
     res.json(songs);
   });
-});
+};
+
+function getRandSong (req, res, next) {
+  Songs.findOneRandom(function(err,song){
+    if (err)
+      return next(err);
+    res.json(song);
+  });
+};
+
+
 /*
 /* POST /projects
 router.post('/', function(req, res, next) {

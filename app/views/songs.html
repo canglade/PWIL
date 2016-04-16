@@ -1,12 +1,11 @@
 <section ng-controller="ConnectionCtrl">
 
   <div class="col-md-12">
-    <ul class="songs">
-      <li ng-repeat="song in songs">
-        Artiste : {{song.artist}}
-        Titre : {{song.title}}
-      </li>
-    </ul>
-  </div>
+    <label>{{song.artist}}</label><br>
+    <label>{{song.title}}</label><br>
 
+    <md-button class="md-raised" ng-click="dislike()" style="width: 150px; height: 150px"><img src="images/dislike.jpg" alt="J'aime" style="width: 100%"/></md-button>
+    <md-button class="md-raised" ng-click="like()" style="width: 150px; height: 150px"><img src="images/like.jpg" alt="J'aime" style="width: 100%"/></md-button>
+
+</div>
 </section>
