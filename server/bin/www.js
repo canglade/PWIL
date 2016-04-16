@@ -6,8 +6,8 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
 var passport	= require('passport');
-var jwt         = require('jwt-simple');
-//var config =require('./config.json');
+var jwt = require('jwt-simple');
+var config = require('./../config/database'); // get db config file
 
 // Variables de routes
 var songs = require('./../routes/songs');
@@ -26,10 +26,9 @@ app.use(bodyParser.urlencoded({ extended: false })); //modif
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 //log to console
-//app.use(morgan('dev'));
+app.use(logger('dev'));
 // Use the passport package in our application
 app.use(passport.initialize());
-
 
 app.use(cors());
 
@@ -44,6 +43,30 @@ app.all('*', function(req, res, next) {
   if ('OPTIONS' == req.method) return res.send(200);
   next();
 });
+
+// Connexion BDD Mongo avec module mongoose
+var mongoose = require('mongoose');
+
+//mongoose.connect(config.connectionString, function(err) {
+mongoose.connect(config.database, function(err) {
+  if(err) {
+    console.log('Connection error !', err);
+  } else {
+    console.log('Connection successful  !');
+  }
+});
+
+// pass passport for configuration
+require('./../config/passport')(passport);
+
+var signup = require('./../routes/signup');
+var authenticate = require('./../routes/authenticate');
+var memberInfo = require('./../routes/memberInfo');
+
+// connect the api routes under /api/*
+app.use('/api', signup);
+app.use('/api', authenticate);
+app.use('/api', memberInfo);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
@@ -75,21 +98,7 @@ app.use(function(err, req, res, next) {
   });
 });
 
-
 module.exports = app;
-
-
-// Connexion BDD Mongo avec module mongoose
-var mongoose = require('mongoose');
-
-//mongoose.connect(config.connectionString, function(err) {
-mongoose.connect('mongodb://localhost/playlist', function(err) {
-  if(err) {
-    console.log('Connection error !', err);
-  } else {
-    console.log('Connection successful  !');
-  }
-});
 
 // start server
 var server = app.listen(3000, function () {

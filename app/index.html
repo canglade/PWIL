@@ -16,7 +16,7 @@
     <link rel="stylesheet" href="styles/main.css">
     <!-- endbuild -->
   </head>
-  <body ng-app="pwilApp">
+  <body ng-app="pwilApp" ng-controller="AppCtrl">
     <!--[if lte IE 8]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -47,7 +47,9 @@
               <li><a ng-href="#/about">About</a></li>
               <li><a ng-href="#/">Contact</a></li>
               <li><a ng-href="#/users">Users</a></li>
-              <li><a ng-href="#/connection">Connexion</a></li>
+              <li><a ng-href="#/account">Mon compte</a></li>
+              <li><a ng-href="#/connection" ng-show="!isAuthenticated">Connexion <i class="glyphicon glyphicon-log-in"></i></a></li>
+              <li><a ng-href="#/connection" ng-show="isAuthenticated">Déconnexion <i class="glyphicon glyphicon-off"></i></a></li>
             </ul>
           </div>
         </div>
@@ -86,11 +88,13 @@
     <script src="bower_components/angular-aria/angular-aria.js"></script>
     <script src="bower_components/angular-messages/angular-messages.js"></script>
     <script src="bower_components/angular-material/angular-material.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="scripts/constants.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/about.js"></script>
         <script src="scripts/controllers/songs.js"></script>
@@ -100,6 +104,9 @@
         <script src="scripts/services/userservice.js"></script>
         <script src="scripts/services/tokeninterceptor.js"></script>
         <script src="scripts/controllers/users.js"></script>
+        <script src="scripts/controllers/register.js"></script>
+        <script src="scripts/controllers/account.js"></script>
+        <script src="scripts/services/authservice.js"></script>
         <!-- endbuild -->
 </body>
 </html>

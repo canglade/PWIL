@@ -1,0 +1,37 @@
+<md-card ng-controller="RegisterCtrl">
+  <md-card-title>
+
+    <md-card-title-text>
+      <span class="md-headline">Création d'un nouvel utilisateur</span>
+    </md-card-title-text>
+
+  </md-card-title>
+
+  <md-card-content>
+
+    <form class="form-horizontal" >
+      <!-- Username -->
+      <div>
+        <md-input-container class="md-block">
+          <label>Username</label>
+          <input ng-model="user.username">
+        </md-input-container>
+      </div>
+      <!-- Name -->
+      <div>
+        <md-input-container class="md-block">
+          <label>Password</label>
+          <input type="password" ng-model="user.password">
+        </md-input-container>
+      </div>
+    </form>
+    {{registerResult}}
+  </md-card-content>
+
+  <md-card-actions layout="row" layout-align="end center">
+
+    <md-button class="md-raised" ui-sref="users">Annuler</md-button>
+    <md-button class="md-raised md-primary" ng-click="signup()">Créer compte</md-button>
+
+  </md-card-actions>
+</md-card>

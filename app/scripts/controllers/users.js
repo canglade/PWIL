@@ -30,6 +30,15 @@ angular.module('pwilApp')
           $scope.user.email = "";
           $scope.user.name ="";
           $scope.user.username ="";
+
+          serviceDb.getAllObjects('users')
+            .success(function (data) {
+              $scope.users = data;
+            })
+            .error(function (err) {
+              console.error(err);
+            });
+
         })
         .error(function (err) {
           console.log(err);
@@ -50,6 +59,6 @@ angular.module('pwilApp')
         .error(function (err) {
           console.error(err);
         });
-    });   
+    });
 
   });
