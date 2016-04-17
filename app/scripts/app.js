@@ -93,9 +93,16 @@ angular
   })
 
     .run(function ($rootScope, $state, AuthService, AUTH_EVENTS) {
-      if (AuthService.isAuthenticated()) {
-        $rootScope.isAuthenticated = true;
-      }
+
+      /*$rootScope.$broadcast('onLogin');
+      $rootScope.$on('onLogin', function() {
+        if (AuthService.isAuthenticated())
+          $rootScope.isAuthenticated = true;
+        else
+          $rootScope.isAuthenticated = false;
+      });*/
+
+
 
 
       $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) {
@@ -106,5 +113,11 @@ angular
             $state.go('outside.login');
           }
         }
+
+        if (AuthService.isAuthenticated())
+          $rootScope.isAuthenticated = true;
+        else
+          $rootScope.isAuthenticated = false;
+
       });
     });

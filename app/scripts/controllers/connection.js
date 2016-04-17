@@ -25,4 +25,12 @@ angular.module('pwilApp')
         $scope.loginResult = "Login failed !";
       });
     };
+
+    if(AuthService.isAuthenticated()) {
+      AuthService.logout();
+      $state.go('inside');
+    }
+
+    //$scope.emit('onLogin');
+
   });
