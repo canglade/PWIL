@@ -53,6 +53,11 @@ angular
         controller: 'AccountCtrl',
         controllerAs: 'account'
       })
+      .when('/contact', {
+        templateUrl: 'views/contact.html',
+        controller: 'ContactCtrl',
+        controllerAs: 'contact'
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -102,7 +107,10 @@ angular
           $rootScope.isAuthenticated = false;
       });*/
 
-
+      if (AuthService.isAuthenticated())
+        $rootScope.isAuthenticated = true;
+      else
+        $rootScope.isAuthenticated = false;
 
 
       $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) {

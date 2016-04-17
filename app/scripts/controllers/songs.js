@@ -9,7 +9,7 @@
  */
 
 angular.module('pwilApp')
-  .controller('SongsCtrl', function ($scope,serviceDb) {
+  .controller('SongsCtrl', function ($scope,serviceDb, AuthService) {
     $scope.currentPage = 1;
     $scope.totalPages = 0;
     $scope.loading = true;
@@ -31,8 +31,12 @@ angular.module('pwilApp')
 
     $scope.like = function(){
       var song = $scope.song.track_id;
+      var mail = AuthService.mail();
 
-      var data = "{\"track_id\": \"" + song + "\" } ";
+      /*var data = "{\"track_id\": \"" + song + "\" } ";*/
+
+      var data = "{ \"track_id\": " + "\"" + song + "\" "
+        + ", \"userMail\": " + "\"" + mail + "\" } ";
 
       serviceDb.addLike('users', data).success(function(data){
         $route.reload();

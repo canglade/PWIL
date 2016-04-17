@@ -12,8 +12,11 @@ function signup (req, res) {
     res.json({success: false, msg: 'Please pass username and password.'});
   } else {
     var newUser = new User({
-      username: req.body.username,
-      password: req.body.password
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      mail: req.body.mail,
+      password: req.body.password,
+      username: req.body.username
     });
     // save the user
     newUser.save(function(err) {

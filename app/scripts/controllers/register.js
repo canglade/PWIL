@@ -10,8 +10,12 @@
 angular.module('pwilApp')
   .controller('RegisterCtrl', function ($scope, AuthService, $state) {
     $scope.user = {
-      name: '',
-      password: ''
+      firstname: '',
+      lastname: '',
+      mail: '',
+      password: '',
+      username: '',
+      birthdate:''
     };
 
     $scope.signup = function() {
@@ -30,5 +34,15 @@ angular.module('pwilApp')
         $scope.registerResult = "Register failed !";
       });
     };
+
+    $scope.arrive = function() {
+      if (AuthService.isAuthenticated()) {
+        $state.go('inside');
+      }
+    };
+
+
+
+    $scope.arrive();
 
   });

@@ -10,13 +10,14 @@
 angular.module('pwilApp')
   .controller('ConnectionCtrl', function ($scope, AuthService, $state) {
     $scope.user = {
-      name: '',
+      mail: '',
       password: ''
     };
 
     $scope.login = function() {
       AuthService.login($scope.user).then(function(msg) {
-        $state.go('inside');
+        $state.go('inside');       
+        $rootscope.mail = $scope.user.mail;
       }, function(errMsg) {
         /*var alertPopup = $ionicPopup.alert({
           title: 'Login failed!',

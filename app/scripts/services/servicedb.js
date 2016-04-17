@@ -9,13 +9,7 @@
  */
 angular.module('pwilApp')
   .factory('serviceDb', function ($http) {
-    return {
-      songs: function(){
-        return $http.get("http://localhost:3000/songs");
-      },
-      randSong: function(){
-        return $http.get("http://localhost:3000/songs/rand");
-      },
+    return {          
       getAllObjects: function(collection){
         return  $http({
           method: 'GET',
@@ -29,6 +23,9 @@ angular.module('pwilApp')
           data: data,
           headers: { 'Content-Type': 'application/json' }
         });
+      },
+      randSong: function(){
+        return $http.get("http://localhost:3000/songs/rand");
       },
       addLike: function(collection, data){
         return $http({

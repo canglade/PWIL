@@ -13,16 +13,50 @@
       <!-- Username -->
       <div>
         <md-input-container class="md-block">
-          <label>Username</label>
-          <input ng-model="user.username">
+          <label>Prenom</label>
+          <input ng-model="user.firstname">
         </md-input-container>
       </div>
       <!-- Name -->
       <div>
         <md-input-container class="md-block">
-          <label>Password</label>
+          <label>Nom</label>
+          <input ng-model="user.lastname">
+        </md-input-container>
+      </div>
+
+      <div>
+        <md-input-container class="md-block">
+          <label>E-mail</label>
+          <input ng-model="user.mail">
+        </md-input-container>
+      </div>
+
+      <div>
+        <md-input-container class="md-block">
+          <label>Mot de passe</label>
           <input type="password" ng-model="user.password">
         </md-input-container>
+      </div>
+
+      <div>
+        <md-input-container class="md-block">
+          <label>Confirmer le mot de passe</label>
+          <input type="password" ng-model="user.confirmpassword">
+        </md-input-container>
+      </div>
+
+      <div>
+        <md-input-container class="md-block">
+          <label>Pseudonyme</label>
+          <input ng-model="user.username">
+        </md-input-container>
+      </div>
+
+      <div>
+        <md-datepicker class="md-block" ng-model="user.birthdate">
+          <label>Date de naissance</label>
+        </md-datepicker>
       </div>
     </form>
     {{registerResult}}

@@ -2,7 +2,7 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>PWIL : Predict What I Like</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -43,11 +43,10 @@
 
             <ul class="nav navbar-nav">
               <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/songs">Songs</a></li>
-              <li><a ng-href="#/about">About</a></li>
-              <li><a ng-href="#/">Contact</a></li>
-              <li><a ng-href="#/users">Users</a></li>
-              <li><a ng-href="#/account">Mon compte</a></li>
+              <li><a ng-href="#/songs" ng-show="isAuthenticated">Random Songs</a></li>
+              <li><a ng-href="#/about">A propos</a></li>
+              <li><a ng-href="#/contact">Contact</a></li>
+              <li><a ng-href="#/account" ng-show="isAuthenticated">Mon compte</a></li>
               <li><a ng-href="#/connection" ng-show="!isAuthenticated">Connexion <i class="glyphicon glyphicon-log-in"></i></a></li>
               <li><a ng-href="#/connection" ng-show="isAuthenticated">Déconnexion <i class="glyphicon glyphicon-off"></i></a></li>
             </ul>
@@ -107,6 +106,7 @@
         <script src="scripts/controllers/register.js"></script>
         <script src="scripts/controllers/account.js"></script>
         <script src="scripts/services/authservice.js"></script>
+        <script src="scripts/controllers/contact.js"></script>
         <!-- endbuild -->
 </body>
 </html>

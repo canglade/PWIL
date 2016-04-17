@@ -11,6 +11,7 @@ angular.module('pwilApp')
   .service('AuthService', function($q, $http, API_ENDPOINT) {
     var LOCAL_TOKEN_KEY = 'pwilIsAwesome';//'yourTokenKey';
     var isAuthenticated = false;
+    var mail ='';
     var authToken;
 
     function loadUserCredentials() {
@@ -58,6 +59,7 @@ angular.module('pwilApp')
           if (result.data.success) {
             storeUserCredentials(result.data.token);
             resolve(result.data.msg);
+            mail = user.mail;
           } else {
             reject(result.data.msg);
           }
@@ -75,7 +77,8 @@ angular.module('pwilApp')
       login: login,
       register: register,
       logout: logout,
-      isAuthenticated: function() {return isAuthenticated;},
+      mail: function() {return mail;},
+      isAuthenticated: function() {return isAuthenticated;}
     };
   })
 

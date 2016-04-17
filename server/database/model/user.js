@@ -1,27 +1,47 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
 
-var user = mongoose.Schema({
-  username: String,
-  name: String,
-  email: String,
-  password : String
+// Création du schéma pour les utilisateurs
+/*var Likes = new mongoose.Schema({
+  track_id : {type:String},
+  freq : {type:Number}
+});*/
+
+var Tags = new mongoose.Schema({
+  style : {type:String},
+  freq : {type:Number}
 });
 
-// Thanks to http://blog.matoski.com/articles/jwt-express-node-mongoose/
+var Histo = new mongoose.Schema({
+  track_id : {type:String},
+  freq : {type:Number}
+});
 
 // set up a mongoose model
 /*var UserSchema = new Schema({
-  name: {
-    type: String,
-    unique: true,
-    required: true
-  },
-  password: {
-    type: String,
-    required: true
-  }
-});*/
+ name: {
+ type: String,
+ unique: true,
+ required: true
+ },
+ password: {
+ type: String,
+ required: true
+ }
+ });*/
+
+var user = new mongoose.Schema({
+  id : String,
+  firstname : { type : String, match: /^[a-zA-Z0-9-_]+$/ },
+  lastname : { type : String, match: /^[a-zA-Z0-9-_]+$/ },
+  mail : { type : String},
+  password : { type : String},
+  username: String,
+  birthdate : { type : Date},
+  tab_likes : [String],
+  tab_tags : [Tags],
+  tab_histo : [Histo]
+});
 
 user.pre('save', function (next) {
   var user = this;
