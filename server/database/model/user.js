@@ -52,4 +52,4 @@ user.methods.comparePassword = function (passw, cb) {
   });
 };
 
-module.exports = mongoose.model('Users', user);
+module.exports = mongoose.model('User', user);
