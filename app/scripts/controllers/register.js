@@ -35,14 +35,12 @@ angular.module('pwilApp')
       });
     };
 
-    $scope.arrive = function() {
+    $scope.onArrival = function() {
       if (AuthService.isAuthenticated()) {
         $state.go('inside');
       }
     };
 
-
-
-    $scope.arrive();
+    $scope.onArrival();
 
   });

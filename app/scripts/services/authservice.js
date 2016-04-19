@@ -21,8 +21,9 @@ angular.module('pwilApp')
       }
     }
 
-    function storeUserCredentials(token) {
+    function storeUserCredentials(token,mail) {
       window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
+      window.localStorage.setItem('USER_MAIL', mail);
       useCredentials(token);
     }
 
@@ -57,9 +58,8 @@ angular.module('pwilApp')
       return $q(function(resolve, reject) {
         $http.post(API_ENDPOINT.url + '/authenticate', user).then(function(result) {
           if (result.data.success) {
-            storeUserCredentials(result.data.token);
+            storeUserCredentials(result.data.token, user.mail);
             resolve(result.data.msg);
-            mail = user.mail;
           } else {
             reject(result.data.msg);
           }

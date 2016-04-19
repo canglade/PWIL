@@ -27,13 +27,21 @@ angular.module('pwilApp')
       randSong: function(){
         return $http.get("http://localhost:3000/songs/rand");
       },
-      addLike: function(collection, data){
+      addLike: function(data){
         return $http({
           method: 'PUT',
-          url: 'http://localhost:3000/' + collection,
+          url: 'http://localhost:3000/users/like',
           data: data,
           headers: { 'Content-Type': 'application/json' }
         });
-      }
+      },
+      addDislike: function(data){
+        return $http({
+          method: 'PUT',
+          url: 'http://localhost:3000/users/dislike',
+          data: data,
+          headers: { 'Content-Type': 'application/json' }
+        });
+      }     
     }
   });

@@ -2,13 +2,20 @@
 
 /**
  * @ngdoc function
- * @name pwilApp.controller:SongsCtrl
+ * @name pwilApp.controller:ConnectionCtrl
  * @description
  * # SongsCtrl
  * Controller of the pwilApp
  */
 angular.module('pwilApp')
-  .controller('ConnectionCtrl', function ($scope, AuthService, $state) {
+  .controller('ConnectionCtrl', function ($rootScope, $scope, AuthService, $state) {
+    $rootScope.activeHome = "";
+    $rootScope.activeSongs = "";
+    $rootScope.activeAccount = "";
+    $rootScope.activeContacts = "";
+    $rootScope.activeAbout = "";
+    $rootScope.activeConnection = "active";
+
     $scope.user = {
       mail: '',
       password: ''
@@ -16,8 +23,13 @@ angular.module('pwilApp')
 
     $scope.login = function() {
       AuthService.login($scope.user).then(function(msg) {
-        $state.go('inside');       
-        $rootscope.mail = $scope.user.mail;
+
+        if (AuthService.isAuthenticated())
+          $rootScope.isAuthenticated = true;
+        else
+          $rootScope.isAuthenticated = false;
+
+        $state.go('inside');
       }, function(errMsg) {
         /*var alertPopup = $ionicPopup.alert({
           title: 'Login failed!',
@@ -28,8 +40,13 @@ angular.module('pwilApp')
     };
 
     if(AuthService.isAuthenticated()) {
+      //$state.go('outside');
       AuthService.logout();
-      $state.go('inside');
+
+      if (AuthService.isAuthenticated())
+        $rootScope.isAuthenticated = true;
+      else
+        $rootScope.isAuthenticated = false;
     }
 
     //$scope.emit('onLogin');

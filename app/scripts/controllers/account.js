@@ -8,7 +8,14 @@
  * Controller of the pwilApp
  */
 angular.module('pwilApp')
-  .controller('AccountCtrl', function ($scope, AuthService, API_ENDPOINT, $http, $state) {
+  .controller('AccountCtrl', function ($rootScope, $scope, AuthService, API_ENDPOINT, $http, $state) {
+    $rootScope.activeHome = "";
+    $rootScope.activeSongs = "";
+    $rootScope.activeAccount = "active";
+    $rootScope.activeContacts = "";
+    $rootScope.activeAbout = "";
+    $rootScope.activeConnection = "";
+    
     $scope.destroySession = function() {
       AuthService.logout();
     };
@@ -23,30 +30,6 @@ angular.module('pwilApp')
       AuthService.logout();
       $state.go('outside.login');
     };
-
-    $scope.arrive = function() {
-      //$scope.memberinfo = AuthService.isAuthenticated();
-      if (AuthService.isAuthenticated()) {
-        $scope.memberinfo = "Connecté";
-      }
-      else {
-        $scope.memberinfo = "Non connecté";
-        $state.go('outside.login');
-      }
-    };
-
-
-
-    $scope.arrive();
+    
+    $scope.AuthentificatedRedirection();
   })
-
-  .controller('AppCtrl', function($scope, $state, AuthService, AUTH_EVENTS) {
-    $scope.$on(AUTH_EVENTS.notAuthenticated, function(event) {
-      AuthService.logout();
-      //$state.go('outside.login');
-      /*var alertPopup = $ionicPopup.alert({
-        title: 'Session Lost!',
-        template: 'Sorry, You have to login again.'
-      });*/
-    });
-  });

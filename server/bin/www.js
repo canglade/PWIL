@@ -8,10 +8,15 @@ var cors = require('cors');
 var passport	= require('passport');
 var jwt = require('jwt-simple');
 var config = require('./../config/database'); // get db config file
+// pass passport for configuration
+require('./../config/passport')(passport);
 
 // Variables de routes
 var songs = require('./../routes/songs');
 var users = require('./../routes/users');
+var signup = require('./../routes/signup');
+var authenticate = require('./../routes/authenticate');
+var memberInfo = require('./../routes/memberInfo');
 
 var app = express();
 
@@ -22,18 +27,20 @@ app.set('view engine', 'ejs');
 app.use(favicon());
 app.use(logger('dev'));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false })); //modif
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//log to console
 app.use(logger('dev'));
-// Use the passport package in our application
 app.use(passport.initialize());
-
 app.use(cors());
 
+// Server's routes
 app.use('/songs', songs);
 app.use('/users', users);
+// connect the api routes under /api/*
+app.use('/api', signup);
+app.use('/api', authenticate);
+app.use('/api', memberInfo);
 
 app.all('*', function(req, res, next) {
   res.set('Access-Control-Allow-Origin', '*');
@@ -56,21 +63,9 @@ mongoose.connect(config.database, function(err) {
   }
 });
 
-// pass passport for configuration
-require('./../config/passport')(passport);
-
-var signup = require('./../routes/signup');
-var authenticate = require('./../routes/authenticate');
-var memberInfo = require('./../routes/memberInfo');
-
-// connect the api routes under /api/*
-app.use('/api', signup);
-app.use('/api', authenticate);
-app.use('/api', memberInfo);
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
-
   var err = new Error('Not Found');
   err.status = 404;
   next(err);

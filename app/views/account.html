@@ -4,7 +4,7 @@
     <md-card-title>
 
       <md-card-title-text>
-        <span class="md-headline">Member area</span>
+        <span class="md-headline">Informations du compte</span>
       </md-card-title-text>
 
     </md-card-title>
@@ -12,15 +12,13 @@
     <md-card-content>
       <div>
         {{memberinfo}}
-        {{isAuthenticated}}
       </div>
     </md-card-content>
 
     <md-card-actions layout="row" layout-align="end center">
 
       <md-button class="md-raised md-primary" ng-click="logout()">Se déconnecter</md-button>
-      <md-button class="md-raised md-primary" ng-click="logout()">Detruire token</md-button>
-      <md-button class="md-raised md-primary" ng-click="getInfo()">Get Member Info</md-button>
+      <md-button class="md-raised md-primary" ng-click="getInfo()">Récupérer les informations du comptes</md-button>
     </md-card-actions>
 
   </md-card>

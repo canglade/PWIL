@@ -9,7 +9,14 @@
  */
 
 angular.module('pwilApp')
-  .controller('SongsCtrl', function ($scope,serviceDb, AuthService) {
+  .controller('SongsCtrl', function ($rootScope, $scope,$route, serviceDb) {
+    $rootScope.activeHome = "";
+    $rootScope.activeSongs = "active";
+    $rootScope.activeAccount = "";
+    $rootScope.activeContacts = "";
+    $rootScope.activeAbout = "";
+    $rootScope.activeConnection = "";
+    
     $scope.currentPage = 1;
     $scope.totalPages = 0;
     $scope.loading = true;
@@ -23,27 +30,45 @@ angular.module('pwilApp')
       });
     };
 
-    $scope.pageChanged = function(){
+    /*$scope.pageChanged = function(){
       $scope.loadSong();
-    };
+    };*/
 
     $scope.loadSong();
 
     $scope.like = function(){
       var song = $scope.song.track_id;
-      var mail = AuthService.mail();
+      var mail = $scope.userMail;
 
       /*var data = "{\"track_id\": \"" + song + "\" } ";*/
 
       var data = "{ \"track_id\": " + "\"" + song + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
 
-      serviceDb.addLike('users', data).success(function(data){
-        $route.reload();
+      serviceDb.addLike(data).success(function(data){
+       /*$route.reload();
+        $scope.loadSong();*/
       });
+
+      $scope.loadSong();
     };
 
     $scope.dislike = function(){
+      var song = $scope.song.track_id;
+      var mail = $scope.userMail;
 
-    }
+      /*var data = "{\"track_id\": \"" + song + "\" } ";*/
+
+      var data = "{ \"track_id\": " + "\"" + song + "\" "
+        + ", \"userMail\": " + "\"" + mail + "\" } ";
+
+      serviceDb.addDislike(data).success(function(data){
+        /*$route.reload();
+         $scope.loadSong();*/
+      });
+      
+      $scope.loadSong();
+    };
+
+    $scope.AuthentificatedRedirection();
 });

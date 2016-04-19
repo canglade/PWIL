@@ -39,6 +39,7 @@ var user = new mongoose.Schema({
   username: String,
   birthdate : { type : Date},
   tab_likes : [String],
+  tab_dislikes : [String],
   tab_tags : [Tags],
   tab_histo : [Histo]
 });

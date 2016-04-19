@@ -7,7 +7,8 @@ var User = require('../database/model/user');
 
 router.get('/', getAllUsers);
 router.post('/', createUser);
-router.put('/', addLike);
+router.put('/like', addLike);
+router.put('/dislike', addDislike);
 
 /* GET users listing. */
 function getAllUsers(req, res, next) {
@@ -42,7 +43,6 @@ function createUser(req, res, next) {
       res.json(req.body);
     });
   }
-
 };
 
 function addLike(req, res, next) {
@@ -51,7 +51,21 @@ function addLike(req, res, next) {
   var track = req.body.track_id;
   var mail = req.body.userMail;
   User.update({"mail" : mail}, {$push:{tab_likes:track}}, function(err){
-    if (err) return next(err);
+    if (err) return next(err);    
+    // NE PAS SUPPRIMER BUG SINON
+    res.json(req.body);
+  });
+};
+
+function addDislike(req, res, next) {
+  console.log("chanson : " + req.body.track_id);
+  console.log("mail : " + req.body.userMail);
+  var track = req.body.track_id;
+  var mail = req.body.userMail;
+  User.update({"mail" : mail}, {$push:{tab_dislikes:track}}, function(err){
+    if (err) return next(err);    
+    // NE PAS SUPPRIMER BUG SINON
+    res.json(req.body);
   });
 };
 
@@ -71,6 +85,5 @@ function getUserByMail(req, res, next) {
     res.json(users);
   });
 };*/
-
 
 module.exports = router;

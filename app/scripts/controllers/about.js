@@ -8,10 +8,11 @@
  * Controller of the pwilApp
  */
 angular.module('pwilApp')
-  .controller('AboutCtrl', function () {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+  .controller('AboutCtrl', function ($rootScope) {
+    $rootScope.activeHome = "";
+    $rootScope.activeSongs = "";
+    $rootScope.activeAccount = "";
+    $rootScope.activeContacts = "";
+    $rootScope.activeAbout = "active";
+    $rootScope.activeConnection = "";
   });

@@ -97,35 +97,38 @@ angular
     });
   })
 
-    .run(function ($rootScope, $state, AuthService, AUTH_EVENTS) {
+  .run(function ($rootScope, $state, AuthService, AUTH_EVENTS) {
+    $rootScope.userMail = window.localStorage.getItem('USER_MAIL');
 
-      /*$rootScope.$broadcast('onLogin');
-      $rootScope.$on('onLogin', function() {
-        if (AuthService.isAuthenticated())
-          $rootScope.isAuthenticated = true;
-        else
-          $rootScope.isAuthenticated = false;
-      });*/
+    $rootScope.AuthentificatedRedirection = function() {
+      //$scope.memberinfo = AuthService.isAuthenticated();
+      if (!AuthService.isAuthenticated()) {
+        $state.go('outside.login');
+      }
+
+    };
+
+    if (AuthService.isAuthenticated())
+      $rootScope.isAuthenticated = true;
+    else
+      $rootScope.isAuthenticated = false;
+
+
+    $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) {
+      $rootScope.userMail = window.localStorage.getItem('USER_MAIL');
+
+      if (!AuthService.isAuthenticated()) {
+        console.log(next.name);
+        if (next.name !== 'outside.login' && next.name !== 'outside.register') {
+          event.preventDefault();
+          $state.go('outside.login');
+        }
+      }
 
       if (AuthService.isAuthenticated())
         $rootScope.isAuthenticated = true;
       else
         $rootScope.isAuthenticated = false;
 
-
-      $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) {
-        if (!AuthService.isAuthenticated()) {
-          console.log(next.name);
-          if (next.name !== 'outside.login' && next.name !== 'outside.register') {
-            event.preventDefault();
-            $state.go('outside.login');
-          }
-        }
-
-        if (AuthService.isAuthenticated())
-          $rootScope.isAuthenticated = true;
-        else
-          $rootScope.isAuthenticated = false;
-
-      });
     });
+  });

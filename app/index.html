@@ -42,13 +42,13 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/songs" ng-show="isAuthenticated">Random Songs</a></li>
-              <li><a ng-href="#/about">A propos</a></li>
-              <li><a ng-href="#/contact">Contact</a></li>
-              <li><a ng-href="#/account" ng-show="isAuthenticated">Mon compte</a></li>
-              <li><a ng-href="#/connection" ng-show="!isAuthenticated">Connexion <i class="glyphicon glyphicon-log-in"></i></a></li>
-              <li><a ng-href="#/connection" ng-show="isAuthenticated">Déconnexion <i class="glyphicon glyphicon-off"></i></a></li>
+              <li class="{{activeHome}}"><a href="#/">Accueil</a></li>
+              <li class="{{activeSongs}}"><a ng-href="#/songs" ng-show="isAuthenticated">Titres aléatoires</a></li>
+              <li class="{{activeAccount}}"><a ng-href="#/account" ng-show="isAuthenticated">Mon compte</a></li>
+              <li class="{{activeContacts}}"><a ng-href="#/contact">Contacts</a></li>
+              <li class="{{activeAbout}}"><a ng-href="#/about">A propos</a></li>
+              <li class="{{activeConnection}}"><a ng-href="#/connection" ng-show="!isAuthenticated">Connexion <i class="glyphicon glyphicon-log-in"></i></a></li>
+              <li ><a ng-href="#/connection" ng-show="isAuthenticated">Déconnexion <i class="glyphicon glyphicon-off"></i></a></li>
             </ul>
           </div>
         </div>
@@ -64,7 +64,6 @@
         <p><span class="glyphicon glyphicon-heart"></span>PWIL team</p>
       </div>
     </div>
-
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
      <script>

@@ -8,6 +8,11 @@
  * Controller of the pwilApp
  */
 angular.module('pwilApp')
-  .controller('ContactCtrl', function () {
-    
+  .controller('ContactCtrl', function ($rootScope) {
+    $rootScope.activeHome = "";
+    $rootScope.activeSongs = "";
+    $rootScope.activeAccount = "";
+    $rootScope.activeContacts = "active";
+    $rootScope.activeAbout = "";
+    $rootScope.activeConnection = "";
   });
