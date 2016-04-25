@@ -4,9 +4,16 @@
     <label>Artiste : {{song.artist}}</label><br>
     <label>Titre : {{song.title}}</label><br>
 
-    <md-button class="md-raised" ng-click="like()" style="width: 150px; height: 150px"><img src="images/like.png" alt="J'aime" style="width: 100%"/></md-button>
-    <md-button class="md-raised" ng-click="dislike()" style="width: 150px; height: 150px"><img src="images/dislike.png" alt="J'aime pas" style="width: 100%"/></md-button>
+    <div class="col-md-12">
+      <ul class="songs">
+        <li ng-repeat="tag in mesTags">
+          Tag : {{tag}}
+        </li>
+      </ul>
+    </div>
 
-  </div>
+    <md-button class="md-raised" ng-click="dislike()" style="width: 150px; height: 150px"><img src="images/dislike.png" alt="J'aime pas" style="width: 100%"/></md-button>
+    <md-button class="md-raised" ng-click="like()" style="width: 150px; height: 150px"><img src="images/like.png" alt="J'aime" style="width: 100%"/></md-button>
+</div>
 
 </section>

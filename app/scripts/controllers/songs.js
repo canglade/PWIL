@@ -24,9 +24,17 @@ angular.module('pwilApp')
 
     $scope.loadSong = function () {
       $scope.loading = true;
+      $scope.liste = [];
       serviceDb.randSong().success(function (data) {
         $scope.loading = false;
         $scope.song = data;
+        var i;
+        var tags = data.tags;
+        var liste = [];
+        for(i=0;i<10;i++){
+          liste.push(tags[i]);
+        }
+        $scope.mesTags = liste;
       });
     };
 

@@ -8,6 +8,7 @@ var Songs = require('../database/model/songs');
 router.get('/', getAllSongs);
 router.get('/rand', getRandSong);
 
+
 /* GET projects listing. */
 function getAllSongs (req, res, next) {
 
@@ -29,6 +30,7 @@ function getRandSong (req, res, next) {
     res.json(song);
   });
 };
+
 
 /*
 /* POST /projects
