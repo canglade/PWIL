@@ -9,7 +9,7 @@
  */
 angular.module('pwilApp')
   .factory('serviceDb', function ($http) {
-    return {          
+    return {
       getAllObjects: function(collection){
         return  $http({
           method: 'GET',
@@ -42,6 +42,13 @@ angular.module('pwilApp')
           data: data,
           headers: { 'Content-Type': 'application/json' }
         });
-      }     
+      },
+      getTabLikes: function(mail){
+        return  $http({
+          method: 'GET',
+          url: 'http://localhost:3000/users/tablikes',
+          headers : { 'mail': mail }
+        });
+      }
     }
   });

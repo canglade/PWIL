@@ -9,6 +9,7 @@ router.get('/', getAllUsers);
 router.post('/', createUser);
 router.put('/like', addLike);
 router.put('/dislike', addDislike);
+router.get('/tablikes', songExist);
 
 /* GET users listing. */
 function getAllUsers(req, res, next) {
@@ -45,16 +46,27 @@ function createUser(req, res, next) {
   }
 };
 
+function songExist(req, res, next) {
+  User.findOne({"mail" : req.headers.mail}, function(err, user){
+    if (err) return next(err);
+    console.log("mail : " + req.headers.mail);
+    res.json(user.tab_likes);
+  });
+};
+
+//fonction serveur requete, resultat de la req et l'étape suivante
 function addLike(req, res, next) {
   console.log("chanson : " + req.body.track_id);
   console.log("mail : " + req.body.userMail);
   var track = req.body.track_id;
   var mail = req.body.userMail;
-  User.update({"mail" : mail}, {$push:{tab_likes:track}}, function(err){
-    if (err) return next(err);    
+
+  User.update({"mail": mail}, {$push: {tab_likes: track}}, function (err) {
+    if (err) return next(err);
     // NE PAS SUPPRIMER BUG SINON
     res.json(req.body);
   });
+
 };
 
 function addDislike(req, res, next) {
@@ -63,7 +75,7 @@ function addDislike(req, res, next) {
   var track = req.body.track_id;
   var mail = req.body.userMail;
   User.update({"mail" : mail}, {$push:{tab_dislikes:track}}, function(err){
-    if (err) return next(err);    
+    if (err) return next(err);
     // NE PAS SUPPRIMER BUG SINON
     res.json(req.body);
   });

@@ -16,7 +16,7 @@ angular.module('pwilApp')
     $rootScope.activeContacts = "";
     $rootScope.activeAbout = "";
     $rootScope.activeConnection = "";
-    
+
     $scope.currentPage = 1;
     $scope.totalPages = 0;
     $scope.loading = true;
@@ -36,7 +36,7 @@ angular.module('pwilApp')
 
     $scope.loadSong();
 
-    $scope.like = function(){
+    $scope.like = function() {
       var song = $scope.song.track_id;
       var mail = $scope.userMail;
 
@@ -45,11 +45,24 @@ angular.module('pwilApp')
       var data = "{ \"track_id\": " + "\"" + song + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
 
-      serviceDb.addLike(data).success(function(data){
-       /*$route.reload();
-        $scope.loadSong();*/
+      serviceDb.getTabLikes(mail).success(function (tablikes) {
+        var exist = false;
+        if (tablikes) {
+          for (var i = 0; i < tablikes.length; i++) {
+            if (tablikes[i] == song) {
+              exist = true;
+              break;
+            }
+          }
+          if (!exist) {
+            serviceDb.addLike(data).success(function (data) {
+              /*$route.reload();
+               $scope.loadSong();*/
+            });
+          }
+        }
       });
-
+      
       $scope.loadSong();
     };
 
@@ -66,7 +79,7 @@ angular.module('pwilApp')
         /*$route.reload();
          $scope.loadSong();*/
       });
-      
+
       $scope.loadSong();
     };
 
