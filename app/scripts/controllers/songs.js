@@ -24,7 +24,7 @@ angular.module('pwilApp')
 
     $scope.loadSong = function () {
       $scope.loading = true;
-      $scope.liste = [];
+      $scope.mesTags = [];
       serviceDb.randSong().success(function (data) {
         $scope.loading = false;
         $scope.song = data;
