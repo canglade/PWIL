@@ -27,6 +27,13 @@ angular.module('pwilApp')
       randSong: function(){
         return $http.get("http://localhost:3000/songs/rand");
       },
+      similSong: function(track){
+        return  $http({
+          method: 'GET',
+          url: 'http://localhost:3000/songs/simil',
+          headers: {"track_id" : track}
+        });
+      },
       addLike: function(data){
         return $http({
           method: 'PUT',

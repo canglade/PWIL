@@ -3,6 +3,7 @@
   <div class="col-md-12">
     <label>Artiste : {{song.artist}}</label><br>
     <label>Titre : {{song.title}}</label><br>
+    <label>Type de proposition : {{proposition}}</label><br>
 
 
 
@@ -12,11 +13,11 @@
     <div class="col-md-12">
       <ul class="songs">
         <li ng-repeat="tag in mesTags">
-          Tag : {{tag}}
+          Tag : {{tag[0]}}
         </li>
       </ul>
     </div>
-    
+
 </div>
 
 </section>

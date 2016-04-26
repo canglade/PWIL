@@ -7,6 +7,7 @@ var Songs = require('../database/model/songs');
 
 router.get('/', getAllSongs);
 router.get('/rand', getRandSong);
+router.get('/simil', getSimilSong);
 
 
 /* GET projects listing. */
@@ -31,6 +32,14 @@ function getRandSong (req, res, next) {
   });
 };
 
+function getSimilSong (req, res, next) {
+  //console.log("Ma similaire : " + req.headers.track_id);
+  Songs.findOne({"track_id": req.headers.track_id}, function (err, song) {
+    if (err)
+      return next(err);
+    res.json(song);
+  });
+};
 
 /*
 /* POST /projects

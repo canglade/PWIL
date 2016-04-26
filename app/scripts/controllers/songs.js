@@ -10,6 +10,8 @@
 
 angular.module('pwilApp')
   .controller('SongsCtrl', function ($rootScope, $scope,$route, serviceDb) {
+    var increment = 0;
+    var laSimilaire = "";
     $rootScope.activeHome = "";
     $rootScope.activeSongs = "active";
     $rootScope.activeAccount = "";
@@ -28,13 +30,51 @@ angular.module('pwilApp')
       serviceDb.randSong().success(function (data) {
         $scope.loading = false;
         $scope.song = data;
-        var i;
+        $scope.proposition = "aleatoire";
         var tags = data.tags;
         var liste = [];
-        for(i=0;i<10;i++){
-          liste.push(tags[i]);
+        if(tags.length >= 10) {
+          for (var i = 0; i < 10; i++) {
+            liste.push(tags[i]);
+          }
+        }
+        else
+        {
+          for (var i = 0; i < tags.length; i++) {
+            liste.push(tags[i]);
+          }
         }
         $scope.mesTags = liste;
+      });
+    };
+
+    $scope.loadSimil = function () {
+      $scope.loading = true;
+      $scope.mesTags = [];
+      serviceDb.similSong(laSimilaire).success(function (data) {
+        if(data){
+          $scope.proposition = "similaire";
+          $scope.loading = false;
+          $scope.song = data;
+          var tags = data.tags;
+          var liste = [];
+          if(tags.length >= 10) {
+            for (var i = 0; i < 10; i++) {
+              liste.push(tags[i]);
+            }
+          }
+          else
+          {
+            for (var i = 0; i < tags.length; i++) {
+              liste.push(tags[i]);
+            }
+          }
+          $scope.mesTags = liste;
+        }
+        else{
+          increment =0;
+          $scope.loadSong();
+        }
       });
     };
 
@@ -44,13 +84,14 @@ angular.module('pwilApp')
 
     $scope.loadSong();
 
-    $scope.like = function() {
-      var song = $scope.song.track_id;
+
+    $scope.like = function(){
+      var song = $scope.song;
       var mail = $scope.userMail;
 
       /*var data = "{\"track_id\": \"" + song + "\" } ";*/
 
-      var data = "{ \"track_id\": " + "\"" + song + "\" "
+      var data = "{ \"track_id\": " + "\"" + song.track_id + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
 
       serviceDb.getTabLikes(mail).success(function (tablikes) {
@@ -94,7 +135,10 @@ angular.module('pwilApp')
         }
       });
 
-      $scope.loadSong();
+
+      laSimilaire = song.similars[increment][0];
+      increment = increment +1;
+      $scope.loadSimil();
     };
 
     $scope.dislike = function(){
