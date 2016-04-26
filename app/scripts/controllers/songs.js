@@ -60,9 +60,32 @@ angular.module('pwilApp')
                $scope.loadSong();*/
             });
           }
+
+
+
         }
       });
-      
+
+      serviceDb.getTabDislikes(mail).success(function (tabdislikes) {
+        var exist = false;
+        if (tabdislikes) {
+          for (var i = 0; i < tabdislikes.length; i++) {
+            if (tabdislikes[i] == song) {
+              exist = true;
+              break;
+            }
+          }
+          if (exist) {
+            serviceDb.removeSongDislike().success(function () {
+              /*$scope.remove=exist;
+              $scope.idtrack=$scope.song.track_id;*/
+              /*$route.reload();
+               $scope.loadSong();*/
+            });
+          }
+        }
+      });
+
       $scope.loadSong();
     };
 
@@ -75,11 +98,51 @@ angular.module('pwilApp')
       var data = "{ \"track_id\": " + "\"" + song + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
 
-      serviceDb.addDislike(data).success(function(data){
-        /*$route.reload();
-         $scope.loadSong();*/
-      });
 
+      serviceDb.getTabDislikes(mail).success(function (tabdislikes) {
+        var exist = false;
+        if (tabdislikes) {
+          for (var i = 0; i < tabdislikes.length; i++) {
+            if (tabdislikes[i] == song) {
+              exist = true;
+              break;
+            }
+          }
+
+
+          $scope.tabdislikes = tabdislikes;
+          $scope.exist= exist;
+
+          if (!exist) {
+            serviceDb.addDislike(data).success(function (data) {
+              /*$route.reload();
+               $scope.loadSong();*/
+            });
+
+          }
+        }
+
+    });
+
+      serviceDb.getTabLikes(mail).success(function (tablikes) {
+        var exist = false;
+        if (tablikes) {
+          for (var i = 0; i < tablikes.length; i++) {
+            if (tablikes[i] == song) {
+              exist = true;
+              break;
+            }
+          }
+          if (exist) {
+            serviceDb.removeSongLike().success(function () {
+              $scope.removesonglike=exist;
+              $scope.idtracksonglike=$scope.song.track_id;
+              /*$route.reload();
+               $scope.loadSong();*/
+            });
+          }
+        }
+      });
       $scope.loadSong();
     };
 

@@ -43,6 +43,31 @@ angular.module('pwilApp')
           headers: { 'Content-Type': 'application/json' }
         });
       },
+
+      getTabDislikes: function(mail){
+        return  $http({
+          method: 'GET',
+          url: 'http://localhost:3000/users/tabdislikes',
+          headers : { 'mail': mail }
+        });
+      },
+
+      removeSongDislike: function(){
+        return  $http({
+          method: 'Put',
+          url: 'http://localhost:3000/users/removesongDislike',
+          headers : { 'Content-Type': 'application/json' }
+        });
+      },
+
+      removeSongLike: function(){
+        return  $http({
+          method: 'Put',
+          url: 'http://localhost:3000/users/removesongLike',
+          headers : { 'Content-Type': 'application/json' }
+        });
+      },
+
       getTabLikes: function(mail){
         return  $http({
           method: 'GET',
