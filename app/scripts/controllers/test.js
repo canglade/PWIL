@@ -1,13 +1,13 @@
 'use strict';
 /**
  * @ngdoc function
- * @name pwilApp.controller:SongsCtrl
+ * @name pwilApp.controller:TestCtrl
  * @description
- * # SongsCtrl
+ * # TestCtrl
  * Controller of the pwilApp
  */
 angular.module('pwilApp')
-  .controller('SongsCtrl', function ($rootScope, $scope,$route, serviceDb, $sce) {
+  .controller('TestCtrl', function ($rootScope, $scope,$route, serviceDb, $sce) {
     $rootScope.activeHome = "";
     $rootScope.activeSongs = "active";
     $rootScope.activeAccount = "";
@@ -55,18 +55,18 @@ angular.module('pwilApp')
       $scope.loadSong();
     };
     $scope.AuthentificatedRedirection();
+
+    /************************   AJOUT TEST   ************************/
     $scope.lecteur= function (artist, song) {
-      //var artiste = artist.replace(/ /g, "+");
-      //var chanson = song.replace(/ /g, "+");
-      //console.log("artist " + artiste);
-      //console.log("son " + chanson);
-      var url = "https://api.spotify.com/v1/search?q=artist:Lady+Gaga+title:Bad+Romance&type=track&limit=1";
-      //var url = "https://api.spotify.com/v1/search?q=artist:" + artiste +  "+title:" + chanson + "&type=track&limit=1";
-      console.log("url " + url)
+      var artiste = artist.replace(/ /g, '+');
+      var chanson = song.replace(/ /g, '+');
+
+      // var url = "https://api.spotify.com/v1/search?q=artist:Lady+Gaga+title:Bad+Romance&type=track&limit=1";
+      var url = "https://api.spotify.com/v1/search?q=artist:" + artiste +  "+title:" + chanson + "&type=track&limit=1";
+      console.log(url);
       $.getJSON(url).then(function(data) {
         $scope.previewUrl = $sce.trustAsResourceUrl(data.tracks.items[0].preview_url)
-        //$scope.nomlArtiste =
-        //console.log(data.tracks.items[0].preview_url);
+        $scope.Url = url;
       })
       /*$.getJSON('https://api.spotify.com/v1/search?q=artist:Lady+Gaga+title:Bad+Romance&type=track&limit=1').then(function(data) {
        console.log(data.tracks.items[0].preview_url); //you can comment this, i used it to debug

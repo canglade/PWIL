@@ -45,6 +45,7 @@
               <li class="{{activeHome}}"><a href="#/">Accueil</a></li>
               <li class="{{activeSongs}}"><a ng-href="#/songs" ng-show="isAuthenticated">Titres aléatoires</a></li>
               <li class="{{activeAccount}}"><a ng-href="#/account" ng-show="isAuthenticated">Mon compte</a></li>
+              <li ><a href="#/test">Test</a></li>
               <li class="{{activeContacts}}"><a ng-href="#/contact">Contacts</a></li>
               <li class="{{activeAbout}}"><a ng-href="#/about">A propos</a></li>
               <li class="{{activeConnection}}"><a ng-href="#/connection" ng-show="!isAuthenticated">Connexion <i class="glyphicon glyphicon-log-in"></i></a></li>
@@ -106,6 +107,9 @@
         <script src="scripts/controllers/account.js"></script>
         <script src="scripts/services/authservice.js"></script>
         <script src="scripts/controllers/contact.js"></script>
+        <script src="scripts/controllers/test.js"></script>
         <!-- endbuild -->
-</body>
+
+
+  </body>
 </html>
