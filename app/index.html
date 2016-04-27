@@ -47,8 +47,8 @@
               <li class="{{activeAccount}}"><a ng-href="#/account" ng-show="isAuthenticated">Mon compte</a></li>
               <li class="{{activeContacts}}"><a ng-href="#/contact">Contacts</a></li>
               <li class="{{activeAbout}}"><a ng-href="#/about">A propos</a></li>
-              <li class="{{activeConnection}}"><a ng-href="#/connection" ng-show="!isAuthenticated">Connexion <i class="glyphicon glyphicon-log-in"></i></a></li>
-              <li ><a ng-href="#/connection" ng-show="isAuthenticated">Déconnexion <i class="glyphicon glyphicon-off"></i></a></li>
+              <li class="{{activeConnection}}"><a ng-href="#/connection" ng-show="!isAuthenticated">Connexion <i class="glyphicon glyphicon-log-in" style="color:green"></i></a></li>
+              <li ><a ng-href="#/connection" ng-show="isAuthenticated">Déconnexion <i class="glyphicon glyphicon-off" style="color:red"></i></a></li>
             </ul>
           </div>
         </div>
@@ -59,7 +59,7 @@
     </div>
     <div class="footer">
       <div class="container">
-        <p><span class="glyphicon glyphicon-heart"></span>PWIL team</p>
+        <p>Projet PWIL - Groupe 1 - MIAGE 2016</p>
       </div>
     </div>
 
@@ -116,7 +116,7 @@
         <!-- endbuild -->
 
     <script type="text/ng-template" id="error-messages">
-      <div ng-message="required">Requis</div>
+      <div ng-message="required">Ce champ est obligatoire.</div>
       <div ng-message="minlength">Trop court</div>
       <div ng-message="maxlength">Trop long</div>
       <div ng-message="email">E-mail invalide</div>

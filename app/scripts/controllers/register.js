@@ -24,26 +24,38 @@ angular.module('pwilApp')
       year: ''
     };
 
-    $scope.signup = function() {
 
-      var concatBirthdate = new Date($scope.birthdate.year, $scope.birthdate.month, $scope.birthdate.day);
-      concatBirthdate.setDate(concatBirthdate.getDate() - 30);
-      $scope.user.birthdate = concatBirthdate;
 
-      AuthService.register($scope.user).then(function(msg) {
-        $state.go('outside.login');
-       /* var alertPopup = $ionicPopup.alert({
-          title: 'Register success!',
-          template: msg
-        });*/
-        $scope.registerResult ="Register success";
-      }, function(errMsg) {
-       /* var alertPopup = $ionicPopup.alert({
-          title: 'Register failed!',
-          template: errMsg
-        });*/
-        $scope.registerResult = "Register failed !";
-      });
+
+    $scope.signup = function(isValid) {
+
+
+      if (isValid) {
+
+        var concatBirthdate = new Date($scope.birthdate.year, $scope.birthdate.month, $scope.birthdate.day);
+        concatBirthdate.setDate(concatBirthdate.getDate() - 30);
+        $scope.user.birthdate = concatBirthdate;
+
+        AuthService.register($scope.user).then(function (msg) {
+          $state.go('outside.login');
+          /* var alertPopup = $ionicPopup.alert({
+           title: 'Register success!',
+           template: msg
+           });*/
+          $scope.registerResult = "Register success";
+        }, function (errMsg) {
+          /* var alertPopup = $ionicPopup.alert({
+           title: 'Register failed!',
+           template: errMsg
+           });*/
+          $scope.registerResult = "Register failed !";
+        });
+      }
+      else
+        $scope.registerResult = "Certains champs sont invalides"
+
+
+
     };
 
     $scope.onArrival = function() {

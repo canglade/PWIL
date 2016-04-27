@@ -8,6 +8,7 @@ var cors = require('cors');
 var passport	= require('passport');
 var jwt = require('jwt-simple');
 var config = require('./../config/database'); // get db config file
+var ml = require('./../machine_learning/musictastelearning.');
 // pass passport for configuration
 require('./../config/passport')(passport);
 

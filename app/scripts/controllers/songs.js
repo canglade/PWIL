@@ -9,7 +9,7 @@
  */
 
 angular.module('pwilApp')
-  .controller('SongsCtrl', function ($rootScope, $scope,$route, serviceDb) {
+  .controller('SongsCtrl', function ($rootScope, $scope, $route, serviceDb, $sce) {
     var increment = 0;
     var laSimilaire = "";
     var styles = [];
@@ -26,6 +26,24 @@ angular.module('pwilApp')
     $scope.loading = true;
 
     //$scope.orderByArtist = "artist";
+
+    $scope.lecteur= function () {
+      /*var artista ="";
+       var artista = "";
+       var song  = "";
+       var song = "";*/
+      var artiste = $scope.song.artist.replace(/ /g, "+");
+      var chanson = $scope.song.title.replace(/ /g, "+");
+
+      console.log("ARTISTE: " + artiste + " SONG: " + chanson);
+      //var url = "https://api.spotify.com/v1/search?q=artist:Lady+Gaga+title:Bad+Romance&type=track&limit=1";
+      var url = "https://api.spotify.com/v1/search?q=artist:" + artiste +  "+title:" + chanson + "&type=track&limit=1";
+      console.log("URL: " + url);
+      $.getJSON(url).then(function(data) {
+        $scope.previewUrl = $sce.trustAsResourceUrl(data.tracks.items[0].preview_url)
+        console.log("PREVIEW URL: " + data.tracks.items[0].preview_url);
+      })
+    };
 
     $scope.loadSong = function () {
       $scope.loading = true;
