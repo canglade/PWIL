@@ -30,6 +30,7 @@ angular.module('pwilApp')
       serviceDb.randSong().success(function (data) {
         $scope.loading = false;
         $scope.song = data;
+
         $scope.proposition = "aleatoire";
         var tags = data.tags;
         var liste = [];
@@ -84,7 +85,6 @@ angular.module('pwilApp')
 
     $scope.loadSong();
 
-
     $scope.like = function(){
       var song = $scope.song;
       var mail = $scope.userMail;
@@ -109,9 +109,6 @@ angular.module('pwilApp')
                $scope.loadSong();*/
             });
           }
-
-
-
         }
       });
 
@@ -135,7 +132,6 @@ angular.module('pwilApp')
         }
       });
 
-
       laSimilaire = song.similars[increment][0];
       increment = increment +1;
       $scope.loadSimil();
@@ -150,7 +146,6 @@ angular.module('pwilApp')
       var data = "{ \"track_id\": " + "\"" + song + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
 
-
       serviceDb.getTabDislikes(mail).success(function (tabdislikes) {
         var exist = false;
         if (tabdislikes) {
@@ -161,7 +156,6 @@ angular.module('pwilApp')
             }
           }
 
-
           $scope.tabdislikes = tabdislikes;
           $scope.exist= exist;
 
@@ -170,10 +164,8 @@ angular.module('pwilApp')
               /*$route.reload();
                $scope.loadSong();*/
             });
-
           }
         }
-
     });
 
       serviceDb.getTabLikes(mail).success(function (tablikes) {

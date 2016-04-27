@@ -82,3 +82,28 @@ body {
   }
 }
 
+.ng-invalid {
+  border-color: red;
+  outline-color: red;
+}
+
+.ng-valid {
+  border-color: green;
+  outline-color: green;
+}
+
+.datefield * {
+  display: inline-block;
+}
+
+.datefield input {
+  width: 4em;
+  padding: 0 0.8em;
+  border: none;
+  font-size: 100%;
+  background: none;
+  color: #000;
+}
+
+.datefield input#year { width:4em; }
+.datefield input:focus { outline:none; }

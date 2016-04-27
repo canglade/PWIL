@@ -54,11 +54,9 @@
         </div>
       </div>
     </div>
-
     <div class="container">
     <div ng-view=""></div>
     </div>
-
     <div class="footer">
       <div class="container">
         <p><span class="glyphicon glyphicon-heart"></span>PWIL team</p>
@@ -90,22 +88,41 @@
     <!-- endbower -->
     <!-- endbuild -->
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/constants.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/controllers/songs.js"></script>
-        <script src="scripts/services/servicedb.js"></script>
-        <script src="scripts/controllers/connection.js"></script>
-        <script src="scripts/services/authenticationservice.js"></script>
-        <script src="scripts/services/userservice.js"></script>
-        <script src="scripts/services/tokeninterceptor.js"></script>
-        <script src="scripts/controllers/users.js"></script>
-        <script src="scripts/controllers/register.js"></script>
-        <script src="scripts/controllers/account.js"></script>
-        <script src="scripts/services/authservice.js"></script>
-        <script src="scripts/controllers/contact.js"></script>
+    <script type="text/javascript" src="http://code.angularjs.org/snapshot/angular.js"></script>
+    <script type="text/javascript" src="http://code.angularjs.org/snapshot/angular-messages.js"></script>
+    <script type="text/javascript" src="angularjs-messages-app.js"></script>
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/app.js"></script>
+
+    <script src="scripts/constants.js"></script>
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/controllers/songs.js"></script>
+    <script src="scripts/controllers/connection.js"></script>
+    <script src="scripts/controllers/users.js"></script>
+    <script src="scripts/controllers/register.js"></script>
+    <script src="scripts/controllers/account.js"></script>
+
+    <script src="scripts/services/servicedb.js"></script>
+    <script src="scripts/services/tokeninterceptor.js"></script>
+    <script src="scripts/services/authenticationservice.js"></script>
+    <script src="scripts/services/userservice.js"></script>
+    <script src="scripts/controllers/contact.js"></script>
+    <script src="scripts/services/authservice.js"></script>
+
+    <script src="scripts/directives/enterkeypress.js"></script>
+    <script src="scripts/directives/compareto.js"></script>
         <!-- endbuild -->
+
+    <script type="text/ng-template" id="error-messages">
+      <div ng-message="required">Requis</div>
+      <div ng-message="minlength">Trop court</div>
+      <div ng-message="maxlength">Trop long</div>
+      <div ng-message="email">E-mail invalide</div>
+      <div ng-message="compareTo">Ce champ ne correspond pas à l'entrée précédente</div>
+      <div ng-message="email">Adresse mail invalide</div>
+    </script>
+
 </body>
 </html>

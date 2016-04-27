@@ -16,14 +16,14 @@
         <div>
           <md-input-container class="md-block">
             <label>E-mail</label>
-            <input ng-model="user.mail">
+            <input ng-model="user.mail" enter-key-press="login()">
           </md-input-container>
         </div>
         <!-- Name -->
         <div>
           <md-input-container class="md-block">
             <label>Mot de passe</label>
-            <input type="password" ng-model="user.password">
+            <input type="password" ng-model="user.password" enter-key-press="login()">
           </md-input-container>
         </div>
       </form>
@@ -31,10 +31,8 @@
     </md-card-content>
 
     <md-card-actions layout="row" layout-align="end center">
-
-      <md-button class="md-raised" ui-sref="users">Annuler</md-button>
       <md-button class="md-raised md-primary" ng-click="login()">Se connecter</md-button>
-      <md-button class="md-raised md-primary" ng-href="#/register"> Register </md-button>
+      <md-button class="md-raised md-primary" ng-href="#/register">S'enregistrer</md-button>
     </md-card-actions>
     {{loginResult}}
   </md-card>

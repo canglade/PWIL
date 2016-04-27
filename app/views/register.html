@@ -9,63 +9,74 @@
 
   <md-card-content>
 
-    <form class="form-horizontal" >
+    <form  name="userForm">
       <!-- Username -->
-      <div>
+      <div class="form-group">
         <md-input-container class="md-block">
           <label>Prenom</label>
-          <input ng-model="user.firstname">
+          <input name="firstname" ng-model="user.firstname" enter-key-press="signup()" required>
         </md-input-container>
-      </div>
-      <!-- Name -->
+        <div ng-messages="userForm.firstname.$error">
+          <div ng-messages-include="error-messages"></div>
+        </div>
+     </div>
+     <!-- Name -->
       <div>
         <md-input-container class="md-block">
           <label>Nom</label>
-          <input ng-model="user.lastname">
+          <input ng-model="user.lastname" enter-key-press="signup()">
         </md-input-container>
+        <div ng-messages="userForm.email.$error">
+          <div ng-messages-include="error-messages"></div>
+        </div>
       </div>
 
       <div>
         <md-input-container class="md-block">
           <label>E-mail</label>
-          <input ng-model="user.mail">
+          <input name="email" type="email" ng-model="user.mail" enter-key-press="signup()">
         </md-input-container>
       </div>
 
       <div>
         <md-input-container class="md-block">
           <label>Mot de passe</label>
-          <input type="password" ng-model="user.password">
+          <input type="password" ng-model="user.password" enter-key-press="signup()">
         </md-input-container>
       </div>
 
       <div>
         <md-input-container class="md-block">
           <label>Confirmer le mot de passe</label>
-          <input type="password" ng-model="user.confirmpassword">
+          <input name="confirmPassword" type="password" ng-model="user.confirmpassword" compare-to="user.password" enter-key-press="signup()">
         </md-input-container>
+        <div ng-messages="userForm.confirmPassword.$error">
+          <div ng-messages-include="error-messages"></div>
+        </div>
+      </div>
       </div>
 
       <div>
         <md-input-container class="md-block">
           <label>Pseudonyme</label>
-          <input ng-model="user.username">
+          <input ng-model="user.username" enter-key-press="signup()">
         </md-input-container>
       </div>
 
       <div>
-        <md-datepicker class="md-block" ng-model="user.birthdate">
-          <label>Date de naissance</label>
-        </md-datepicker>
+          <label style="color:#b0b0b0">Date de naissance</label>
+
+        <div id="date" class="datefield">
+          <input id="day" ng-model="birthdate.day" type="tel" maxlength="2" placeholder="jj" enter-key-press="signup()"/> /
+          <input id="month" ng-model="birthdate.month" type="tel" maxlength="2" placeholder="mm" enter-key-press="signup()"/> /
+          <input id="year" ng-model="birthdate.year" type="tel" maxlength="4" placeholder="aaaa" enter-key-press="signup()"/>
+        </div>
       </div>
     </form>
     {{registerResult}}
   </md-card-content>
 
   <md-card-actions layout="row" layout-align="end center">
-
-    <md-button class="md-raised" ui-sref="users">Annuler</md-button>
     <md-button class="md-raised md-primary" ng-click="signup()">Créer compte</md-button>
-
   </md-card-actions>
 </md-card>

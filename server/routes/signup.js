@@ -16,7 +16,8 @@ function signup (req, res) {
       lastname: req.body.lastname,
       mail: req.body.mail,
       password: req.body.password,
-      username: req.body.username
+      username: req.body.username,
+      birthdate: req.body.birthdate
     });
     // save the user
     newUser.save(function(err) {

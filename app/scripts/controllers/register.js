@@ -18,7 +18,18 @@ angular.module('pwilApp')
       birthdate:''
     };
 
+    $scope.birthdate = {
+      day: '',
+      month: '',
+      year: ''
+    };
+
     $scope.signup = function() {
+
+      var concatBirthdate = new Date($scope.birthdate.year, $scope.birthdate.month, $scope.birthdate.day);
+      concatBirthdate.setDate(concatBirthdate.getDate() - 30);
+      $scope.user.birthdate = concatBirthdate;
+
       AuthService.register($scope.user).then(function(msg) {
         $state.go('outside.login');
        /* var alertPopup = $ionicPopup.alert({
