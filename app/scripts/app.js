@@ -58,6 +58,11 @@ angular
         controller: 'ContactCtrl',
         controllerAs: 'contact'
       })
+      .when('/testflo', {
+        templateUrl: 'views/testflo.html',
+        controller: 'TestfloCtrl',
+        controllerAs: 'testflo'
+      })
       .otherwise({
         redirectTo: '/'
       });
