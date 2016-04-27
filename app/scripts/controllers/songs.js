@@ -30,7 +30,6 @@ angular.module('pwilApp')
       serviceDb.randSong().success(function (data) {
         $scope.loading = false;
         $scope.song = data;
-
         $scope.proposition = "aleatoire";
         var tags = data.tags;
         var liste = [];
@@ -80,8 +79,8 @@ angular.module('pwilApp')
     };
 
     /*$scope.pageChanged = function(){
-      $scope.loadSong();
-    };*/
+     $scope.loadSong();
+     };*/
 
     $scope.loadSong();
 
@@ -124,7 +123,7 @@ angular.module('pwilApp')
           if (exist) {
             serviceDb.removeSongDislike().success(function () {
               /*$scope.remove=exist;
-              $scope.idtrack=$scope.song.track_id;*/
+               $scope.idtrack=$scope.song.track_id;*/
               /*$route.reload();
                $scope.loadSong();*/
             });
@@ -146,6 +145,7 @@ angular.module('pwilApp')
       var data = "{ \"track_id\": " + "\"" + song + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
 
+
       serviceDb.getTabDislikes(mail).success(function (tabdislikes) {
         var exist = false;
         if (tabdislikes) {
@@ -164,9 +164,10 @@ angular.module('pwilApp')
               /*$route.reload();
                $scope.loadSong();*/
             });
+
           }
         }
-    });
+      });
 
       serviceDb.getTabLikes(mail).success(function (tablikes) {
         var exist = false;
@@ -191,4 +192,4 @@ angular.module('pwilApp')
     };
 
     $scope.AuthentificatedRedirection();
-});
+  });
