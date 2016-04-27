@@ -22,6 +22,7 @@ angular.module('pwilApp')
     $scope.currentPage = 1;
     $scope.totalPages = 0;
     $scope.loading = true;
+
     //$scope.orderByArtist = "artist";
 
     $scope.loadSong = function () {
@@ -31,6 +32,7 @@ angular.module('pwilApp')
         $scope.loading = false;
         $scope.song = data;
         $scope.proposition = "aleatoire";
+        increment = 0;
         var tags = data.tags;
         var liste = [];
         if(tags.length >= 10) {
@@ -81,9 +83,7 @@ angular.module('pwilApp')
     /*$scope.pageChanged = function(){
      $scope.loadSong();
      };*/
-
     $scope.loadSong();
-
     $scope.like = function(){
       var song = $scope.song;
       var mail = $scope.userMail;
@@ -130,10 +130,15 @@ angular.module('pwilApp')
           }
         }
       });
-
-      laSimilaire = song.similars[increment][0];
-      increment = increment +1;
-      $scope.loadSimil();
+      if(song.similars.length != 0){
+        laSimilaire = song.similars[increment][0];
+        increment = increment +1;
+        $scope.increment = increment;
+        $scope.loadSimil();
+      }
+      else{
+        $scope.loadSong();
+      }
     };
 
     $scope.dislike = function(){
