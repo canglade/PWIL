@@ -75,6 +75,15 @@ angular.module('pwilApp')
         });
       },
 
+      addTag: function(styles){
+        return  $http({
+          method: 'Put',
+          data: styles,
+          url: 'http://localhost:3000/users/addTag',
+          headers : { 'Content-Type': 'application/json' }
+        });
+      },
+
       getTabLikes: function(mail){
         return  $http({
           method: 'GET',

@@ -8,6 +8,7 @@ var User = require('../database/model/user');
 router.get('/', getAllUsers);
 router.post('/', createUser);
 router.put('/like', addLike);
+router.put('/addTag', addTag);
 router.put('/dislike', addDislike);
 router.get('/tablikes', songExist);
 router.get('/tabdislikes', songDislikeExist);
@@ -58,6 +59,8 @@ function songExist(req, res, next) {
 };
 
 
+
+
 function songDislikeExist(req, res, next) {
   User.findOne({"mail" : req.headers.mail}, function(err, user){
     if (err) return next(err);
@@ -93,6 +96,24 @@ function addDislike(req, res, next) {
   });
 };
 
+
+function addTag(req, res, next) {
+  var mail = req.body.userMail;
+  for(var i = 0; i< req.body.styles.length; i++){
+    if(req.body.styles[i]==","){
+      req.body.styles[i].pop();
+    }
+  }
+  for(var i = 0; i< req.body.styles.length; i++) {
+
+    User.update({"mail": mail}, {$push: {tab_tags: req.body.styles[i]}}, function (err) {
+      if (err) return next(err);
+      // NE PAS SUPPRIMER BUG SINON
+      res.json(req.body);
+    });
+
+  }
+};
 
 function removeSongFromTabDislike(req, res, next) {
 

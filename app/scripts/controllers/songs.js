@@ -12,6 +12,8 @@ angular.module('pwilApp')
   .controller('SongsCtrl', function ($rootScope, $scope,$route, serviceDb) {
     var increment = 0;
     var laSimilaire = "";
+    var styles = [];
+
     $rootScope.activeHome = "";
     $rootScope.activeSongs = "active";
     $rootScope.activeAccount = "";
@@ -93,8 +95,42 @@ angular.module('pwilApp')
       var data = "{ \"track_id\": " + "\"" + song.track_id + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
 
+      //On initialise la liste de tags en enlevant le poids de chaque tag
+      var tabTags = [];
+      if(song.tags.length < 10) {
+        for (var j = 0; j < song.tags.length; j++) {
+          console.log(song.tags[j][0]);
+          tabTags.push(song.tags[j][0]);
+        }
+      }else{
+        for (var j = 0; j < 10; j++) {
+          console.log(song.tags[j][0]);
+          tabTags.push(song.tags[j][0]);
+        }
+      }
+
+
+      //On parcours les tags pour retrouver les chaines de caractère rap, rock, electro, hiphop...
+      for (var i=0 ; i< tabTags.length; i++)
+      {
+        tabTags[i] = tabTags[i].trim();
+        tabTags[i] = tabTags[i].toUpperCase();
+        console.log(tabTags[i]);
+        console.log(tabTags[i].indexOf("ROCK"));
+        if (tabTags[i].indexOf("ROCK")!==-1){styles.push(1);}
+        if(tabTags[i].indexOf("ELECTRO")!==-1 || tabTags[i].indexOf("TECHNO")!==-1 || tabTags[i].indexOf("DUBSTEP")!==-1){
+          styles.push(2);
+        }
+        if(tabTags[i].indexOf("RAP")!==-1 || tabTags[i].indexOf("HIPHOP")!==-1 || tabTags[i].indexOf("RNB")!==-1
+          || tabTags[i].indexOf("HIP-HOP")!==-1){
+          styles.push(3);
+        }
+      }
+
       serviceDb.getTabLikes(mail).success(function (tablikes) {
         var exist = false;
+        var dataStyles = "{ \"styles\": " + "\"" + styles + "\" "
+          + ", \"userMail\": " + "\"" + mail + "\" } ";
         if (tablikes) {
           for (var i = 0; i < tablikes.length; i++) {
             if (tablikes[i] == song) {
@@ -107,6 +143,14 @@ angular.module('pwilApp')
               /*$route.reload();
                $scope.loadSong();*/
             });
+            if (styles.length != 0 )
+            {serviceDb.addTag(dataStyles).success(function (data) {
+              /*$route.reload();
+               $scope.loadSong();*/
+            });
+            }
+            //$scope.styles = styles;
+            styles=[];
           }
         }
       });
@@ -130,13 +174,14 @@ angular.module('pwilApp')
           }
         }
       });
-      if(song.similars.length != 0){
+
+      if(song.similars.length!=0){
         laSimilaire = song.similars[increment][0];
         increment = increment +1;
-        $scope.increment = increment;
         $scope.loadSimil();
       }
-      else{
+      else
+      {
         $scope.loadSong();
       }
     };
