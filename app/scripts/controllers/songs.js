@@ -149,7 +149,7 @@ angular.module('pwilApp')
                $scope.loadSong();*/
             });
             }
-            //$scope.styles = styles;
+            $scope.styles = styles;
             styles=[];
           }
         }

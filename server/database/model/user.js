@@ -7,10 +7,10 @@ var bcrypt = require('bcryptjs');
   freq : {type:Number}
 });*/
 
-var Tags = new mongoose.Schema({
-  style : {type:String},
-  freq : {type:Number}
-});
+// var Tags = new mongoose.Schema({
+//   style : {type:String},
+//   freq : {type:Number}
+// });
 
 var Histo = new mongoose.Schema({
   track_id : {type:String},
@@ -40,7 +40,7 @@ var user = new mongoose.Schema({
   birthdate : { type : Date},
   tab_likes : [String],
   tab_dislikes : [String],
-  tab_tags : [Tags],
+  tab_tags : [String],
   tab_histo : [Histo]
 });
 

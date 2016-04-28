@@ -99,20 +99,15 @@ function addDislike(req, res, next) {
 
 function addTag(req, res, next) {
   var mail = req.body.userMail;
-  for(var i = 0; i< req.body.styles.length; i++){
-    if(req.body.styles[i]==","){
-      req.body.styles[i].pop();
-    }
-  }
-  for(var i = 0; i< req.body.styles.length; i++) {
+  var tags = req.body.styles.split(",");
 
-    User.update({"mail": mail}, {$push: {tab_tags: req.body.styles[i]}}, function (err) {
+    User.update({"mail": mail}, {$push: {tab_tags:{$each: tags}}}, function (err) {
       if (err) return next(err);
       // NE PAS SUPPRIMER BUG SINON
       res.json(req.body);
     });
 
-  }
+
 };
 
 function removeSongFromTabDislike(req, res, next) {
