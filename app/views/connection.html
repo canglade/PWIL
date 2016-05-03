@@ -1,4 +1,4 @@
-<section ng-controller="ConnectionCtrl">
+<section>
 
   <md-card >
     <md-card-title>
@@ -26,15 +26,15 @@
             <input type="password" ng-model="user.password" enter-key-press="login()">
           </md-input-container>
         </div>
+
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-primary" ng-click="login()">Se connecter</md-button>
+          <md-button class="md-raised md-primary" ng-href="#/register">S'enregistrer</md-button>
+        </md-card-actions>
+        <flash-message duration="5000"></flash-message>
+
       </form>
 
     </md-card-content>
-
-    <md-card-actions layout="row" layout-align="end center">
-      <md-button class="md-raised md-primary" ng-click="login()">Se connecter</md-button>
-      <md-button class="md-raised md-primary" ng-href="#/register">S'enregistrer</md-button>
-    </md-card-actions>
-    {{loginResult}}
   </md-card>
-
 </section>

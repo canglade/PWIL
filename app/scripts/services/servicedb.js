@@ -84,6 +84,14 @@ angular.module('pwilApp')
         });
       },
 
+      isEmailFree: function(mail){
+        return  $http({
+          method: 'GET',
+          url: 'http://localhost:3000/users/email/free',
+          headers : { 'mail': mail }
+        });
+      },
+
       getTabLikes: function(mail){
         return  $http({
           method: 'GET',

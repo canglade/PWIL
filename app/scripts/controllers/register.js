@@ -8,7 +8,7 @@
  * Controller of the pwilApp
  */
 angular.module('pwilApp')
-  .controller('RegisterCtrl', function ($scope, AuthService, $state) {
+  .controller('RegisterCtrl', function ($scope, AuthService, $state, Flash) {
     $scope.user = {
       firstname: '',
       lastname: '',
@@ -24,11 +24,24 @@ angular.module('pwilApp')
       year: ''
     };
 
-
-
+    $scope.success = function() {
+      var message = '<strong>Well done!</strong> You successfully read this important alert message.';
+      Flash.create('success', message);
+    };
+    $scope.info = function() {
+      var message = '<strong>Heads up!</strong> This alert needs your attention, but it\'s not super important.';
+      Flash.create('info', message);
+    };
+    $scope.warning = function() {
+      var message = '<strong>Warning!</strong> Better check yourself, you\'re not looking too good.';
+      Flash.create('warning', message);
+    };
+    $scope.danger = function() {
+      var message = '<strong>Oh snap!</strong> Change a few things up and try submitting again.';
+      Flash.create('danger', message);
+    };
 
     $scope.signup = function(isValid) {
-
 
       if (isValid) {
 
@@ -48,11 +61,16 @@ angular.module('pwilApp')
            title: 'Register failed!',
            template: errMsg
            });*/
-          $scope.registerResult = "Register failed !";
+          $scope.registerResult = errMsg;
+          var message = '<strong>Attention!</strong> '+errMsg+'.';
+          Flash.create('danger', message);
         });
       }
-      else
+      else {
         $scope.registerResult = "Certains champs sont invalides"
+        var message = '<strong>Attention!</strong> Certains champs sont invalides.';
+        Flash.create('danger', message);
+      }
 
 
 

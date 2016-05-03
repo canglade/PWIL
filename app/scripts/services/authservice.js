@@ -49,6 +49,7 @@ angular.module('pwilApp')
             resolve(result.data.msg);
           } else {
             reject(result.data.msg);
+            console.log(result.data.msg);
           }
         });
       });

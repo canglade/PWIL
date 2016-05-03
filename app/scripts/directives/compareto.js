@@ -8,6 +8,9 @@ angular
     link: function(scope, element, attributes, ngModel) {
 
       ngModel.$validators.compareTo = function(modelValue) {
+        /*console.log(scope.otherModelValue);
+        console.log("between");
+        console.log(modelValue);*/
         return modelValue == scope.otherModelValue;
       };
 

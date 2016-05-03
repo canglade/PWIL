@@ -8,8 +8,8 @@ var User = require('../database/model/user');
 router.post('/signup', signup);
 
 function signup (req, res) {
-  if (!req.body.username || !req.body.password) {
-    res.json({success: false, msg: 'Please pass username and password.'});
+  if (!req.body.mail || !req.body.password) {
+    res.json({success: false, msg: 'Veuillez entrer un mail et un mot de passe.'});
   } else {
     var newUser = new User({
       firstname: req.body.firstname,
@@ -22,9 +22,9 @@ function signup (req, res) {
     // save the user
     newUser.save(function(err) {
       if (err) {
-        return res.json({success: false, msg: 'Username already exists.'});
+        return res.json({success: false, msg: 'Cet email est déjà utilisé.'});
       }
-      res.json({success: true, msg: 'Successful created new user.'});
+      res.json({success: true, msg: 'Utilisateur créer avec succès.'});
     });
   }
 };

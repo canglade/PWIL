@@ -14,6 +14,7 @@ angular
     'ngRoute',
     'ngMaterial',
     'ngMessages',
+    'ngFlash',
     'ui.router'
   ])
   .config(function ($stateProvider,$routeProvider) {

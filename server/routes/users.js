@@ -15,6 +15,7 @@ router.get('/tablikes', songExist);
 router.get('/tabdislikes', songDislikeExist);
 router.put('/removesongDislike', removeSongFromTabDislike);
 router.put('/removesongLike', removeSongFromTablike);
+router.get('/email/free', isUserMailFree);
 
 /* GET users listing. */
 function getAllUsers(req, res, next) {
@@ -30,11 +31,11 @@ function getAllUsers(req, res, next) {
 
 /* POST /users */
 function createUser(req, res, next) {
-  User.findOne({"username" : req.body.username}, function(err, coll){
+  User.findOne({"mail" : req.body.mail}, function(err, user){
     if (err) return next(err);
-    if (coll) {
+    if (user) {
       // username already exists
-      next(new Error("Ce pseudo est déjà utilisé : " + req.body.username));
+      next(new Error("Ce mail est déjà utilisé : " + req.body.mail));
     } else {
       createUs();
     }
@@ -60,14 +61,25 @@ function songExist(req, res, next) {
   });
 };
 
-
-
-
 function songDislikeExist(req, res, next) {
   User.findOne({"mail" : req.headers.mail}, function(err, user){
     if (err) return next(err);
     console.log("mail : " + req.headers.mail);
     res.json(user.tab_dislikes);
+  });
+};
+
+function isUserMailFree(req, res, next) {
+  var success = false;
+  User.findOne({"mail" : req.headers.mail}, function(err, user){
+    if (err) return next(err);
+    if (user) {
+      success = false;
+    }
+    else {
+      success = true;
+    }
+    res.json(success);
   });
 };
 

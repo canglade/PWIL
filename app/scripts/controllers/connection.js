@@ -8,7 +8,7 @@
  * Controller of the pwilApp
  */
 angular.module('pwilApp')
-  .controller('ConnectionCtrl', function ($rootScope, $scope, AuthService, $state) {
+  .controller('ConnectionCtrl', function ($rootScope, $scope, AuthService, $state, Flash) {
     $rootScope.activeHome = "";
     $rootScope.activeSongs = "";
     $rootScope.activeAccount = "";
@@ -35,7 +35,8 @@ angular.module('pwilApp')
           title: 'Login failed!',
           template: errMsg
         });*/
-        $scope.loginResult = "Login failed !";
+        var message = '<strong>Erreur !</strong> '+errMsg;
+        Flash.create('danger', message);
       });
     };
 

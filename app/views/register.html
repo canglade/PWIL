@@ -1,4 +1,4 @@
-<md-card ng-controller="RegisterCtrl">
+<md-card>
   <md-card-title>
 
     <md-card-title-text>
@@ -14,20 +14,20 @@
       <div>
         <md-input-container class="md-block">
           <label>Prenom</label>
-          <input name="firstname" ng-model="user.firstname" maxlength="20" enter-key-press="signup()">
+          <input name="firstname" ng-model="user.firstname" maxlength="20" enter-key-press="signup(userForm.$valid)">
         </md-input-container>
      <!-- Name -->
       <div>
         <md-input-container class="md-block">
           <label>Nom</label>
-          <input ng-model="user.lastname" enter-key-press="signup()">
+          <input ng-model="user.lastname" enter-key-press="signup(userForm.$valid)">
         </md-input-container>
       </div>
 
       <div>
         <md-input-container class="md-block">
           <label>E-mail *</label>
-          <input name="email" type="email" ng-model="user.mail" enter-key-press="signup()" required>
+          <input name="email" type="email" ng-model="user.mail" enter-key-press="signup(userForm.$valid)" required>
           <div ng-messages="userForm.email.$error" ng-show="userForm.email.$touched">
             <div ng-messages-include="error-messages"></div>
           </div>
@@ -37,7 +37,7 @@
       <div>
         <md-input-container class="md-block">
           <label>Mot de passe *</label>
-          <input type="password" name="password" ng-model="user.password" class="form-control" enter-key-press="signup()" required>
+          <input type="password" name="password" ng-model="user.password" class="form-control" enter-key-press="signup(userForm.$valid)" required>
           <div ng-messages="userForm.password.$error" ng-show="userForm.password.$touched">
             <div ng-messages-include="error-messages"></div>
           </div>
@@ -47,7 +47,7 @@
       <div>
         <md-input-container class="md-block">
           <label>Confirmer le mot de passe *</label>
-          <input name="confirmPassword" type="password" ng-model="user.confirmpassword" class="form-control" compare-to="user.password" enter-key-press="signup()" required>
+          <input name="confirmPassword" type="password" ng-model="user.confirmpassword" class="form-control" compare-to="user.password" enter-key-press="signup(userForm.$valid)" required>
           <div ng-messages="userForm.confirmPassword.$error" ng-show="userForm.confirmPassword.$touched">
             <div ng-messages-include="error-messages"></div>
           </div>
@@ -58,7 +58,7 @@
       <div>
         <md-input-container class="md-block">
           <label>Pseudonyme</label>
-          <input ng-model="user.username" enter-key-press="signup()">
+          <input ng-model="user.username" enter-key-press="signup(userForm.$valid)" maxlength="20">
         </md-input-container>
       </div>
 
@@ -66,9 +66,9 @@
 
         <label style="color:#b0b0b0">Date de naissance *</label>
         <div id="date" class="datefield">
-          <input name="birthdate" id="day" ng-model="birthdate.day" type="tel" maxlength="2" placeholder="jj" enter-key-press="signup()" required/> /
-          <input name="birthdate" id="month" ng-model="birthdate.month" type="tel" maxlength="2" placeholder="mm" enter-key-press="signup()" required/> /
-          <input name="birthdate" id="year" ng-model="birthdate.year" type="tel" maxlength="4" placeholder="aaaa" enter-key-press="signup()" required/>
+          <input name="birthdate" id="day" ng-model="birthdate.day" type="tel" maxlength="2" placeholder="jj" enter-key-press="signup(userForm.$valid)" required/> /
+          <input name="birthdate" id="month" ng-model="birthdate.month" type="tel" maxlength="2" placeholder="mm" enter-key-press="signup(userForm.$valid)" required/> /
+          <input name="birthdate" id="year" ng-model="birthdate.year" type="tel" maxlength="4" placeholder="aaaa" enter-key-press="signup(userForm.$valid)" required/>
         </div>
         <div ng-messages="userForm.birthdate.$error" ng-show="userForm.birthdate.$touched">
           <div ng-messages-include="error-messages"></div>
@@ -79,13 +79,8 @@
       <md-card-actions layout="row" layout-align="end center">
         <md-button class="md-raised md-primary" ng-click="signup(userForm.$valid)">Créer compte</md-button>
       </md-card-actions>
-
+      <flash-message duration="5000"></flash-message>
     </form>
 
-
-
-    {{registerResult}}
   </md-card-content>
-
-
 </md-card>
