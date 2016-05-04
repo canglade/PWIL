@@ -1,74 +1,121 @@
-/*
-CF : https://www.npmjs.com/package/machine_learning AND http://joonku.com/project/machine_learning/apidoc
-*/
+var express = require('express');
+var nbCluster = require('../config/machineLearning');
+var router = express.Router();
+var bodyParser = require('body-parser');
+var _ = require('lodash');
+var bcrypt = require('bcryptjs');
+var User = require('../database/model/user');
 var ml = require('machine_learning');
+var math = require('mathjs');
+var utilisateurs = [];
 
-var data = [[1,0,1,0,1,1,1,0,0,0,0,0,1,0],
-  [1,1,1,1,1,1,1,0,0,0,0,0,1,0],
-  [1,1,1,0,1,1,1,0,1,0,0,0,1,0],
-  [1,0,1,1,1,1,1,1,0,0,0,0,1,0],
-  [1,1,1,1,1,1,1,0,0,0,0,0,1,1],
-  [0,0,1,0,0,1,0,0,1,0,1,1,1,0],
-  [0,0,0,0,0,0,1,1,1,0,1,1,1,0],
-  [0,0,0,0,0,1,1,1,0,1,0,1,1,0],
-  [0,0,1,0,1,0,1,1,1,1,0,1,1,1],
-  [0,0,0,0,0,0,1,1,1,1,1,1,1,1],
-  [0,0,1,0,1,1,1,1,0,0,1,1,1,0],
-  [1,0,1,0,0,1,1,1,1,1,0,0,1,0]];
+// function updateModelUser() {
+//   User.find(function(err,users){
+//     if (err)
+//       return next(err);
+//     if(users[0].tab_tags.length != nbCluster){
+//       for(var i = 0;i<users.length;i++){
+//         updateTab(users[i], users[i].tab_tags);
+//       }
+//     }
+//   });
+//
+//   function updateTab(user, tags){
+//     var oldSize = tags.length;
+//     var newSize = nbCluster - oldSize;
+//     for(var i = 0; i<newSize;i++){
+//       tags.push(0);
+//     }
+//     User.update({mail:user.mail},{$set: {tab_tags:tags}}, function (err) {
+//       if (err) return next(err);
+//     });
+//   }
+// };
+//
+// updateModelUser();
 
-var dataTags = [[0],
-  [0,2],
-  [1,0],
-  [1],
-  [1],
-  [2,1],
-  [1,0],
-  [0],
-  [1],
-  [0],
-  [1],
-  [2],
-  [2],
-  [2],
-  [1,0],
-  [1],
-  [0],
-  [0,2],
-  [0]
-];
+//fonction de clustering
+function clustering() {
+  var query = User.find(null);
+// on récupère tous les utilisateurs
+  query.exec(function (err, users) {
+    if (err) { throw err; }
+    //Pour chacun, on récupère ses tags
+    for (var i = 0, l = users.length; i < l; i++) {
+      //var tags = [];
+      utilisateurs.push(users[i].tab_tags);
+      //utilisateurs.push(tags);
+      console.log("Utilisateur " + i + " : " + users[i].tab_tags);
+    }
+    //on appelle l'algo de ML
+    var clusters = machineLearning();
+    //On met à jour les utilisateurs dans la base
+    for(var i = 0; i<clusters.length;i++){
+      for(var j = 0; j<clusters[i].length;j++){
+        var indice = clusters[i][j];
+        updateUser(users[indice].username,i);
+      }
+    }
+  });
+  //Fonction de ML qui retourne les clusters pour chaque utilisateur
+  function machineLearning(){
+    //Standardisation des données
 
-var result = ml.kmeans.cluster({
-  data : dataTags,
-  k : 6, // Nombre de Clusters
-  epochs: 500, // Limite du nombre de boucle
-  init_using_data : true, // Les données  initiales des clusters sont prisent aléatoirement si True
-  distance : {type : "euclidean"}
+    //initialisation des tableaux
+    var tableauValeurs = [];
+    var tableauMoyennes = [];
+    var tableauStd = [];
 
-  /*
-   distance : {type : 'euclidean'} // this is default
-   distance : {type : 'pearson'}
+    for(var i = 0;i<nbCluster;i++) {
+      tableauValeurs.push([]);
+      tableauMoyennes.push(0);
+      tableauStd.push(0);
+    }
 
-   Or you can use your own distance
+    //initialisation des valeurs
+    for(var j = 0;j<nbCluster;j++){
+      for(var i = 0; i<utilisateurs.length; i++) {
+        tableauValeurs[j].push(utilisateurs[i][j]);
+      }
+    }
 
-   distance : function(x1,x2) { // Euclidean Distance Function
-   var distance = 0;
-   for(var i=0 ; i < x1.length; i++) {
-   var dx = x1[i] - x2[i];
-   distance += dx * dx;
-   }
-   return Math.sqrt(distance);
-   };
-   */
-});
+    for(var i = 0;i<nbCluster;i++){
+      tableauMoyennes[i] = math.mean(tableauValeurs[i]);
+      tableauStd[i] = math.std(tableauValeurs[i]);
+    }
 
-console.log("clusters : ", result.clusters);
-// clusters :  [ [ 5, 6, 7, 8, 9, 10 ], [], [], [ 0, 1, 2, 3, 4 ] ]
-// Les numéros correspondent à l'index dans le tableau de données data
+    for(var i = 0; i< utilisateurs.length;i++) {
+      for(var j = 0;j<nbCluster;j++){
+        utilisateurs[i][j] = ((utilisateurs[i][j] - tableauMoyennes[j]) / tableauStd[j]);
+      }
+      console.log("Utilisateur " + i + " : " + utilisateurs[i]);
+    }
 
-//console.log("means : ", result.means);
-/* means :  [ [ 0.16666666666666666, 0, 0.5, 0, 0.16666666666666666, 0.5, 0.8333333333333334, 0.8333333333333334, 0.8333333333333334, 0.6666666666666666, 0.5, 0.8333333333333334, 1, 0.3333333333333333 ],
- [ 1, 0.25, 1, 0.25, 0.75, 1, 1, 0.5, 0.5, 0.25, 0, 0, 1, 0 ],
- [ 1, 0, 1, 0, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0 ],
- [ 1, 0.6, 1, 0.6, 1, 1, 1, 0.2, 0.2, 0, 0, 0, 1, 0.2 ] ]*/
+    //Appel du Kmeans
+    var result = ml.kmeans.cluster({
+      data : utilisateurs,
+      k : 3, // Nombre de Clusters
+      epochs: 500, // Limite du nombre de boucle
+      init_using_data : true, // Les données  initiales des clusters sont prisent aléatoirement si True
+      distance : {type : "pearson"}
+    });
+    console.log("clusters : ", result.clusters);
+    console.log("Moyennes : ", result.means);
 
-module.exports = result;
+    return result.clusters;
+  }
+  //Fonction de mise à jour
+  function updateUser(username, cluster){
+    User.update({username:username}, {$set:{cluster:cluster}}, function (err) {
+      if (err) {
+        console.log("erreur");
+        return next(err);
+      }
+      console.log(username + " Cluster : " + cluster);
+    });
+  }
+
+};
+
+clustering();
+//module.exports = result;

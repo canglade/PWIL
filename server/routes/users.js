@@ -38,6 +38,7 @@ function createUser(req, res, next) {
       createUs();
     }
   });
+
   function createUs(){
     var user = _.omit(req.body);
 
@@ -101,13 +102,29 @@ function addTag(req, res, next) {
   var mail = req.body.userMail;
   var tags = req.body.styles.split(",");
 
-    User.update({"mail": mail}, {$push: {tab_tags:{$each: tags}}}, function (err) {
+  User.findOne({"mail": mail}, function (err, user) {
+    if (err) return next(err);
+    // NE PAS SUPPRIMER BUG SINON
+
+    var rock =user.tab_tags[0];
+    var electro = user.tab_tags[1];
+    var rap =user.tab_tags[2];
+
+    for(var i = 0;i < tags.length;i++){
+      if(tags[i] == 1){rock++}else if(tags[i]==2){electro++}else{rap++};
+    }
+      updateUser([rock,electro,rap]);
+  });
+
+  function updateUser(tags){
+    console.log(tags);
+    User.update({"mail": mail}, {$set: {tab_tags:tags}}, function (err) {
       if (err) return next(err);
       // NE PAS SUPPRIMER BUG SINON
+
       res.json(req.body);
     });
-
-
+  }
 };
 
 function removeSongFromTabDislike(req, res, next) {

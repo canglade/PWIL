@@ -1,5 +1,6 @@
 var mongoose = require('mongoose');
 var bcrypt = require('bcryptjs');
+var nbCluster = require('../../config/machineLearning');
 
 // Création du schéma pour les utilisateurs
 /*var Likes = new mongoose.Schema({
@@ -30,6 +31,13 @@ var Histo = new mongoose.Schema({
  }
  });*/
 
+//initialisation du tableau de tags à la création d'un nouvel utilisateur (en fonction du nb Clusters
+var init_Tags = [];
+
+for(var i = 0;i<nbCluster;i++){
+  init_Tags.push(0);
+}
+
 var user = new mongoose.Schema({
   id : String,
   firstname : { type : String, match: /^[a-zA-Z0-9-_]+$/ },
@@ -40,8 +48,9 @@ var user = new mongoose.Schema({
   birthdate : { type : Date},
   tab_likes : [String],
   tab_dislikes : [String],
-  tab_tags : [String],
-  tab_histo : [Histo]
+  tab_tags : {type : [Number], default: init_Tags},
+  tab_histo : [Histo],
+  cluster : Number
 });
 
 user.pre('save', function (next) {
