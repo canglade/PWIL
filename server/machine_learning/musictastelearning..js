@@ -149,16 +149,16 @@ function clustering() {
     }
 
     function updateSongs(track, cluster, old_cluster){
-        Songs.findOne({"track_id": track}, function (err, song) {
-          if (err) return next(err);
-          // NE PAS SUPPRIMER BUG SINON
+      Songs.findOne({"track_id": track}, function (err, song) {
+        if (err) return next(err);
+        // NE PAS SUPPRIMER BUG SINON
 
-          var likes = song.tab_like;
-          likes[old_cluster] = likes[old_cluster] - 1;
-          likes[cluster] = likes[cluster] + 1;
+        var likes = song.tab_like;
+        likes[old_cluster] = likes[old_cluster] - 1;
+        likes[cluster] = likes[cluster] + 1;
 
-          updateLikesSong(track,likes);
-        });
+        updateLikesSong(track,likes);
+      });
     }
 
     function updateLikesSong(track, likes){

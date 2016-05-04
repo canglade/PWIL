@@ -98,6 +98,13 @@ angular.module('pwilApp')
           url: 'http://localhost:3000/users/tablikes',
           headers : { 'mail': mail }
         });
+      },
+      getSpotifyPreview: function(track, artist){
+        return  $http({
+          method: 'GET',
+          url: 'http://localhost:3000/songs/preview/',
+          headers : { 'track': track, 'artist': artist }
+        });
       }
     }
   });

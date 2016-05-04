@@ -1,6 +1,14 @@
 var express = require('express');
 var router = express.Router();
 var bodyParser = require('body-parser');
+var SpotifyWebApi = require('spotify-web-api-node');
+
+// credentials are optional
+var spotifyApi = new SpotifyWebApi({
+  clientId : 'fcecfc72172e4cd267473117a17cbd4d',
+  clientSecret : 'a6338157c9bb5ac9c71924cb2940e1a7',
+  redirectUri : 'http://www.example.com/callback'
+});
 
 //var mongoose = require('mongoose');
 var Songs = require('../database/model/songs');
@@ -8,7 +16,7 @@ var Songs = require('../database/model/songs');
 router.get('/', getAllSongs);
 router.get('/rand', getRandSong);
 router.get('/simil', getSimilSong);
-
+router.get('/preview', getSpotifyPreview);
 
 /* GET projects listing. */
 function getAllSongs (req, res, next) {
@@ -39,6 +47,18 @@ function getSimilSong (req, res, next) {
       return next(err);
     res.json(song);
   });
+};
+
+function getSpotifyPreview (req, res, next) {
+  // Search tracks whose artist's name contains 'Kendrick Lamar', and track name contains 'Alright'
+  spotifyApi.searchTracks('track:'+req.headers.track+' artist:'+req.headers.artist)
+    .then(function(data) {
+      res.json(data);
+      //console.log('Search tracks', data.body.tracks.items[0].album.images[1].url);
+      //console.log('Search tracks', data.body.tracks.items[0].preview_url);
+    }, function(err) {
+      console.log('Something went wrong!', err);
+    });
 };
 
 /*

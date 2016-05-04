@@ -1,6 +1,14 @@
 <section>
 
   <div class="col-md-12">
+    <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+    <img src="{{albumFolder}}">
+  </div>
+  <div class="col-md-12">
+    <audio src="{{preview_url}}" ng-show="displayPlayer" autoplay audiplayer controls/>
+  </div>
+
+  <div class="col-md-12">
     <label>Artiste : {{song.artist}}</label><br>
     <label>Titre : {{song.title}}</label><br>
     <label>Type de proposition : {{proposition}}</label><br>
@@ -12,7 +20,6 @@
         </li>
       </ul>
     </div>
-
     <md-button class="md-raised" ng-click="dislike()" style="width: 150px; height: 150px"><img src="images/dislike.png" alt="J'aime pas" style="width: 100%"/></md-button>
     <md-button class="md-raised" ng-click="like()" style="width: 150px; height: 150px"><img src="images/like.png" alt="J'aime" style="width: 100%"/></md-button>
 

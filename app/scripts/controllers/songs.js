@@ -9,7 +9,7 @@
  */
 
 angular.module('pwilApp')
-  .controller('SongsCtrl', function ($rootScope, $scope,$route, serviceDb) {
+  .controller('SongsCtrl', function ($rootScope, $scope,$route, $sce, serviceDb) {
     var increment = 0;
     var laSimilaire = "";
     var styles = [];
@@ -23,19 +23,35 @@ angular.module('pwilApp')
 
     $scope.currentPage = 1;
     $scope.totalPages = 0;
-    $scope.loading = true;
+    $scope.isLoading = true;
 
     $scope.$on('$viewContentLoaded', function () {
       $scope.loadSong();
+
     });
-    //$scope.orderByArtist = "artist";
+
+    $scope.loadPreview = function () {
+      serviceDb.getSpotifyPreview($scope.song.title, $scope.song.artist).success(function (data) {
+        if (data.body.tracks.items.length > 0) {
+          $scope.preview_url = $sce.trustAsResourceUrl(data.body.tracks.items[0].preview_url);
+          $scope.albumFolder = $sce.trustAsResourceUrl(data.body.tracks.items[0].album.images[1].url);
+          $scope.displayPlayer = true;
+        }
+        else {
+          $scope.albumFolder = "images/nosongs.jpg";
+          $scope.preview_url = "";
+          $scope.displayPlayer = false;
+        }
+      });
+    }
 
     $scope.loadSong = function () {
-      $scope.loading = true;
+      $scope.isLoading = true;
       $scope.mesTags = [];
       serviceDb.randSong().success(function (data) {
-        $scope.loading = false;
         $scope.song = data;
+        $scope.loadPreview();
+        $scope.isLoading = false;
         $scope.proposition = "aleatoire";
         increment = 0;
         var tags = data.tags;
@@ -61,8 +77,9 @@ angular.module('pwilApp')
       serviceDb.similSong(laSimilaire).success(function (data) {
         if(data){
           $scope.proposition = "similaire";
-          $scope.loading = false;
           $scope.song = data;
+          $scope.loadPreview();
+          $scope.isLoading = false;
           var tags = data.tags;
           var liste = [];
           if(tags.length >= 10) {
