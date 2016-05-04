@@ -27,7 +27,6 @@ angular.module('pwilApp')
 
     $scope.$on('$viewContentLoaded', function () {
       $scope.loadSong();
-
     });
 
     $scope.loadPreview = function () {
@@ -35,10 +34,11 @@ angular.module('pwilApp')
         if (data.body.tracks.items.length > 0) {
           $scope.preview_url = $sce.trustAsResourceUrl(data.body.tracks.items[0].preview_url);
           $scope.albumFolder = $sce.trustAsResourceUrl(data.body.tracks.items[0].album.images[1].url);
+          $scope.albumName = $sce.trustAsResourceUrl(data.body.tracks.items[0].album.name)
           $scope.displayPlayer = true;
         }
         else {
-          $scope.albumFolder = "images/nosongs.jpg";
+          $scope.albumFolder = "images/nosongs.png";
           $scope.preview_url = "";
           $scope.displayPlayer = false;
         }
@@ -50,23 +50,13 @@ angular.module('pwilApp')
       $scope.mesTags = [];
       serviceDb.randSong().success(function (data) {
         $scope.song = data;
+        $scope.proposition = "aleatoire";
         $scope.loadPreview();
         $scope.isLoading = false;
-        $scope.proposition = "aleatoire";
         increment = 0;
         var tags = data.tags;
-        var liste = [];
-        if(tags.length >= 10) {
-          for (var i = 0; i < 10; i++) {
-            liste.push(tags[i]);
-          }
-        }
-        else
-        {
-          for (var i = 0; i < tags.length; i++) {
-            liste.push(tags[i]);
-          }
-        }
+        var liste = tags.slice(0, 5);
+
         $scope.mesTags = liste;
       });
     };
@@ -76,23 +66,13 @@ angular.module('pwilApp')
       $scope.mesTags = [];
       serviceDb.similSong(laSimilaire).success(function (data) {
         if(data){
-          $scope.proposition = "similaire";
           $scope.song = data;
+          $scope.proposition = "similaire";
           $scope.loadPreview();
           $scope.isLoading = false;
           var tags = data.tags;
-          var liste = [];
-          if(tags.length >= 10) {
-            for (var i = 0; i < 10; i++) {
-              liste.push(tags[i]);
-            }
-          }
-          else
-          {
-            for (var i = 0; i < tags.length; i++) {
-              liste.push(tags[i]);
-            }
-          }
+          var liste = tags.slice(0, 5);
+
           $scope.mesTags = liste;
         }
         else{
@@ -102,15 +82,10 @@ angular.module('pwilApp')
       });
     };
 
-    /*$scope.pageChanged = function(){
-     $scope.loadSong();
-     };*/
-
     $scope.like = function(){
       var song = $scope.song;
       var mail = $scope.userMail;
 
-      /*var data = "{\"track_id\": \"" + song + "\" } ";*/
 
       var data = "{ \"track_id\": " + "\"" + song.track_id + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
@@ -128,7 +103,6 @@ angular.module('pwilApp')
           tabTags.push(song.tags[j][0]);
         }
       }
-
 
       //On parcours les tags pour retrouver les chaines de caractère rap, rock, electro, hiphop...
       for (var i=0 ; i< tabTags.length; i++)
@@ -159,15 +133,9 @@ angular.module('pwilApp')
             }
           }
           if (!exist) {
-            serviceDb.addLike(data).success(function (data) {
-              /*$route.reload();
-               $scope.loadSong();*/
-            });
+            serviceDb.addLike(data).success(function (data) {});
             if (styles.length != 0 )
-            {serviceDb.addTag(dataStyles).success(function (data) {
-              /*$route.reload();
-               $scope.loadSong();*/
-            });
+            {serviceDb.addTag(dataStyles).success(function (data) {});
             }
             styles=[];
           }
@@ -185,10 +153,6 @@ angular.module('pwilApp')
           }
           if (exist) {
             serviceDb.removeSongDislike().success(function () {
-              /*$scope.remove=exist;
-               $scope.idtrack=$scope.song.track_id;*/
-              /*$route.reload();
-               $scope.loadSong();*/
             });
           }
         }
@@ -209,7 +173,6 @@ angular.module('pwilApp')
       var song = $scope.song.track_id;
       var mail = $scope.userMail;
 
-      /*var data = "{\"track_id\": \"" + song + "\" } ";*/
 
       var data = "{ \"track_id\": " + "\"" + song + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
@@ -229,10 +192,7 @@ angular.module('pwilApp')
           $scope.exist= exist;
 
           if (!exist) {
-            serviceDb.addDislike(data).success(function (data) {
-              /*$route.reload();
-               $scope.loadSong();*/
-            });
+            serviceDb.addDislike(data).success(function (data) {});
 
           }
         }
@@ -251,8 +211,6 @@ angular.module('pwilApp')
             serviceDb.removeSongLike().success(function () {
               $scope.removesonglike=exist;
               $scope.idtracksonglike=$scope.song.track_id;
-              /*$route.reload();
-               $scope.loadSong();*/
             });
           }
         }

@@ -1,34 +1,31 @@
-<section>
-
-  <div class="col-md-12">
-    <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
-    <img src="{{albumFolder}}">
-  </div>
-  <div class="col-md-12">
-    <audio src="{{preview_url}}" ng-show="displayPlayer" autoplay audiplayer controls/>
-  </div>
-
-  <div class="col-md-12">
-    <label>Artiste : {{song.artist}}</label><br>
-    <label>Titre : {{song.title}}</label><br>
-    <label>Type de proposition : {{proposition}}</label><br>
-
-    <div class="col-md-12">
-      <ul class="songs">
-        <li ng-repeat="tag in tags">
-          tag : {{tag}}
-        </li>
-      </ul>
+<md-card >
+  <md-card-content>
+    <div class="row">
+      <div class="col-md-4" style="text-align: center;">
+        <button ng-click="dislike()" style="width: 100px; height: 100px; margin-top: 33%;"><img src="images/dislike.png" alt="J'aime pas" style="width: 100%"/></button>
+      </div>
+    <div class="col-md-4" style="">
+          <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+          <img src="{{albumFolder}}">
+          <audio src="{{preview_url}}" ng-show="displayPlayer" audiplayer controls/>
     </div>
-    <md-button class="md-raised" ng-click="dislike()" style="width: 150px; height: 150px"><img src="images/dislike.png" alt="J'aime pas" style="width: 100%"/></md-button>
-    <md-button class="md-raised" ng-click="like()" style="width: 150px; height: 150px"><img src="images/like.png" alt="J'aime" style="width: 100%"/></md-button>
-
-    <div class="col-md-12">
-      <ul class="songs">
-        <li ng-repeat="tag in mesTags">
-          Tag : {{tag[0]}}
-        </li>
-      </ul>
+      <div class="col-md-4" style="text-align: center;">
+        <button ng-click="like()" style="width: 100px; height: 100px; margin-top: 33%;"><img src="images/like.png" alt="J'aime" style="width: 100%"/></button>
+      </div>
     </div>
-  </div>
-</section>
+    <div class="row">
+      <div class="col-md-12"  style="text-align: center;">
+            <strong>Artiste :</strong> {{song.artist}}<br>
+            <strong>Titre :</strong> {{song.title}}<br>
+            <strong>Album :</strong> {{albumName}}<br>
+            <!--<label>Type de proposition : {{proposition}}</label><br>-->
+            <strong>Tags :</strong>
+            <ul class="songs">
+              <li ng-repeat="tag in mesTags">
+                {{tag[0]}}
+              </li>
+            </ul>
+      </div>
+    </div>
+  </md-card-content>
+  </md-card>
