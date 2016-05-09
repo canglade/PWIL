@@ -10,6 +10,7 @@ var ml = require('machine_learning');
 var math = require('mathjs');
 var utilisateurs = [];
 
+
 // function updateModelUser() {
 //   User.find(function(err,users){
 //     if (err)
