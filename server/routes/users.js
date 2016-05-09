@@ -85,7 +85,7 @@ function addLike(req, res, next) {
     // NE PAS SUPPRIMER BUG SINON
     console.log("Mon cluster : " + user.cluster);
     updateUser(user.mail);
-    //updateSong(track,user.cluster);
+    updateSong(track,user.cluster);
     res.json(req.body);
   });
 
@@ -95,16 +95,30 @@ function addLike(req, res, next) {
       // NE PAS SUPPRIMER BUG SINON
     });
   }
+
   //fonction d'update de la chanson
-  /*function updateSong(track, cluster){
-    var query = Songs.update({"track_id": track},{$inc: {}});
-    query.$inc['tab_like.' + cluster] = 1;
-    query.exec( function (err) {
+  function updateSong(track, cluster){
+    Songs.findOne({"track_id": track}, function (err, song) {
       if (err) return next(err);
       // NE PAS SUPPRIMER BUG SINON
-      console.log(track);
+
+      var likes = song.tab_like;
+      likes[cluster] = likes[cluster] + 1;
+
+      console.log("Mon tag :" + likes);
+
+      updateLikesSong(track,likes);
     });
-  }*/
+
+  }
+
+  function updateLikesSong(track, tag){
+    Songs.update({"track_id": track}, {$set: {tab_like: tag}}, function (err) {
+      if (err) return next(err);
+      console.log("Update :" + track + " " +tag);
+      // NE PAS SUPPRIMER BUG SINON
+    });
+  }
 };
 
 function addDislike(req, res, next) {

@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 var _ = require('lodash');
 var bcrypt = require('bcryptjs');
 var User = require('../database/model/user');
+var Songs = require('../database/model/songs');
 var ml = require('machine_learning');
 var math = require('mathjs');
 var utilisateurs = [];
@@ -106,13 +107,67 @@ function clustering() {
   }
   //Fonction de mise à jour
   function updateUser(username, cluster){
-    User.update({username:username}, {$set:{cluster:cluster}}, function (err) {
-      if (err) {
-        console.log("erreur");
-        return next(err);
+
+    User.findOne({"username": username}, function (err, user) {
+      if (err) return next(err);
+      // NE PAS SUPPRIMER BUG SINON
+      if(user.old_cluster == -1){
+        updateClusters(username,cluster);
       }
-      console.log(username + " Cluster : " + cluster);
+      else{
+        if(cluster !== user.old_cluster){
+          //mise à jour des songs
+          console.log("On change de cluster");
+
+          for(var i = 0;i < user.tab_likes.length;i++){
+            updateSongs(user.tab_likes[i], cluster, user.old_cluster);
+          }
+
+          //Puis on met à jour le cluster
+          updateClusters(username,cluster);
+
+        }
+      }
+      console.log("Utilisateur :" + username + " Cluster : " + cluster);
     });
+
+    function updateClusters(username, cluster){
+      User.update({"username": username},{$set: {old_cluster: cluster}}, function (err) {
+        if (err) return next(err);
+        updateNewCluster(username,cluster);
+        // NE PAS SUPPRIMER BUG SINON
+      });
+    }
+
+    function updateNewCluster(username, cluster){
+      User.update({username:username}, {$set:{cluster:cluster}}, function (err) {
+        if (err) {
+          console.log("erreur");
+          return next(err);
+        }
+      });
+    }
+
+    function updateSongs(track, cluster, old_cluster){
+        Songs.findOne({"track_id": track}, function (err, song) {
+          if (err) return next(err);
+          // NE PAS SUPPRIMER BUG SINON
+
+          var likes = song.tab_like;
+          likes[old_cluster] = likes[old_cluster] - 1;
+          likes[cluster] = likes[cluster] + 1;
+
+          updateLikesSong(track,likes);
+        });
+    }
+
+    function updateLikesSong(track, likes){
+      Songs.update({"track_id": track}, {$set: {tab_like: likes}}, function (err) {
+        if (err) return next(err);
+        // NE PAS SUPPRIMER BUG SINON
+      });
+    }
+
   }
 
 };

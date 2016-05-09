@@ -50,7 +50,8 @@ var user = new mongoose.Schema({
   tab_dislikes : [String],
   tab_tags : {type : [Number], default: init_Tags},
   tab_histo : [Histo],
-  cluster : Number
+  cluster : Number,
+  old_cluster: {type : Number, default: -1}
 });
 
 user.pre('save', function (next) {
