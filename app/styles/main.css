@@ -33,8 +33,8 @@ body {
 /* Custom page footer */
 .footer {
   padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
+  color: black;
+  border-top: 1px solid #b3b3b3;
 }
 
 .container-narrow > hr {
@@ -45,6 +45,7 @@ body {
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
+  background-color: white;
 }
 .jumbotron .btn {
   font-size: 21px;
@@ -60,7 +61,7 @@ body {
 }
 
 /* Responsive: Portrait tablets and up */
-@media screen and (min-width: 1000px) {
+@media screen and (min-width: 500px) {
   .container {
     max-width: 1000px;
   }
@@ -252,4 +253,45 @@ button.close {
 
 .connectionbutton {
   margin :  6px 8px 6px 8px;
+}
+
+.centered {
+  left: 50%;
+  /* bring your own prefixes */
+}
+
+.cardcenter {
+  width : 41%;
+  margin-left: 33%;
+}
+
+.navbar-default .navbar-nav > .active > a,
+.navbar-default .navbar-nav > .active > a:hover,
+.navbar-default .navbar-nav > .active > a:focus {
+  color: #08149C;
+  background-color: white;
+  opacity : 0.9;
+}
+
+.navbar-default .navbar-nav > li > a {
+  color: white;
+  text-shadow: 1px 1px black;
+  font-family: 'Cambria', sans-serif;
+  font-size: 17px;
+}
+
+html, body {
+  color: rgba(0, 0, 0, 0.87);
+  background : #f8f8f8;
+}
+
+.navbar-default {
+  background-color: #F7AA72;
+  opacity : 1;
+  border-color : #e7e7e7;
+}
+
+.header, .marketing {
+ background-color: #08149C;
+  background: linear-gradient(to bottom, #08149C, white);
 }

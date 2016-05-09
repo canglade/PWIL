@@ -24,43 +24,27 @@ angular.module('pwilApp')
       year: ''
     };
 
-    $scope.success = function() {
-      var message = '<strong>Well done!</strong> You successfully read this important alert message.';
-      Flash.create('success', message);
-    };
-    $scope.info = function() {
-      var message = '<strong>Heads up!</strong> This alert needs your attention, but it\'s not super important.';
-      Flash.create('info', message);
-    };
-    $scope.warning = function() {
-      var message = '<strong>Warning!</strong> Better check yourself, you\'re not looking too good.';
-      Flash.create('warning', message);
-    };
-    $scope.danger = function() {
-      var message = '<strong>Oh snap!</strong> Change a few things up and try submitting again.';
-      Flash.create('danger', message);
-    };
-
     $scope.signup = function(isValid) {
+
+      var m = parseInt($scope.birthdate.month, 10);
+      var d = parseInt($scope.birthdate.day, 10);
+      var y = parseInt($scope.birthdate.year, 10);
+      var concatBirthdate = new Date(y,m-1,d);
+      if (concatBirthdate.getFullYear() == y && concatBirthdate.getMonth() + 1 == m && concatBirthdate.getDate() == d) {
+        concatBirthdate.setDate(concatBirthdate.getDate()+1);
+        $scope.user.birthdate = concatBirthdate;
+      } else {
+        console.log('Invalid date');
+        isValid = false;
+      }
 
       if (isValid) {
 
-        var concatBirthdate = new Date($scope.birthdate.year, $scope.birthdate.month, $scope.birthdate.day);
-        concatBirthdate.setDate(concatBirthdate.getDate() - 30);
-        $scope.user.birthdate = concatBirthdate;
-
         AuthService.register($scope.user).then(function (msg) {
           $state.go('outside.login');
-          /* var alertPopup = $ionicPopup.alert({
-           title: 'Register success!',
-           template: msg
-           });*/
-          $scope.registerResult = "Register success";
+          Flash.create('success', "Utilisateur crée avec succès !");
         }, function (errMsg) {
-          /* var alertPopup = $ionicPopup.alert({
-           title: 'Register failed!',
-           template: errMsg
-           });*/
+
           $scope.registerResult = errMsg;
           var message = '<strong>Attention!</strong> '+errMsg+'.';
           Flash.create('danger', message);
@@ -71,9 +55,6 @@ angular.module('pwilApp')
         var message = '<strong>Attention!</strong> Certains champs sont invalides.';
         Flash.create('danger', message);
       }
-
-
-
     };
 
     $scope.onArrival = function() {
@@ -83,5 +64,4 @@ angular.module('pwilApp')
     };
 
     $scope.onArrival();
-
   });

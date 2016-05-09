@@ -1,40 +1,45 @@
-<section>
+<md-card class="cardcenter">
+  <md-card-title>
 
-  <md-card >
-    <md-card-title>
+    <md-card-title-text>
+      <span class="md-headline">Connexion</span>
+    </md-card-title-text>
 
-      <md-card-title-text>
-        <span class="md-headline">Connexion</span>
-      </md-card-title-text>
+  </md-card-title>
 
-    </md-card-title>
+  <md-card-content>
 
-    <md-card-content>
+    <form class="form-horizontal" >
+      <!-- Username -->
+      <div>
+        <md-input-container class="md-block">
+          <label>E-mail</label>
+          <input ng-model="user.mail" enter-key-press="login()">
+        </md-input-container>
+      </div>
+      <!-- Name -->
+      <div>
+        <md-input-container class="md-block">
+          <label>Mot de passe</label>
+          <input type="password" ng-model="user.password" enter-key-press="login()">
+        </md-input-container>
+      </div>
 
-      <form class="form-horizontal" >
-        <!-- Username -->
-        <div>
-          <md-input-container class="md-block">
-            <label>E-mail</label>
-            <input ng-model="user.mail" enter-key-press="login()">
-          </md-input-container>
-        </div>
-        <!-- Name -->
-        <div>
-          <md-input-container class="md-block">
-            <label>Mot de passe</label>
-            <input type="password" ng-model="user.password" enter-key-press="login()">
-          </md-input-container>
-        </div>
-
-        <md-card-actions layout="row" layout-align="end center">
-          <md-button class="md-raised md-primary" ng-click="login()">Se connecter</md-button>
+      <md-card-actions>
+        <div class="row">
+          <div class="col-xs-5">
+            <md-button class="md-raised md-primary" ng-click="login()">Se connecter</md-button>
+          </div>
+          <div class="col-xs-2">
+          </div>
+          <div class="col-xs-5">
           <md-button class="md-raised md-primary" ng-href="#/register">S'enregistrer</md-button>
-        </md-card-actions>
-        <flash-message duration="5000"></flash-message>
+          </div>
+        </div>
+      </md-card-actions>
 
-      </form>
+    </form>
+    <flash-message duration="5000"></flash-message>
 
-    </md-card-content>
-  </md-card>
-</section>
+  </md-card-content>
+</md-card>

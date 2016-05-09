@@ -1,8 +1,15 @@
-<div class="jumbotron">
-  <h1>Bienvenue sur PWIL</h1>
-  <p class="lead">
-    <img src="images/pwillogo.png" alt="Bienvenue sur PWIL"><br>
-    Always a pleasure to predict your taste !
-  </p>
-  <p><a class="btn btn-lg btn-success" ng-show="!isAuthenticated" ng-href="#/connection">Commencer <span class="glyphicon glyphicon-ok"></span></a></p>
-</div>
+<md-card >
+  <md-card-content>
+    <div class="jumbotron">
+      <h1>Bienvenue sur PWIL</h1>
+      <p class="lead">
+        <img src="images/pwillogo.png" alt="Bienvenue sur PWIL"><br>
+        Always a pleasure to predict your taste !
+      </p>
+      <p>
+        <a class="btn btn-lg btn-success" ng-show="!isAuthenticated" ng-href="#/connection">Commencer <span class="glyphicon glyphicon-ok"></span></a>
+        <a class="btn btn-lg btn-success" ng-show="isAuthenticated" ng-href="#/songs">Commencer <span class="glyphicon glyphicon-ok"></span></a>
+      </p>
+    </div>
+  </md-card-content>
+</md-card>
