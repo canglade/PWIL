@@ -4,6 +4,7 @@ var bodyParser = require('body-parser');
 var _ = require('lodash');
 var bcrypt = require('bcryptjs');
 var User = require('../database/model/user');
+var Songs = require('../database/model/songs');
 
 router.get('/', getAllUsers);
 router.post('/', createUser);
@@ -70,6 +71,7 @@ function songDislikeExist(req, res, next) {
   });
 };
 
+//TODO : Update l'utilisateur et la chanson au moment du like
 //fonction serveur requete, resultat de la req et l'étape suivante
 function addLike(req, res, next) {
   console.log("chanson : " + req.body.track_id);
@@ -77,12 +79,32 @@ function addLike(req, res, next) {
   var track = req.body.track_id;
   var mail = req.body.userMail;
 
-  User.update({"mail": mail}, {$push: {tab_likes: track}}, function (err) {
+
+  User.findOne({"mail": mail}, function (err, user) {
     if (err) return next(err);
     // NE PAS SUPPRIMER BUG SINON
+    console.log("Mon cluster : " + user.cluster);
+    updateUser(user.mail);
+    //updateSong(track,user.cluster);
     res.json(req.body);
   });
 
+  function updateUser(mail){
+    User.update({"mail": mail}, {$push: {tab_likes: track}}, function (err) {
+      if (err) return next(err);
+      // NE PAS SUPPRIMER BUG SINON
+    });
+  }
+  //fonction d'update de la chanson
+  /*function updateSong(track, cluster){
+    var query = Songs.update({"track_id": track},{$inc: {}});
+    query.$inc['tab_like.' + cluster] = 1;
+    query.exec( function (err) {
+      if (err) return next(err);
+      // NE PAS SUPPRIMER BUG SINON
+      console.log(track);
+    });
+  }*/
 };
 
 function addDislike(req, res, next) {
