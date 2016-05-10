@@ -1,4 +1,4 @@
-set MONGO_PATH="E:\Mes documents\MIAGE\M2\S10\Project 1\MongoDB"
+set MONGO_PATH="C:\Users\thiba\Desktop\Projet1\Mongo"
 
 echo *** LAUNCHING MONGO DB ***
 

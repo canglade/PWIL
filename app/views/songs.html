@@ -4,28 +4,30 @@
       <div class="col-md-4" style="text-align: center;">
         <button ng-click="dislike()" style="width: 100px; height: 100px; margin-top: 33%;"><img src="images/dislike.png" alt="J'aime pas" style="width: 100%"/></button>
       </div>
-    <div class="col-md-4" style="">
-          <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
-          <img src="{{albumFolder}}">
-          <audio src="{{preview_url}}" ng-show="displayPlayer" autoplay audiplayer controls/>
-    </div>
+      <div class="col-md-4" style="">
+        <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+        <img src="{{albumFolder}}">
+        <audio src="{{preview_url}}" ng-show="displayPlayer" autoplay audiplayer controls/>
+      </div>
       <div class="col-md-4" style="text-align: center;">
         <button ng-click="like()" style="width: 100px; height: 100px; margin-top: 33%;"><img src="images/like.png" alt="J'aime" style="width: 100%"/></button>
       </div>
     </div>
     <div class="row">
       <div class="col-md-12"  style="text-align: center;">
-            <strong>Artiste :</strong> {{song.artist}}<br>
-            <strong>Titre :</strong> {{song.title}}<br>
-            <strong>Album :</strong> {{albumName}}<br>
-            <!--<label>Type de proposition : {{proposition}}</label><br>-->
-            <strong>Tags :</strong>
-            <ul class="songs">
-              <li ng-repeat="tag in mesTags">
-                {{tag[0]}}
-              </li>
-            </ul>
+        <strong>Artiste :</strong> {{song.artist}}<br>
+        <strong>Titre :</strong> {{song.title}}<br>
+        <strong>Album :</strong> {{albumName}}<br>
+        <!--<label>Type de proposition : {{proposition}}</label><br>-->
+        <strong>Tags :</strong>
+        <ul class="songs">
+          <li ng-repeat="tag in mesTags">
+            {{tag[0]}}
+          </li>
+        </ul>
       </div>
     </div>
+    <md-button class="md-raised" ng-click="nextsong()" style="width: 150px; height: 150px">NEXT</md-button>
+    <md-button class="md-raised" ng-click="diversSong()" style="width: 150px; height: 150px">DIVERSIFICACHION</md-button>
   </md-card-content>
-  </md-card>
+</md-card>

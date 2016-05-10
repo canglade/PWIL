@@ -14,6 +14,9 @@ var spotifyApi = new SpotifyWebApi({
 var Songs = require('../database/model/songs');
 
 router.get('/', getAllSongs);
+router.get('/diversSong', diversSong);
+router.get('/nextsong', nextsong);
+router.get('/countsong', countsong);
 router.get('/rand', getRandSong);
 router.get('/simil', getSimilSong);
 router.get('/preview', getSpotifyPreview);
@@ -61,41 +64,52 @@ function getSpotifyPreview (req, res, next) {
     });
 };
 
-/*
-/* POST /projects
-router.post('/', function(req, res, next) {
-  Project.create(req.body, function (err) {
-    if (err)
-      return next(err);
-    res.json(req.body);
-  });
-});
+function countsong (req, res, next) {
+  //cherche une musique du meme tag que la précédente (aprés avoir cliquer sur le bouton next)
+  //console.log(req.headers.numcluster);
+  var numcluster = parseInt(req.headers.numcluster);
+  var queryCount = Songs.find({"tag":numcluster}).count();
 
-/* GET /projects/id
-router.get('/:id', function(req, res, next) {
-  Project.findById(req.params.id, function (err, projects) {
+  queryCount.exec(function (err, songs) {
     if (err)
       return next(err);
-    res.json(projects);
+    res.json(songs);
   });
-});
+};
 
-/* PUT /projects/:id
-router.put('/:id', function(req, res, next) {
-  Project.findByIdAndUpdate(req.params.id, req.body, function (err, projects) {
-    if (err)
-      return next(err);
-    res.json(projects);
-  });
-});
+function nextsong (req, res, next) {
+  //cherche une musique du meme tag que la précédente (aprés avoir cliquer sur le bouton next)
+  var numcluster = parseInt(req.headers.numcluster);
+  var query = Songs.find({"tag":numcluster});
 
-/* DELETE /projects/:id
-router.delete('/:id', function(req, res, next) {
-  Project.findByIdAndRemove(req.params.id, req.body, function (err, post) {
+  console.log(req.headers.nbsong);
+  var nbsong = parseInt(req.headers.nbsong);
+  query.limit(1).skip(Math.floor(Math.random()*nbsong));
+  query.select({title:1, artist:1, tags : 1, tag : 1});
+
+  query.exec (function(err,songs) {
     if (err)
       return next(err);
-    res.json(post);
+    res.json(songs);
   });
-});*/
+
+};
+
+function diversSong (req, res, next) {
+  //cherche une musique du meme tag que la précédente (aprés avoir cliquer sur le bouton next)
+  var numcluster = parseInt(req.headers.numcluster);
+  var query = Songs.find({"tag":{$ne:numcluster}});
+
+  console.log(req.headers.nbsong);
+  var nbsong = parseInt(req.headers.nbsong);
+  query.limit(1).skip(Math.floor(Math.random()*nbsong));
+  query.select({title:1, artist:1, tags : 1, tag : 1});
+
+  query.exec (function(err,songs) {
+    if (err)
+      return next(err);
+    res.json(songs);
+  });
+};
 
 module.exports = router;

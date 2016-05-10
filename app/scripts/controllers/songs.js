@@ -61,6 +61,39 @@ angular.module('pwilApp')
       });
     };
 
+
+    $scope.nextsong = function () {
+      var mail = $scope.userMail;
+      serviceDb.getcluster(mail).success(function (data)
+      {
+        var cluster = data;
+        console.log(cluster);
+          serviceDb.countsong(cluster).success(function(nbSong)
+          {
+            serviceDb.nextsong(cluster,nbSong).success(function (data1)
+            {
+              $scope.song = data1[0];
+              console.log(data1);
+              var tags = data1[0].tags;
+              var liste = [];
+              if(tags.length >= 10) {
+                for (var i = 0; i < 10; i++) {
+                  liste.push(tags[i]);
+                }
+              }
+              else
+              {
+                for (var i = 0; i < tags.length; i++) {
+                  liste.push(tags[i]);
+                }
+              }
+              $scope.mesTags = liste;
+            });
+          }
+          );
+      });
+    };
+
     $scope.loadSimil = function () {
       $scope.loading = true;
       $scope.mesTags = [];
@@ -169,6 +202,38 @@ angular.module('pwilApp')
       }
     };
 
+    $scope.diversSong = function () {
+      var mail = $scope.userMail;
+      serviceDb.getcluster(mail).success(function (data)
+      {
+        var cluster = data;
+        console.log(cluster);
+        serviceDb.countsong(cluster).success(function(nbSong)
+          {
+            serviceDb.diversSong(cluster,nbSong).success(function (data1)
+            {
+              $scope.song = data1[0];
+              console.log(data1);
+              var tags = data1[0].tags;
+              var liste = [];
+              if(tags.length >= 10) {
+                for (var i = 0; i < 10; i++) {
+                  liste.push(tags[i]);
+                }
+              }
+              else
+              {
+                for (var i = 0; i < tags.length; i++) {
+                  liste.push(tags[i]);
+                }
+              }
+              $scope.mesTags = liste;
+            });
+          }
+        );
+      });
+    };
+    
     $scope.dislike = function(){
       var song = $scope.song.track_id;
       var mail = $scope.userMail;
@@ -215,7 +280,7 @@ angular.module('pwilApp')
           }
         }
       });
-      $scope.loadSong();
+      $scope.nextsong();
     };
 
     $scope.AuthentificatedRedirection();

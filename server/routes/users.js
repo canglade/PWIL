@@ -7,6 +7,7 @@ var User = require('../database/model/user');
 var Songs = require('../database/model/songs');
 
 router.get('/', getAllUsers);
+router.get('/getcluster', getcluster);
 router.post('/', createUser);
 router.put('/like', addLike);
 router.put('/addTag', addTag);
@@ -161,7 +162,7 @@ function addTag(req, res, next) {
     for(var i = 0;i < tags.length;i++){
       if(tags[i] == 1){rock++}else if(tags[i]==2){electro++}else{rap++};
     }
-      updateUser([rock,electro,rap]);
+    updateUser([rock,electro,rap]);
   });
 
   function updateUser(tags){
@@ -196,21 +197,13 @@ function removeSongFromTablike(req, res, next) {
     res.json(req.body);
   });
 };
-/*function insertTest(req, res, next) {
-  User.insert(req.body, function (err) {
-    if (err)
-      return next(err);
-    res.json(req.body);
+
+function getcluster(req, res, next) {
+  console.log("mail" + req.headers.mail);
+  User.findOne({"mail" : req.headers.mail}, function(err, user){
+    if (err) return next(err);
+    res.json(user.cluster);
   });
 };
-
-function getUserByMail(req, res, next) {
-  var query = Users.findOne({'mail' : req.params.mail});
-  query.exec (function(err,users) {
-    if (err)
-      return next(err);
-    res.json(users);
-  });
-};*/
 
 module.exports = router;

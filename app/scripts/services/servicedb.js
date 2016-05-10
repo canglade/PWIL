@@ -105,6 +105,34 @@ angular.module('pwilApp')
           url: 'http://localhost:3000/songs/preview/',
           headers : { 'track': track, 'artist': artist }
         });
+      },
+      nextsong: function(numcluster,nbsong){
+        return  $http({
+          method: 'GET',
+          url: 'http://localhost:3000/songs/nextsong',
+          headers : { 'numcluster': numcluster , 'nbsong': nbsong}
+        });
+      },
+      getcluster: function(mail){
+        return  $http({
+          method: 'GET',
+          url: 'http://localhost:3000/users/getcluster',
+          headers : { 'mail': mail }
+        });
+      },
+      countsong: function(numcluster){
+        return  $http({
+          method: 'GET',
+          url: 'http://localhost:3000/songs/countsong',
+          headers : { 'numcluster': numcluster }
+        });
+      },
+      diversSong: function(numcluster,nbsong) {
+        return $http({
+          method: 'GET',
+          url: 'http://localhost:3000/songs/diversSong',
+          headers: {'numcluster': numcluster, 'nbsong': nbsong}
+        });
       }
     }
   });

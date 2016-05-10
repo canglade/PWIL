@@ -154,6 +154,7 @@ function clustering() {
         // NE PAS SUPPRIMER BUG SINON
 
         var likes = song.tab_like;
+        console.log("CACAAAA : "+likes);
         likes[old_cluster] = likes[old_cluster] - 1;
         likes[cluster] = likes[cluster] + 1;
 
