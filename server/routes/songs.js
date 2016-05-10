@@ -34,7 +34,7 @@ function getAllSongs (req, res, next) {
     res.json(songs);
   });
 };
-
+/* Get Random Song */
 function getRandSong (req, res, next) {
   Songs.findOneRandom(function(err,song){
     if (err)
@@ -43,6 +43,7 @@ function getRandSong (req, res, next) {
   });
 };
 
+/* Get Similar Song */
 function getSimilSong (req, res, next) {
   //console.log("Ma similaire : " + req.headers.track_id);
   Songs.findOne({"track_id": req.headers.track_id}, function (err, song) {
@@ -64,6 +65,7 @@ function getSpotifyPreview (req, res, next) {
     });
 };
 
+/* Count the number of song according to the number of cluster */
 function countsong (req, res, next) {
   //cherche une musique du meme tag que la précédente (aprés avoir cliquer sur le bouton next)
   //console.log(req.headers.numcluster);
@@ -77,6 +79,7 @@ function countsong (req, res, next) {
   });
 };
 
+/* Play the Next song similar to the previous one , same style */
 function nextsong (req, res, next) {
   //cherche une musique du meme tag que la précédente (aprés avoir cliquer sur le bouton next)
   var numcluster = parseInt(req.headers.numcluster);
@@ -95,6 +98,7 @@ function nextsong (req, res, next) {
 
 };
 
+/* Play a different style song */
 function diversSong (req, res, next) {
   //cherche une musique du meme tag que la précédente (aprés avoir cliquer sur le bouton next)
   var numcluster = parseInt(req.headers.numcluster);
