@@ -9,32 +9,7 @@ var Songs = require('../database/model/songs');
 var ml = require('machine_learning');
 var math = require('mathjs');
 var utilisateurs = [];
-
-
-// function updateModelUser() {
-//   User.find(function(err,users){
-//     if (err)
-//       return next(err);
-//     if(users[0].tab_tags.length != nbCluster){
-//       for(var i = 0;i<users.length;i++){
-//         updateTab(users[i], users[i].tab_tags);
-//       }
-//     }
-//   });
-//
-//   function updateTab(user, tags){
-//     var oldSize = tags.length;
-//     var newSize = nbCluster - oldSize;
-//     for(var i = 0; i<newSize;i++){
-//       tags.push(0);
-//     }
-//     User.update({mail:user.mail},{$set: {tab_tags:tags}}, function (err) {
-//       if (err) return next(err);
-//     });
-//   }
-// };
-//
-// updateModelUser();
+var nbStyles = 3;
 
 //fonction de clustering
 function clustering() {
@@ -68,26 +43,26 @@ function clustering() {
     var tableauMoyennes = [];
     var tableauStd = [];
 
-    for(var i = 0;i<nbCluster;i++) {
+    for(var i = 0;i<nbStyles;i++) {
       tableauValeurs.push([]);
       tableauMoyennes.push(0);
       tableauStd.push(0);
     }
 
     //initialisation des valeurs
-    for(var j = 0;j<nbCluster;j++){
+    for(var j = 0;j<nbStyles;j++){
       for(var i = 0; i<utilisateurs.length; i++) {
         tableauValeurs[j].push(utilisateurs[i][j]);
       }
     }
 
-    for(var i = 0;i<nbCluster;i++){
+    for(var i = 0;i<nbStyles;i++){
       tableauMoyennes[i] = math.mean(tableauValeurs[i]);
       tableauStd[i] = math.std(tableauValeurs[i]);
     }
 
     for(var i = 0; i< utilisateurs.length;i++) {
-      for(var j = 0;j<nbCluster;j++){
+      for(var j = 0;j<nbStyles;j++){
         utilisateurs[i][j] = ((utilisateurs[i][j] - tableauMoyennes[j]) / tableauStd[j]);
       }
       console.log("Utilisateur " + i + " : " + utilisateurs[i]);
@@ -96,7 +71,7 @@ function clustering() {
     //Appel du Kmeans
     var result = ml.kmeans.cluster({
       data : utilisateurs,
-      k : 3, // Nombre de Clusters
+      k : nbCluster, // Nombre de Clusters
       epochs: 500, // Limite du nombre de boucle
       init_using_data : true, // Les données  initiales des clusters sont prisent aléatoirement si True
       distance : {type : "pearson"}
@@ -111,7 +86,6 @@ function clustering() {
 
     User.findOne({"username": username}, function (err, user) {
       if (err) return next(err);
-      // NE PAS SUPPRIMER BUG SINON
       if(user.old_cluster == -1){
         updateClusters(username,cluster);
       }
@@ -155,8 +129,16 @@ function clustering() {
         // NE PAS SUPPRIMER BUG SINON
 
         var likes = song.tab_like;
+        if(likes.length !== nbCluster){
+          var newSize = nbCluster-likes.length;
+          for(var i = 0;i<newSize;i++){
+            likes.push(0);
+          }
+        }
+
         likes[old_cluster] = likes[old_cluster] - 1;
         likes[cluster] = likes[cluster] + 1;
+        console.log("modif de la chanson :" + track);
 
         updateLikesSong(track,likes);
       });
@@ -168,10 +150,9 @@ function clustering() {
         // NE PAS SUPPRIMER BUG SINON
       });
     }
-
   }
-
 };
 
 clustering();
+
 //module.exports = result;

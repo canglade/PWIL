@@ -31,13 +31,6 @@ var Histo = new mongoose.Schema({
  }
  });*/
 
-//initialisation du tableau de tags à la création d'un nouvel utilisateur (en fonction du nb Clusters
-var init_Tags = [];
-
-for(var i = 0;i<nbCluster;i++){
-  init_Tags.push(0);
-}
-
 var user = new mongoose.Schema({
   id : String,
   firstname : { type : String, match: /^[a-zA-Z0-9-_]+$/ },
@@ -48,7 +41,7 @@ var user = new mongoose.Schema({
   birthdate : { type : Date, required: true},
   tab_likes : [String],
   tab_dislikes : [String],
-  tab_tags : {type : [Number], default: init_Tags},
+  tab_tags : {type : [Number], default: [0,0,0]},
   tab_histo : [Histo],
   cluster : Number,
   old_cluster: {type : Number, default: -1}

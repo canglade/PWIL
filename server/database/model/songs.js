@@ -12,12 +12,6 @@ var Similaires = new mongoose.Schema({
   poids : {type:Number}
 });
 
-var init_Like = [];
-
-for(var i = 0;i<nbCluster;i++){
-  init_Like.push(0);
-}
-
 // Création du schéma pour les musiques
 var songs = new mongoose.Schema({
   id : String,
@@ -27,7 +21,8 @@ var songs = new mongoose.Schema({
   tags : [Tags],
   track_id : { type : String, match: /^[a-zA-Z0-9-_]+$/ },
   title : { type : String, match: /^[a-zA-Z0-9-_]+$/ },
-  tab_like : {type : [Number], default: init_Like},
+  tab_like : {type : [Number], default: [0,0,0]},
+  tag : [Number],
 });
 
 songs.plugin(random);

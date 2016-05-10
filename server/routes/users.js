@@ -5,6 +5,7 @@ var _ = require('lodash');
 var bcrypt = require('bcryptjs');
 var User = require('../database/model/user');
 var Songs = require('../database/model/songs');
+var nbCluster = require('../config/machineLearning');
 
 router.get('/', getAllUsers);
 router.get('/getcluster', getcluster);
@@ -84,14 +85,12 @@ function isUserMailFree(req, res, next) {
   });
 };
 
-//TODO : Update l'utilisateur et la chanson au moment du like
 //fonction serveur requete, resultat de la req et l'étape suivante
 function addLike(req, res, next) {
   console.log("chanson : " + req.body.track_id);
   console.log("mail : " + req.body.userMail);
   var track = req.body.track_id;
   var mail = req.body.userMail;
-
 
   User.findOne({"mail": mail}, function (err, user) {
     if (err) return next(err);
@@ -116,11 +115,18 @@ function addLike(req, res, next) {
       // NE PAS SUPPRIMER BUG SINON
 
       var likes = song.tab_like;
+      if(likes.length !== nbCluster){
+        var newSize = nbCluster-likes.length;
+        for(var i = 0;i<newSize;i++){
+          likes.push(0);
+        }
+      }
       likes[cluster] = likes[cluster] + 1;
 
       console.log("Mon tag :" + likes);
 
       updateLikesSong(track,likes);
+      updateClusterSong(track,likes);
     });
 
   }
@@ -132,6 +138,32 @@ function addLike(req, res, next) {
       // NE PAS SUPPRIMER BUG SINON
     });
   }
+
+  function updateClusterSong(track, likes) {
+    var somme = 0;
+    var seuil = 100/nbCluster;
+    seuil = Math.trunc(seuil);
+    console.log("seuil :" + seuil);
+    var choix = [];
+    for(var i =0;i<likes.length;i++){
+      somme = somme + likes[i];
+    }
+
+    if(somme > 100){
+      console.log("Track : " + track + " Likes : " + likes);
+      for(var i = 0;i<likes.length;i++){
+        var pourcentage = (likes[i]/somme)*100;
+        pourcentage = Math.trunc(pourcentage);
+        console.log(pourcentage);
+        if(pourcentage>=seuil){choix.push(i);}
+      }
+      Songs.update({"track_id": track}, {$set: {tag: choix}}, function (err) {
+        if (err) return next(err);
+        // NE PAS SUPPRIMER BUG SINON
+      });
+    }
+  }
+
 };
 
 function addDislike(req, res, next) {
