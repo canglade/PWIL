@@ -61,18 +61,18 @@ angular.module('pwilApp')
       });
     };
 
-
     $scope.nextsong = function () {
       var mail = $scope.userMail;
       serviceDb.getcluster(mail).success(function (data)
       {
         var cluster = data;
         console.log(cluster);
-          serviceDb.countsong(cluster).success(function(nbSong)
+        serviceDb.countsong(cluster).success(function(nbSong)
           {
             serviceDb.nextsong(cluster,nbSong).success(function (data1)
             {
               $scope.song = data1[0];
+              $scope.loadPreview();
               console.log(data1);
               var tags = data1[0].tags;
               var liste = [];
@@ -90,7 +90,7 @@ angular.module('pwilApp')
               $scope.mesTags = liste;
             });
           }
-          );
+        );
       });
     };
 
@@ -213,6 +213,7 @@ angular.module('pwilApp')
             serviceDb.diversSong(cluster,nbSong).success(function (data1)
             {
               $scope.song = data1[0];
+              $scope.loadPreview();
               console.log(data1);
               var tags = data1[0].tags;
               var liste = [];
@@ -233,7 +234,7 @@ angular.module('pwilApp')
         );
       });
     };
-    
+
     $scope.dislike = function(){
       var song = $scope.song.track_id;
       var mail = $scope.userMail;
@@ -280,7 +281,7 @@ angular.module('pwilApp')
           }
         }
       });
-      $scope.nextsong();
+      $scope.loadSong();
     };
 
     $scope.AuthentificatedRedirection();
