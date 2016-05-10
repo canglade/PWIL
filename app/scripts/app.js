@@ -29,10 +29,10 @@ angular
         controller: 'AboutCtrl',
         controllerAs: 'about',
       })
-      .when('/songs', {
-        templateUrl: 'views/songs.html',
-        controller: 'SongsCtrl',
-        controllerAs: 'songs',
+      .when('/account/initialisation', {
+        templateUrl: 'views/account/initialisation.html',
+        controller: 'AccountInitialisationCtrl',
+        controllerAs: 'accountInitialisation',
       })
       .when('/connection', {
         templateUrl: 'views/connection.html',
@@ -49,15 +49,20 @@ angular
         controller: 'RegisterCtrl',
         controllerAs: 'register'
       })
-      .when('/account', {
-        templateUrl: 'views/account.html',
-        controller: 'AccountCtrl',
-        controllerAs: 'account'
+      .when('/account/informations', {
+        templateUrl: 'views/account/informations.html',
+        controller: 'AccountInformationsCtrl',
+        controllerAs: 'accountInformations'
       })
       .when('/contact', {
         templateUrl: 'views/contact.html',
         controller: 'ContactCtrl',
         controllerAs: 'contact'
+      })
+      .when('/radio', {
+        templateUrl: 'views/radio.html',
+        controller: 'RadioCtrl',
+        controllerAs: 'radio'
       })
       .otherwise({
         redirectTo: '/'
@@ -79,10 +84,19 @@ angular
         templateUrl: 'views/register.html',
         controller: 'RegisterCtrl'
       })
-      .state('inside', {
-        url: 'account',
-        templateUrl: 'views/account.html',
-        controller: 'AccountCtrl'
+      .state('account', {
+        url: '',
+        abstract: true
+      })
+      .state('account.initialisation', {
+        url: 'account/initialisation',
+        templateUrl: 'views/account/initialisation.html',
+        controller: 'AccountInitialisationCtrl'
+      })
+      .state('account.informations', {
+        url: 'account/informations',
+        templateUrl: 'views/account/informations.html',
+        controller: 'AccountInformationsCtrl'
       });
 
   })

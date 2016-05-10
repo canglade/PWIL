@@ -12,12 +12,14 @@ var utilisateurs = [];
 var nbStyles = 3;
 
 //fonction de clustering
-function clustering() {
+var clustering = function () {
+
   var query = User.find(null);
 // on récupère tous les utilisateurs
   query.exec(function (err, users) {
     if (err) { throw err; }
     //Pour chacun, on récupère ses tags
+    utilisateurs = [];
     for (var i = 0, l = users.length; i < l; i++) {
       //var tags = [];
       utilisateurs.push(users[i].tab_tags);
@@ -27,10 +29,10 @@ function clustering() {
     //on appelle l'algo de ML
     var clusters = machineLearning();
     //On met à jour les utilisateurs dans la base
-    for(var i = 0; i<clusters.length;i++){
+     for(var i = 0; i<clusters.length;i++){
       for(var j = 0; j<clusters[i].length;j++){
         var indice = clusters[i][j];
-        updateUser(users[indice].username,i);
+        updateUser(users[indice].mail,i);
       }
     }
   });
@@ -82,12 +84,12 @@ function clustering() {
     return result.clusters;
   }
   //Fonction de mise à jour
-  function updateUser(username, cluster){
+  function updateUser(mail, cluster){
 
-    User.findOne({"username": username}, function (err, user) {
+    User.findOne({"mail": mail}, function (err, user) {
       if (err) return next(err);
       if(user.old_cluster == -1){
-        updateClusters(username,cluster);
+        updateClusters(mail,cluster);
       }
       else{
         if(cluster !== user.old_cluster){
@@ -99,23 +101,23 @@ function clustering() {
           }
 
           //Puis on met à jour le cluster
-          updateClusters(username,cluster);
+          updateClusters(mail,cluster);
 
         }
       }
-      console.log("Utilisateur :" + username + " Cluster : " + cluster);
+      console.log("Utilisateur :" + mail + " Cluster : " + cluster);
     });
 
-    function updateClusters(username, cluster){
-      User.update({"username": username},{$set: {old_cluster: cluster}}, function (err) {
+    function updateClusters(mail, cluster){
+      User.update({"mail": mail},{$set: {old_cluster: cluster}}, function (err) {
         if (err) return next(err);
-        updateNewCluster(username,cluster);
+        updateNewCluster(mail,cluster);
         // NE PAS SUPPRIMER BUG SINON
       });
     }
 
-    function updateNewCluster(username, cluster){
-      User.update({username:username}, {$set:{cluster:cluster}}, function (err) {
+    function updateNewCluster(mail, cluster){
+      User.update({"mail":mail}, {$set:{cluster:cluster}}, function (err) {
         if (err) {
           console.log("erreur");
           return next(err);
@@ -153,6 +155,5 @@ function clustering() {
   }
 };
 
-clustering();
+exports.clustering = clustering;
 
-//module.exports = result;

@@ -4,11 +4,11 @@
  * @ngdoc function
  * @name pwilApp.controller:AccountCtrl
  * @description
- * # AccountCtrl
+ * # AccountInformationsCtrl
  * Controller of the pwilApp
  */
 angular.module('pwilApp')
-  .controller('AccountCtrl', function ($rootScope, $scope, AuthService, API_ENDPOINT, $http, $state) {
+  .controller('AccountInformationsCtrl', function ($rootScope, $scope, AuthService, API_ENDPOINT, $http, $state) {
     $rootScope.activeHome = "";
     $rootScope.activeSongs = "";
     $rootScope.activeAccount = "active";

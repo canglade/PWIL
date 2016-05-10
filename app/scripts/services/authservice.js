@@ -13,6 +13,7 @@ angular.module('pwilApp')
     var isAuthenticated = false;
     var mail ='';
     var authToken;
+    var old_cluster='';
 
     function loadUserCredentials() {
       var token = window.localStorage.getItem(LOCAL_TOKEN_KEY);
@@ -23,7 +24,7 @@ angular.module('pwilApp')
 
     function storeUserCredentials(token,mail) {
       window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
-      window.localStorage.setItem('USER_MAIL', mail);
+      window.localStorage.setItem('USER_MAIL', mail);   
       useCredentials(token);
     }
 
@@ -58,7 +59,8 @@ angular.module('pwilApp')
     var login = function(user) {
       return $q(function(resolve, reject) {
         $http.post(API_ENDPOINT.url + '/authenticate', user).then(function(result) {
-          if (result.data.success) {
+          if (result.data.success) {           
+            old_cluster = result.data.old_cluster;
             storeUserCredentials(result.data.token, user.mail);
             resolve(result.data.msg);
           } else {
@@ -79,7 +81,8 @@ angular.module('pwilApp')
       register: register,
       logout: logout,
       mail: function() {return mail;},
-      isAuthenticated: function() {return isAuthenticated;}
+      isAuthenticated: function() {return isAuthenticated;},
+      old_cluster: function() {return old_cluster;}
     };
   })
 

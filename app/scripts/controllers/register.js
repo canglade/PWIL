@@ -59,7 +59,7 @@ angular.module('pwilApp')
 
     $scope.onArrival = function() {
       if (AuthService.isAuthenticated()) {
-        $state.go('inside');
+        $state.go('account.initialisation');
       }
     };
 

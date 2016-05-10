@@ -28,8 +28,11 @@ angular.module('pwilApp')
           $rootScope.isAuthenticated = true;
         else
           $rootScope.isAuthenticated = false;
-
-        $state.go('inside');
+        
+        if (AuthService.old_cluster() == -1) 
+          $state.go('account.initialisation');           
+        else
+          $state.go('account.informations');
       }, function(errMsg) {
         /*var alertPopup = $ionicPopup.alert({
           title: 'Login failed!',

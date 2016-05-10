@@ -44,8 +44,8 @@
 
             <ul class="nav navbar-nav">
               <li class="{{activeHome}}"><a href="#/">Accueil</a></li>
-              <li class="{{activeSongs}}"><a ng-href="#/songs" ng-show="isAuthenticated">Titres aléatoires</a></li>
-              <li class="{{activeAccount}}"><a ng-href="#/account" ng-show="isAuthenticated">Mon compte</a></li>
+              <li class="{{activeSongs}}"><a ng-href="#/radio" ng-show="isAuthenticated">Radio</a></li>
+              <li class="{{activeAccount}}"><a ng-href="#/account/informations" ng-show="isAuthenticated">Mon compte</a></li>
               <li class="{{activeContacts}}"><a ng-href="#/contact">Contacts</a></li>
               <li class="{{activeAbout}}"><a ng-href="#/about">A propos</a></li>
               <li class="{{activeConnection}}"><a ng-href="#/connection" ng-show="!isAuthenticated">Connexion <i class="glyphicon glyphicon-log-in" style="color:green"></i></a></li>
@@ -101,11 +101,12 @@
     <script src="scripts/constants.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/about.js"></script>
-    <script src="scripts/controllers/songs.js"></script>
+    <script src="scripts/controllers/account/initialisation.js"></script>
     <script src="scripts/controllers/connection.js"></script>
     <script src="scripts/controllers/users.js"></script>
     <script src="scripts/controllers/register.js"></script>
-    <script src="scripts/controllers/account.js"></script>
+    <script src="scripts/controllers/account/informations.js"></script>
+    <script src="scripts/controllers/radio.js"></script>
 
     <script src="scripts/services/servicedb.js"></script>
     <script src="scripts/services/tokeninterceptor.js"></script>

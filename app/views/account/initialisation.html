@@ -1,0 +1,41 @@
+<md-card >
+  <md-card-content>
+
+    <md-card-title>
+      <md-card-title-text>
+        <span class="md-headline">Initialisation du compte</span>
+      </md-card-title-text>
+    </md-card-title>
+
+    <div class="row">
+      <div class="col-md-4" style="text-align: center;">
+        <button ng-click="dislike()" style="width: 100px; height: 100px; margin-top: 33%;"><img src="images/dislike.png" alt="J'aime pas" style="width: 100%"/></button>
+      </div>
+      <div class="col-md-4" style="">
+        <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+        <img src="{{albumFolder}}">
+        <audio src="{{preview_url}}" ng-show="displayPlayer" autoplay audiplayer controls/>
+      </div>
+      <div class="col-md-4" style="text-align: center;">
+        <button ng-click="like()" style="width: 100px; height: 100px; margin-top: 33%;"><img src="images/like.png" alt="J'aime" style="width: 100%"/></button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12"  style="text-align: center;">
+        <strong>Artiste :</strong> {{song.artist}}<br>
+        <strong>Titre :</strong> {{song.title}}<br>
+        <strong>Album :</strong> {{albumName}}<br>
+        <!--<label>Type de proposition : {{proposition}}</label><br>-->
+        <strong>Tags :</strong>
+        <ul class="songs">
+          <li ng-repeat="tag in mesTags">
+            {{tag[0]}}
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row">
+      <button ng-click="calculate()">Validation</button>
+    </div>
+  </md-card-content>
+</md-card>

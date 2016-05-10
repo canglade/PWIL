@@ -9,14 +9,14 @@
  */
 
 angular.module('pwilApp')
-  .controller('SongsCtrl', function ($rootScope, $scope,$route, $sce, serviceDb) {
+  .controller('AccountInitialisationCtrl', function ($rootScope, $scope,$route, $sce, serviceDb) {
     var increment = 0;
     var laSimilaire = "";
     var styles = [];
 
     $rootScope.activeHome = "";
-    $rootScope.activeSongs = "active";
-    $rootScope.activeAccount = "";
+    $rootScope.activeSongs = "";
+    $rootScope.activeAccount = "active";
     $rootScope.activeContacts = "";
     $rootScope.activeAbout = "";
     $rootScope.activeConnection = "";
@@ -45,6 +45,10 @@ angular.module('pwilApp')
       });
     }
 
+    $scope.calculate = function(){
+      serviceDb.calculate();
+    }
+
     $scope.loadSong = function () {
       $scope.isLoading = true;
       $scope.mesTags = [];
@@ -58,46 +62,6 @@ angular.module('pwilApp')
         var liste = tags.slice(0, 5);
 
         $scope.mesTags = liste;
-      });
-    };
-
-    //NextSong permet d'afficher les chansons correspondante au numéro de cluster de l'utilisateur
-    $scope.nextsong = function () {
-      var mail = $scope.userMail;
-      //On récupére son cluster
-      serviceDb.getcluster(mail).success(function (data)
-      {
-        var cluster = data;
-        console.log(cluster);
-        //on compte le nombre de chansons correspondante à ce cluster
-        serviceDb.countsong(cluster).success(function(nbSong)
-          {
-            //on appelle la fonction nextsong qui nous renvoi
-            //une chanson aléatoire correspondante au cluster de l'utilisateur
-            serviceDb.nextsong(cluster,nbSong).success(function (data1)
-            {
-              $scope.song = data1[0];
-              //afficher la pochette de l'album
-              $scope.loadPreview();
-
-              //Affichage sur l'interface de la liste des tags de la chanson
-              var tags = data1[0].tags;
-              var liste = [];
-              if(tags.length >= 10) {
-                for (var i = 0; i < 10; i++) {
-                  liste.push(tags[i]);
-                }
-              }
-              else
-              {
-                for (var i = 0; i < tags.length; i++) {
-                  liste.push(tags[i]);
-                }
-              }
-              $scope.mesTags = liste;
-            });
-          }
-        );
       });
     };
 
@@ -122,9 +86,6 @@ angular.module('pwilApp')
       });
     };
 
-
-    //Fonction Like permet de:
-    //Récuperer la chanson que l'utilisateur aime puis de l'inserer dans son tableau tab_like
     $scope.like = function(){
       var song = $scope.song;
       var mail = $scope.userMail;
@@ -169,14 +130,12 @@ angular.module('pwilApp')
         var dataStyles = "{ \"styles\": " + "\"" + styles + "\" "
           + ", \"userMail\": " + "\"" + mail + "\" } ";
         if (tablikes) {
-          //chercher la chanson dans le tab_like
           for (var i = 0; i < tablikes.length; i++) {
             if (tablikes[i] == song) {
               exist = true;
               break;
             }
           }
-          // si elle n'existe pas on l'ajoute dans le tab_like
           if (!exist) {
             serviceDb.addLike(data).success(function (data) {});
             if (styles.length != 0 )
@@ -187,7 +146,6 @@ angular.module('pwilApp')
         }
       });
 
-      // Si la chanson existe dans le tab de dislike alors on la supprime
       serviceDb.getTabDislikes(mail).success(function (tabdislikes) {
         var exist = false;
         if (tabdislikes) {
@@ -215,44 +173,6 @@ angular.module('pwilApp')
       }
     };
 
-    // Fonction diversSong permet de diversifier le style musicale
-    // On affiche une chanson aléatoire qui n'appartient pas aux tags de l'utilisateur
-    $scope.diversSong = function () {
-      var mail = $scope.userMail;
-      serviceDb.getcluster(mail).success(function (data)
-      {
-        var cluster = data;
-        console.log(cluster);
-        serviceDb.countsong(cluster).success(function(nbSong)
-          {
-            serviceDb.diversSong(cluster,nbSong).success(function (data1)
-            {
-              $scope.song = data1[0];
-              $scope.loadPreview();
-              console.log(data1);
-              var tags = data1[0].tags;
-              var liste = [];
-              if(tags.length >= 10) {
-                for (var i = 0; i < 10; i++) {
-                  liste.push(tags[i]);
-                }
-              }
-              else
-              {
-                for (var i = 0; i < tags.length; i++) {
-                  liste.push(tags[i]);
-                }
-              }
-              $scope.mesTags = liste;
-            });
-          }
-        );
-      });
-    };
-
-    //Fonction dislike
-    // Si l'utilisateur dislike une chanson alors on vérifie qu'elle n'existe pas dans son tab_like sinon on la supprime
-    // puis on l'ajoute à son tab_dislike
     $scope.dislike = function(){
       var song = $scope.song.track_id;
       var mail = $scope.userMail;
@@ -301,6 +221,5 @@ angular.module('pwilApp')
       });
       $scope.loadSong();
     };
-
     $scope.AuthentificatedRedirection();
   });

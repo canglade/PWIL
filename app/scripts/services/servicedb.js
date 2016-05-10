@@ -133,6 +133,12 @@ angular.module('pwilApp')
           url: 'http://localhost:3000/songs/diversSong',
           headers: {'numcluster': numcluster, 'nbsong': nbsong}
         });
+      },
+      calculate: function(){
+        return  $http({
+          method: 'GET',
+          url: 'http://localhost:3000/cluster/calculate/'
+        });
       }
     }
   });
