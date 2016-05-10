@@ -275,7 +275,6 @@ button.close {
 
 .navbar-default .navbar-nav > li > a {
   color: white;
-  text-shadow: 1px 1px black;
   font-family: 'Cambria', sans-serif;
   font-size: 17px;
 }
@@ -286,12 +285,18 @@ html, body {
 }
 
 .navbar-default {
-  background-color: #F7AA72;
+  background-color: rgba(29, 136, 140, 0.22);
   opacity : 1;
   border-color : #e7e7e7;
 }
 
 .header, .marketing {
  background-color: #08149C;
-  background: linear-gradient(to bottom, #08149C, white);
+  background: linear-gradient(to bottom, rgba(48, 133, 158, 0.72), white);
 }
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
+  color: #1A1C6B;
+  background-color: transparent;
+}
+

@@ -1,3 +1,3 @@
-var clusterNumber = 5;
+var clusterNumber = 3;
 
 module.exports = clusterNumber;
