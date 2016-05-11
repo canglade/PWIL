@@ -285,7 +285,7 @@ html, body {
 }
 
 .navbar-default {
-  background-color: rgba(29, 174, 179, 0.84);
+  background-color: rgba(17, 89, 134, 0.84);
   opacity : 1;
   border-color : #e7e7e7;
 }
@@ -300,3 +300,6 @@ html, body {
   background-color: transparent;
 }
 
+body {
+  background-image: url("../images/background.png");
+}
