@@ -9,7 +9,6 @@
 
     <div class="row">
       <div class="col-md-4" style="text-align: center;">
-        <button ng-click="dislike()" style="width: 100px; height: 100px; margin-top: 33%;"><img src="images/dislike.png" alt="J'aime pas" style="width: 100%"/></button>
       </div>
       <div class="col-md-4" style="">
         <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
@@ -17,21 +16,37 @@
         <audio src="{{preview_url}}" ng-show="displayPlayer" autoplay audiplayer controls/>
       </div>
       <div class="col-md-4" style="text-align: center;">
-        <button ng-click="like()" style="width: 100px; height: 100px; margin-top: 33%;"><img src="images/like.png" alt="J'aime" style="width: 100%"/></button>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12"  style="text-align: center;">
-        <strong>Artiste :</strong> {{song.artist}}<br>
-        <strong>Titre :</strong> {{song.title}}<br>
-        <strong>Album :</strong> {{albumName}}<br>
+        <div class="col-md-4" style="text-align: center;">
+        </div>
+        <div class="col-md-4" style="text-align: center;">
+          <img src="images/dislike.png" alt="J'aime pas" ng-click="dislike()" style="width: 30%"/>
+          <img src="images/next.png" alt="J'aime pas" ng-click="nextsong()" style="width: 30%"/>
+          <img src="images/like.png" ng-click="like()" alt="J'aime" style="width: 30%"/><br>
+        </div>
+        <div class="col-md-4" style="text-align: center;">
+        </div>
+    </div>
+    <div class="row">
+
+      <div class="col-md-4" style="text-align: center;">
+      </div>
+      <div class="col-md-4" style="text-align: center;">
+        <table width="100%" border ="1" cellspacing="1" cellpadding="1"><tr><td><div align=center>
+          <strong>Artiste :</strong> {{song.artist}}<br>
+          <strong>Titre :</strong> {{song.title}}<br>
+          <strong>Album :</strong> {{albumName}}<br>
+        </div></td><tr></table>
+
         <!--<label>Type de proposition : {{proposition}}</label><br>-->
         <strong>Tags :</strong> {{mesTags}}
       </div>
+      <div class="col-md-4" style="text-align: center;">
+      </div>
     </div>
-
-    <md-button class="md-raised" ng-click="nextsong()">Suivant</md-button>
-    <md-button class="md-raised" ng-click="diversSong()">Diversification</md-button>
+    <img src="images/random.png" alt="J'aime pas" ng-click="diversSong()" style="width: 10%"/>
 
   </md-card-content>
 </md-card>
