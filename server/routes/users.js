@@ -18,6 +18,7 @@ router.get('/tabdislikes', songDislikeExist);
 router.put('/removesongDislike', removeSongFromTabDislike);
 router.put('/removesongLike', removeSongFromTablike);
 router.get('/email/free', isUserMailFree);
+router.put('/reinit', reinit);
 
 /* GET users listing. */
 function getAllUsers(req, res, next) {
@@ -238,5 +239,14 @@ function getcluster(req, res, next) {
     res.json(user.cluster);
   });
 };
+
+function reinit (req, res, next) {
+  User.update({"mail": req.body.mail}, {$set: {tab_likes:[], tab_dislikes: [], tab_tags : [0,0,0], old_cluster : -1}}, function (err) {
+    if (err) return next(err);
+    // NE PAS SUPPRIMER BUG SINON
+
+    res.json("Success");
+  });
+}
 
 module.exports = router;

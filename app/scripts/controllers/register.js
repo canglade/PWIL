@@ -42,7 +42,7 @@ angular.module('pwilApp')
 
         AuthService.register($scope.user).then(function (msg) {
           $state.go('outside.login');
-          Flash.create('success', "Utilisateur crée avec succès !");
+          Flash.create('success', "Utilisateur créé avec succès !");
         }, function (errMsg) {
 
           $scope.registerResult = errMsg;

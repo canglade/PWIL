@@ -25,15 +25,16 @@
         <strong>Artiste :</strong> {{song.artist}}<br>
         <strong>Titre :</strong> {{song.title}}<br>
         <strong>Album :</strong> {{albumName}}<br>
-        <!--<label>Type de proposition : {{proposition}}</label><br>-->
         <strong>Tags :</strong>
-
-            {{mesTags}}
-
+        <ul class="songs">
+          <li ng-repeat="tag in mesTags">
+            {{tag[0]}}
+          </li>
+        </ul>
       </div>
     </div>
     <div class="row">
-      <button ng-click="calculate()">Validation</button>
+      <button ng-click="calculateClusters($event)">Validation</button>
     </div>
   </md-card-content>
 </md-card>

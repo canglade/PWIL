@@ -134,10 +134,17 @@ angular.module('pwilApp')
           headers: {'numcluster': numcluster, 'nbsong': nbsong}
         });
       },
-      calculate: function(){
+      calculateClusters: function(){
         return  $http({
           method: 'GET',
           url: 'http://localhost:3000/cluster/calculate/'
+        });
+      },
+      reinitAccount: function(mail) {
+        return $http({
+          method: 'PUT',
+          url: 'http://localhost:3000/users/reinit',
+          data: {'mail': mail }
         });
       }
     }

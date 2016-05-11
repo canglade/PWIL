@@ -9,7 +9,7 @@
  */
 
 angular.module('pwilApp')
-  .controller('AccountInitialisationCtrl', function ($rootScope, $scope,$route, $sce, serviceDb) {
+  .controller('AccountInitialisationCtrl', function ($rootScope, $scope,$route, $sce, $state, $mdDialog, serviceDb) {
     var increment = 0;
     var laSimilaire = "";
     var styles = [];
@@ -45,8 +45,20 @@ angular.module('pwilApp')
       });
     }
 
-    $scope.calculate = function(){
-      serviceDb.calculate();
+    $scope.calculateClusters = function(event){
+        var confirm = $mdDialog.confirm()
+          .title('Valider vos choix :')
+          //.textContent('All of the banks have agreed to forgive you your debts.')
+          .ariaLabel('Lucky day')
+          .targetEvent(event)
+          .ok('Ok')
+          .cancel('Annuler');
+        $mdDialog.show(confirm).then(function() {
+          serviceDb.calculateClusters();
+          $state.go('account.informations');
+        }, function() {
+          //Annuler donc rien ne se passe
+        });
     }
 
     $scope.loadSong = function () {
