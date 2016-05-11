@@ -13,6 +13,7 @@ angular.module('pwilApp')
     var increment = 0;
     var laSimilaire = "";
     var styles = [];
+    var historique = $rootScope.historique;
 
     $rootScope.activeHome = "";
     $rootScope.activeSongs = "active";
@@ -64,6 +65,10 @@ angular.module('pwilApp')
         for(var i =0;i<liste.length;i++){
           liste[i] = liste[i][0];
         }
+        historique.unshift(data.title + " : " + data.artist);
+        historique = historique.slice(0, 10);
+        window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
+        console.log(historique);
         $scope.mesTags = liste.toString();
       });
     };
@@ -84,6 +89,7 @@ angular.module('pwilApp')
             serviceDb.nextsong(cluster,nbSong).success(function (data1)
             {
               $scope.song = data1[0];
+
               //afficher la pochette de l'album
               $scope.loadPreview();
 
@@ -104,6 +110,10 @@ angular.module('pwilApp')
               for(var i =0;i<liste.length;i++){
                 liste[i] = liste[i][0];
               }
+              historique.unshift(data1[0].title + " : " + data1[0].artist);
+              historique = historique.slice(0, 10);
+              window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
+              console.log(historique);
               $scope.mesTags = liste.toString();
             });
           }
@@ -125,6 +135,10 @@ angular.module('pwilApp')
           for(var i =0;i<liste.length;i++){
             liste[i] = liste[i][0];
           }
+          historique.unshift(data.title + " : " + data.artist);
+          historique = historique.slice(0, 10);
+          window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
+          console.log(historique);
           $scope.mesTags = liste.toString();
         }
         else{
@@ -144,7 +158,7 @@ angular.module('pwilApp')
 
       var data = "{ \"track_id\": " + "\"" + song.track_id + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
-      
+
       //On initialise la liste de tags en enlevant le poids de chaque tag
       var tabTags = [];
       if(song.tags.length < 10) {
@@ -258,6 +272,10 @@ angular.module('pwilApp')
               for(var i =0;i<liste.length;i++){
                 liste[i] = liste[i][0];
               }
+              historique.unshift(data1[0].title + " : " + data1[0].artist);
+              historique = historique.slice(0, 10);
+              window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
+              console.log(historique);
               $scope.mesTags = liste.toString();
             });
           }

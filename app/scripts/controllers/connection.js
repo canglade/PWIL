@@ -23,14 +23,15 @@ angular.module('pwilApp')
 
     $scope.login = function() {
       AuthService.login($scope.user).then(function(msg) {
+        window.localStorage.setItem('SONGS_HISTO', JSON.stringify([]));
 
         if (AuthService.isAuthenticated())
           $rootScope.isAuthenticated = true;
         else
           $rootScope.isAuthenticated = false;
-        
-        if (AuthService.old_cluster() == -1) 
-          $state.go('account.initialisation');           
+
+        if (AuthService.old_cluster() == -1)
+          $state.go('account.initialisation');
         else
           $state.go('account.informations');
       }, function(errMsg) {

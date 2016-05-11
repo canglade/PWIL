@@ -114,6 +114,7 @@ angular
 
   .run(function ($rootScope, $state, AuthService, AUTH_EVENTS) {
     $rootScope.userMail = window.localStorage.getItem('USER_MAIL');
+    $rootScope.historique = JSON.parse(window.localStorage.getItem('SONGS_HISTO'));
 
     $rootScope.AuthentificatedRedirection = function() {
       //$scope.memberinfo = AuthService.isAuthenticated();
@@ -131,6 +132,7 @@ angular
 
     $rootScope.$on('$stateChangeStart', function (event,next, nextParams, fromState) {
       $rootScope.userMail = window.localStorage.getItem('USER_MAIL');
+      $rootScope.historique = JSON.parse(window.localStorage.getItem('SONGS_HISTO'));
 
       if (!AuthService.isAuthenticated()) {
         console.log(next.name);
