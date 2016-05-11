@@ -88,8 +88,7 @@ function nextsong (req, res, next) {
   console.log(req.headers.nbsong);
   var nbsong = parseInt(req.headers.nbsong);
   query.limit(1).skip(Math.floor(Math.random()*nbsong));
-  query.select({title:1, artist:1, tags : 1, tag : 1});
-
+  
   query.exec (function(err,songs) {
     if (err)
       return next(err);
@@ -107,7 +106,6 @@ function diversSong (req, res, next) {
   console.log(req.headers.nbsong);
   var nbsong = parseInt(req.headers.nbsong);
   query.limit(1).skip(Math.floor(Math.random()*nbsong));
-  query.select({title:1, artist:1, tags : 1, tag : 1});
 
   query.exec (function(err,songs) {
     if (err)

@@ -91,7 +91,7 @@ function addLike(req, res, next) {
   console.log("mail : " + req.body.userMail);
   var track = req.body.track_id;
   var mail = req.body.userMail;
-
+  
   User.findOne({"mail": mail}, function (err, user) {
     if (err) return next(err);
     // NE PAS SUPPRIMER BUG SINON
@@ -115,6 +115,7 @@ function addLike(req, res, next) {
       // NE PAS SUPPRIMER BUG SINON
 
       var likes = song.tab_like;
+
       if(likes.length !== nbCluster){
         var newSize = nbCluster-likes.length;
         for(var i = 0;i<newSize;i++){

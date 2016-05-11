@@ -144,7 +144,7 @@ angular.module('pwilApp')
 
       var data = "{ \"track_id\": " + "\"" + song.track_id + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
-
+      
       //On initialise la liste de tags en enlevant le poids de chaque tag
       var tabTags = [];
       if(song.tags.length < 10) {

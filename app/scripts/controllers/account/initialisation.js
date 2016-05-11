@@ -61,7 +61,10 @@ angular.module('pwilApp')
         var tags = data.tags;
         var liste = tags.slice(0, 5);
 
-        $scope.mesTags = liste;
+        for(var i =0;i<liste.length;i++){
+          liste[i] = liste[i][0];
+        }
+        $scope.mesTags = liste.toString();
       });
     };
 
@@ -77,7 +80,10 @@ angular.module('pwilApp')
           var tags = data.tags;
           var liste = tags.slice(0, 5);
 
-          $scope.mesTags = liste;
+          for(var i =0;i<liste.length;i++){
+            liste[i] = liste[i][0];
+          }
+          $scope.mesTags = liste.toString();
         }
         else{
           increment =0;
