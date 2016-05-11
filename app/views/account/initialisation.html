@@ -9,7 +9,7 @@
 
     <div class="row">
       <div class="col-md-4" style="text-align: center;">
-        <button ng-click="dislike()" style="width: 100px; height: 100px; margin-top: 33%;"><img src="images/dislike.png" alt="J'aime pas" style="width: 100%"/></button>
+        <img src="images/dislike.png" alt="J'aime pas" ng-click="dislike()" style="width: 40%; height: 40%; margin-top: 33%;"/>
       </div>
       <div class="col-md-4" style="">
         <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
@@ -17,8 +17,7 @@
         <audio src="{{preview_url}}" ng-show="displayPlayer" autoplay audiplayer controls/>
       </div>
       <div class="col-md-4" style="text-align: center;">
-        <button ng-click="like()" style="width: 100px; height: 100px; margin-top: 33%;"><img src="images/like.png" alt="J'aime" style="width: 100%"/></button>
-      </div>
+        <img src="images/like.png" alt="J'aime pas" ng-click="like()" style="width: 40%; height: 40%; margin-top: 33%;"/>      </div>
     </div>
     <div class="row">
       <div class="col-md-12"  style="text-align: center;">
@@ -34,7 +33,15 @@
       </div>
     </div>
     <div class="row">
-      <button ng-click="calculateClusters($event)">Validation</button>
+      <div class="col-md-4" style="text-align: center;">
+      </div>
+      <div class="col-md-4" style="text-align: center;">
+        <img src="images/valide.png" alt="J'aime pas" ng-click="calculateClusters($event)" style="width: 40%"/>
+      </div>
+      <div class="col-md-4" style="text-align: center;">
+
+      </div>
+
     </div>
   </md-card-content>
 </md-card>
