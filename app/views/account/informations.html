@@ -1,5 +1,4 @@
-<section>
-
+<div class="col-md-6" style="text-align: center;">
   <md-card >
     <md-card-title>
 
@@ -68,7 +67,11 @@
       <md-button class="md-raised md-primary" ng-click="logout()">Se déconnecter</md-button>
       <md-button class="md-raised md-primary" ng-click="reinitAcount($event)">Réinitialiser le compte</md-button>
     </md-card-actions>
+  </md-card>
+</div>
 
+<div class="col-md-6" style="text-align: center;">
+  <md-card>
     <md-card-title>
       <md-card-title-text>
         <span class="md-headline">Statistiques du compte</span>
@@ -79,7 +82,5 @@
       <div id="barStat"></div>
       <div id="donutStat"></div>
     </md-card-content>
-
   </md-card>
-
-</section>
+</div>
