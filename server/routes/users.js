@@ -19,6 +19,7 @@ router.put('/removesongDislike', removeSongFromTabDislike);
 router.put('/removesongLike', removeSongFromTablike);
 router.get('/email/free', isUserMailFree);
 router.put('/reinit', reinit);
+router.get('/getTabTags', getTabTags);
 
 /* GET users listing. */
 function getAllUsers(req, res, next) {
@@ -92,7 +93,7 @@ function addLike(req, res, next) {
   console.log("mail : " + req.body.userMail);
   var track = req.body.track_id;
   var mail = req.body.userMail;
-  
+
   User.findOne({"mail": mail}, function (err, user) {
     if (err) return next(err);
     // NE PAS SUPPRIMER BUG SINON
@@ -246,6 +247,13 @@ function reinit (req, res, next) {
     // NE PAS SUPPRIMER BUG SINON
 
     res.json("Success");
+  });
+}
+
+function getTabTags (req, res, next) {
+  User.findOne({"mail" : req.headers.mail}, {"tab_tags" : 1}, function(err, user){
+    if (err) return next(err);
+    res.json(user.tab_tags);
   });
 }
 

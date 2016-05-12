@@ -154,6 +154,13 @@ angular.module('pwilApp')
           data: {"mail" : mail,"newmail" : user.mail,"firstname" : user.firstname,"lastname" : user.lastname,"username" : user.username,"birthdate" : user.birthdate},
           headers: { 'Content-Type': 'application/json' }
         });
+      },
+      getTabTags: function(mail){
+        return  $http({
+          method: 'GET',
+          url: 'http://localhost:3000/users/getTabTags',
+          headers : { 'mail': mail }
+        });
       }
     }
   });

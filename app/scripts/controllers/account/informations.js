@@ -33,6 +33,7 @@ angular.module('pwilApp')
 
     $scope.$on('$viewContentLoaded', function () {
       $scope.getInfo();
+      $scope.graph();
     });
 
     $scope.destroySession = function() {
@@ -113,5 +114,22 @@ angular.module('pwilApp')
       }
     };
 
+    $scope.graph = function (){
+      serviceDb.getTabTags($scope.userMail).success(function (tabTags) {
+        console.log(tabTags);
+        var chart = c3.generate({
+          bindto: '#barStat',
+          data: {
+            columns: [
+              ['Rock', tabTags[0]],
+              ['Rap', tabTags[1]],
+              ['Electro', tabTags[2]]
+            ],
+            type: 'donut'
+          }
+        });
+      });
+    };
+
     $scope.AuthentificatedRedirection();
-  })
+  });
