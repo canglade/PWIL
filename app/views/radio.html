@@ -8,13 +8,11 @@
       <div class="col-md-4" style="text-align: center;">
         <md-card >
           <md-card-content>
-            <div align=center>
-              <h5>
-                <strong>Artiste :</strong> {{song.artist}}<br>
-                <strong>Titre :</strong> {{song.title}}<br>
-                <strong>Album :</strong> {{albumName}}<br>
-              </h5>
-            </div>
+              <div align=center>
+                  <strong>Artiste :</strong> {{song.artist}}<br>
+                  <strong>Titre :</strong> {{song.title}}<br>
+                  <strong>Album :</strong> {{albumName}}<br>
+              </div>
             </md-card-content>
           </md-card>
       </div>
@@ -45,26 +43,26 @@
         <div class="col-md-4" style="text-align: center;">
         </div>
     </div>
-    <div class="row">
-
-      <div class="col-md-4" style="text-align: center;">
-      </div>
-      <div class="col-md-4" style="text-align: center;">
-        <strong>Tags :</strong> {{mesTags}}
-      </div>
-      <div class="col-md-4" style="text-align: center;">
-      </div>
-    </div>
-    <div class="row">
-
-      <div class="col-md-4" style="text-align: center;">
-      </div>
-      <div class="col-md-4" style="text-align: center;">
-      </div>
-      <div class="col-md-4" style="text-align: center;">
-        <img src="images/random.png" alt="J'aime pas" ng-click="diversSong()" style="width: 30%"/>
-      </div>
+    <div class="row" style="text-align: center;">
+        <div id="alltags">
+          <div id="fond">
+            <div id="contenu0">{{mesTags[0]}}</div>
+            <div id="contenu1">{{mesTags[1]}}</div>
+            <div id="contenu2">{{mesTags[2]}}</div>
+            <div id="contenu3">{{mesTags[3]}}</div>
+          </div>
+        </div>
     </div>
 
-  </md-card-content>
+  <div class="row">
+    <div class="col-md-4" style="text-align: center;">
+    </div>
+    <div class="col-md-4" style="text-align: center;">
+    </div>
+    <div class="col-md-4" style="text-align: right;">
+      <img src="images/random.png" alt="J'aime pas" ng-click="diversSong()" style="width: 30%"/>
+    </div>
+  </div>
+
+</md-card-content>
 </md-card>

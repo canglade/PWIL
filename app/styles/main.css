@@ -304,3 +304,57 @@ body {
   background-image: url("../images/background.png");
 }
 
+#alltags{
+  display:inline-block;
+}
+
+#fond {
+  background:url("../images/background_tag.png") top left;
+  position:relative;
+  width:360px;
+  text-align: left;
+  height:105px;
+  z-index:1;
+}
+
+#contenu0 {
+  display: inline-block;
+  position: relative;
+  margin-top: 40px;
+  width: 83px;
+  z-index: 10;
+  text-align: center;
+  color: rgba(17, 89, 134, 0.84);
+  font-weight: bold;
+}
+#contenu1 {
+  display: inline-block;
+  position: relative;
+  width: 83px;
+  z-index: 10;
+  text-align: center;
+  margin-left: 5px;
+  color: rgba(17, 89, 134, 0.84);
+  font-weight: bold;
+}
+#contenu2 {
+  display: inline-block;
+  position: relative;
+  width: 83px;
+  z-index: 10;
+  text-align: center;
+  margin-left: 5px;
+  color: rgba(17, 89, 134, 0.84);
+  font-weight: bold;
+}
+#contenu3 {
+  display: inline-block;
+  position: relative;
+  width: 83px;
+  z-index: 10;
+  text-align: center;
+  margin-left: 5px;
+  color: rgba(17, 89, 134, 0.84);
+  font-weight: bold;
+}
+

@@ -69,10 +69,21 @@ angular.module('pwilApp')
         historique = historique.slice(0, 10);
         window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
         console.log(historique);
-        $scope.mesTags = liste.toString();
+        var tagMaj = [];
+        for(var j = 0 ; j < liste.length ; j++)
+        {
+          if (liste[j].toString().length < 10)
+          {
+            liste[j] = firstToUpperCase(liste[j]);
+            tagMaj.push(liste[j]);
+          }
+        }
+        $scope.mesTags = tagMaj;
       });
     };
-
+    function firstToUpperCase( str ) {
+      return str.substr(0, 1).toUpperCase() + str.substr(1);
+    }
     //NextSong permet d'afficher les chansons correspondante au numéro de cluster de l'utilisateur
     $scope.nextsong = function () {
       var mail = $scope.userMail;
@@ -110,11 +121,23 @@ angular.module('pwilApp')
               for(var i =0;i<liste.length;i++){
                 liste[i] = liste[i][0];
               }
+
               historique.unshift(data1[0].title + " : " + data1[0].artist);
               historique = historique.slice(0, 10);
               window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
               console.log(historique);
-              $scope.mesTags = liste.toString();
+
+              var tagMaj = [];
+              for(var j = 0 ; j < liste.length ; j++)
+              {
+                if (liste[j].toString().length < 10)
+                {
+                  liste[j] = firstToUpperCase(liste[j]);
+                  tagMaj.push(liste[j]);
+                }
+              }
+              $scope.mesTags = tagMaj;
+
             });
           }
         );
@@ -135,11 +158,22 @@ angular.module('pwilApp')
           for(var i =0;i<liste.length;i++){
             liste[i] = liste[i][0];
           }
-          historique.unshift(data.title + " : " + data.artist);
+        historique.unshift(data.title + " : " + data.artist);
           historique = historique.slice(0, 10);
           window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
           console.log(historique);
-          $scope.mesTags = liste.toString();
+
+          var tagMaj = [];
+          for(var j = 0 ; j < liste.length ; j++)
+          {
+            if (liste[j].toString().length < 10)
+            {
+              liste[j] = firstToUpperCase(liste[j]);
+              tagMaj.push(liste[j]);
+            }
+          }
+          $scope.mesTags = tagMaj;
+
         }
         else{
           increment =0;
@@ -272,11 +306,22 @@ angular.module('pwilApp')
               for(var i =0;i<liste.length;i++){
                 liste[i] = liste[i][0];
               }
+
               historique.unshift(data1[0].title + " : " + data1[0].artist);
               historique = historique.slice(0, 10);
               window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
               console.log(historique);
-              $scope.mesTags = liste.toString();
+              var tagMaj = [];
+              for(var j = 0 ; j < liste.length ; j++)
+              {
+                if (liste[j].toString().length < 10)
+                {
+                  liste[j] = firstToUpperCase(liste[j]);
+                  tagMaj.push(liste[j]);
+                }
+              }
+              $scope.mesTags = tagMaj;
+
             });
           }
         );
