@@ -1,37 +1,50 @@
-<md-card >
-  <md-card-content>
+<div class="col-md-9" style="text-align: center;">
+  <md-card >
+    <md-card-content>
 
-    <div class="row">
+      <div class="row">
 
-      <div class="col-md-4" style="text-align: center;">
+        <!--<div class="col-md-0" style="text-align: center;">-->
+        <!--</div>-->
+        <div class="col-md-12" style="text-align: center;">
+
+          <h2><strong><font color="#256891">{{song.artist}}</font></strong><br></h2>
+          <h3><strong>{{song.title}}</strong><br></h3>
+          <h4>Album: <i>{{albumName}}</i><br></h4>
+
+
+
+          <!--<md-card >-->
+          <!--<md-card-content>-->
+          <!--<div align=center>-->
+          <!--<h5>-->
+          <!--<strong>Artiste :</strong> {{song.artist}}<br>-->
+          <!--<strong>Titre :</strong> {{song.title}}<br>-->
+          <!--<strong>Album :</strong> {{albumName}}<br>-->
+          <!--</h5>-->
+          <!--</div>-->
+          <!--</md-card-content>-->
+          <!--</md-card>-->
+          <!--</div>-->
+          <!--<div class="col-md-2" style="text-align: center;">-->
+        </div>
       </div>
-      <div class="col-md-4" style="text-align: center;">
-        <md-card >
-          <md-card-content>
-              <div align=center>
-                  <strong>Artiste :</strong> {{song.artist}}<br>
-                  <strong>Titre :</strong> {{song.title}}<br>
-                  <strong>Album :</strong> {{albumName}}<br>
-              </div>
-            </md-card-content>
-          </md-card>
+
+      <div class="row">
+        <div class="col-md-3" style="text-align: center;">
+        </div>
+        <div class="col-md-3">
+          <br>
+          <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
+          <img src="{{albumFolder}}">
+          <audio src="{{preview_url}}" ng-show="displayPlayer" autoplay audiplayer controls/>
+        </div>
+        <div class="col-md-3 col-centered" style="">
+        </div>
+        <div class="col-md-3" style="text-align: center;">
+        </div>
       </div>
-      <div class="col-md-4" style="text-align: center;">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-4" style="text-align: center;">
-      </div>
-      <div class="col-md-4" style="">
-        <br>
-        <md-progress-circular md-mode="indeterminate" ng-show="isLoading"></md-progress-circular>
-        <img src="{{albumFolder}}">
-        <audio src="{{preview_url}}" ng-show="displayPlayer" autoplay audiplayer controls/>
-      </div>
-      <div class="col-md-4" style="text-align: center;">
-      </div>
-    </div>
-    <div class="row">
+      <div class="row">
 
         <div class="col-md-4" style="text-align: center;">
         </div>
@@ -42,8 +55,8 @@
         </div>
         <div class="col-md-4" style="text-align: center;">
         </div>
-    </div>
-    <div class="row" style="text-align: center;">
+      </div>
+      <div class="row" style="text-align: center;">
         <div id="alltags">
           <div id="fond">
             <div id="contenu0">{{mesTags[0]}}</div>
@@ -52,17 +65,47 @@
             <div id="contenu3">{{mesTags[3]}}</div>
           </div>
         </div>
-    </div>
+      </div>
 
-  <div class="row">
-    <div class="col-md-4" style="text-align: center;">
-    </div>
-    <div class="col-md-4" style="text-align: center;">
-    </div>
-    <div class="col-md-4" style="text-align: right;">
-      <img src="images/random.png" alt="J'aime pas" ng-click="diversSong()" style="width: 30%"/>
-    </div>
-  </div>
+      <div>
+        <div class="col-md-10" style="text-align: center;">
+        </div>
+        <div class="col-md-2" style="text-align: center;">
+          <img src="images/random.png" alt="J'aime pas" ng-click="diversSong()" style="width: 30%"/>
+        </div>
+        <div class="col-md-4" style="text-align: center;">
+        </div>
+      </div>
 
-</md-card-content>
-</md-card>
+    </md-card-content>
+  </md-card>
+</div>
+
+<div class="col-md-3" style="">
+  <strong><p style="text-align: center">Historique</p></strong>
+  <md-card>
+    <md-card-content>
+      <md-content>
+        <md-list>
+          <md-list-item class="md-1-line" ng-repeat="histo in historique">
+            <div class="md-list-item-text" >
+              <div class="row">
+                <h7><strong>{{histo[1]}}</strong></h7>
+              </div>
+              <div class="row">
+                <h7>{{histo[0]}}</h7>
+              </div>
+              <div class="row">
+              </div>
+            </div>
+            <md-divider inset=""></md-divider>
+          </md-list-item>
+        </md-list>
+      </md-content>
+
+    </md-card-content>
+  </md-card>
+
+</div>
+
+
