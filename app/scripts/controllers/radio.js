@@ -122,11 +122,6 @@ angular.module('pwilApp')
                 liste[i] = liste[i][0];
               }
 
-              historique.unshift(data1[0].title + " : " + data1[0].artist);
-              historique = historique.slice(0, 10);
-              window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
-              console.log(historique);
-
               var tagMaj = [];
               for(var j = 0 ; j < liste.length ; j++)
               {
@@ -137,7 +132,7 @@ angular.module('pwilApp')
                 }
               }
               $scope.mesTags = tagMaj;
-              
+
               historique.unshift([data1[0].title, data1[0].artist]);
               historique = historique.slice(0, 10);
               window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
@@ -163,11 +158,6 @@ angular.module('pwilApp')
             liste[i] = liste[i][0];
           }
 
-        historique.unshift(data.title + " : " + data.artist);
-          historique = historique.slice(0, 10);
-          window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
-          console.log(historique);
-
           var tagMaj = [];
           for(var j = 0 ; j < liste.length ; j++)
           {
@@ -178,7 +168,7 @@ angular.module('pwilApp')
             }
           }
           $scope.mesTags = tagMaj;
-          
+
           historique.unshift([data.title, data.artist]);
           historique = historique.slice(0, 10);
           window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
@@ -314,11 +304,7 @@ angular.module('pwilApp')
               for(var i =0;i<liste.length;i++){
                 liste[i] = liste[i][0];
               }
-              
-              historique.unshift(data1[0].title + " : " + data1[0].artist);
-              historique = historique.slice(0, 10);
-              window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
-              console.log(historique);
+
               var tagMaj = [];
               for(var j = 0 ; j < liste.length ; j++)
               {
