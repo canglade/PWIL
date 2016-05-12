@@ -10,15 +10,62 @@
     </md-card-title>
 
     <md-card-content>
-      <div>
-        {{memberinfo}}
-      </div>
+      <form name="userForm">
+        <div>
+          <md-input-container class="md-block">
+            <label><font color="black">E-mail *</font></label>
+            <input name="email" type="email" ng-model="user.mail"  required>
+            <div ng-messages="userForm.email.$error" ng-show="userForm.email.$touched">
+              <div ng-messages-include="error-messages"></div>
+            </div>
+          </md-input-container>
+        </div>
+        <!-- Username -->
+        <div>
+          <md-input-container class="md-block">
+            <label><font color="black">Prénom :</font></label>
+            <input name="firstname" ng-model="user.firstname" maxlength="20">
+          </md-input-container>
+          <!-- Name -->
+          <div>
+            <md-input-container class="md-block">
+              <label><font color="black">Nom :</font></label>
+              <input ng-model="user.lastname">
+            </md-input-container>
+          </div>
+
+          <div>
+            <md-input-container class="md-block">
+              <label><font color="black">Pseudonyme :</font></label>
+              <input ng-model="user.username" maxlength="20">
+            </md-input-container>
+          </div>
+
+          <div>
+
+            <label style="color:#b0b0b0"><font color="black">Date de naissance : </font></label>
+            <div id="date" class="datefield">
+              <input name="birthdate" id="day" ng-model="birthdate.day" type="tel" maxlength="2" placeholder="jj" required/> /
+              <input name="birthdate" id="month" ng-model="birthdate.month" type="tel" maxlength="2" placeholder="mm"  required/> /
+              <input name="birthdate" id="year" ng-model="birthdate.year" type="tel" maxlength="4" placeholder="aaaa"  required/>
+            </div>
+            <div ng-messages="userForm.birthdate.$error" ng-show="userForm.birthdate.$touched">
+              <div ng-messages-include="error-messages"></div>
+            </div>
+
+          </div>
+
+          <md-card-actions layout="row" layout-align="end center">
+            <md-button class="md-raised md-primary" ng-click="update(userForm.$valid)">Modifier compte</md-button>
+          </md-card-actions>
+          <flash-message duration="5000"></flash-message>
+        </div>
+      </form>
     </md-card-content>
 
     <md-card-actions layout="row" layout-align="end center">
 
       <md-button class="md-raised md-primary" ng-click="logout()">Se déconnecter</md-button>
-      <md-button class="md-raised md-primary" ng-click="getInfo()">Récupérer les informations du compte</md-button>
       <md-button class="md-raised md-primary" ng-click="reinitAcount($event)">Réinitialiser le compte</md-button>
     </md-card-actions>
 

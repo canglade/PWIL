@@ -146,6 +146,14 @@ angular.module('pwilApp')
           url: 'http://localhost:3000/users/reinit',
           data: {'mail': mail }
         });
+      },
+      updateUser: function(user,mail){
+        return  $http({
+          method: 'PUT',
+          url: 'http://localhost:3000/api/update/user',
+          data: {"mail" : mail,"newmail" : user.mail,"firstname" : user.firstname,"lastname" : user.lastname,"username" : user.username,"birthdate" : user.birthdate},
+          headers: { 'Content-Type': 'application/json' }
+        });
       }
     }
   });

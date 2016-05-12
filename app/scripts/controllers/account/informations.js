@@ -8,7 +8,7 @@
  * Controller of the pwilApp
  */
 angular.module('pwilApp')
-  .controller('AccountInformationsCtrl', function ($rootScope, $scope, AuthService, API_ENDPOINT, $http, $state, $mdDialog, serviceDb) {
+  .controller('AccountInformationsCtrl', function ($rootScope, $scope, AuthService, API_ENDPOINT, $http, $state, $mdDialog, Flash, serviceDb) {
     $rootScope.activeHome = "";
     $rootScope.activeSongs = "";
     $rootScope.activeAccount = "active";
@@ -16,13 +16,46 @@ angular.module('pwilApp')
     $rootScope.activeAbout = "";
     $rootScope.activeConnection = "";
 
+    $scope.user = {
+      firstname: '',
+      lastname: '',
+      mail: '',
+      password: '',
+      username: '',
+      birthdate:''
+    };
+
+    $scope.birthdate = {
+      day: '',
+      month: '',
+      year: ''
+    };
+
+    $scope.$on('$viewContentLoaded', function () {
+      $scope.getInfo();
+    });
+
     $scope.destroySession = function() {
       AuthService.logout();
     };
 
     $scope.getInfo = function() {
+      // Code de Robin
+      // $http.get(API_ENDPOINT.url + '/memberinfo').then(function(result) {
+      //   $scope.memberinfo = result.data.msg;
+      // });
+
       $http.get(API_ENDPOINT.url + '/memberinfo').then(function(result) {
-        $scope.memberinfo = result.data.msg;
+
+        $scope.user.lastname = result.data.user.lastname;
+        $scope.user.firstname = result.data.user.firstname;
+        $scope.user.username = result.data.user.username;
+        $scope.user.birthdate = result.data.user.birthdate;
+        var birthdateDate =  new Date(result.data.user.birthdate);
+        $scope.birthdate.year = birthdateDate.getFullYear();
+        $scope.birthdate.month = birthdateDate.getMonth()+1;
+        $scope.birthdate.day = birthdateDate.getDate()-1;
+        $scope.user.mail = result.data.user.mail;
       });
     };
 
@@ -46,6 +79,38 @@ angular.module('pwilApp')
     $scope.logout = function() {
       AuthService.logout();
       $state.go('outside.login');
+    };
+
+    $scope.update = function(isValid) {
+
+      var m = parseInt($scope.birthdate.month, 10);
+      var d = parseInt($scope.birthdate.day, 10);
+      var y = parseInt($scope.birthdate.year, 10);
+      var concatBirthdate = new Date(y,m-1,d);
+      if (concatBirthdate.getFullYear() == y && concatBirthdate.getMonth() + 1 == m && concatBirthdate.getDate() == d) {
+        concatBirthdate.setDate(concatBirthdate.getDate()+1);
+        $scope.user.birthdate = concatBirthdate;
+      } else {
+        console.log('Invalid date');
+        isValid = false;
+      }
+      if (isValid) {
+
+        serviceDb.updateUser($scope.user,$scope.userMail).then(function (msg) {
+          Flash.create('success', "Utilisateur modifié avec succès !");
+          $rootScope.userMail = $scope.user.mail;
+        }, function (errMsg) {
+
+          $scope.registerResult = errMsg;
+          var message = '<strong>Attention!</strong> '+errMsg+'.';
+          Flash.create('danger', message);
+        });
+      }
+      else {
+        $scope.registerResult = "Certains champs sont invalides"
+        var message = '<strong>Attention!</strong> Certains champs sont invalides.';
+        Flash.create('danger', message);
+      }
     };
 
     $scope.AuthentificatedRedirection();

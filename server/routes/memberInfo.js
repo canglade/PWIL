@@ -8,6 +8,7 @@ var config = require('./../config/database');
 var jwt = require('jwt-simple');
 
 router.get('/memberinfo', memberInfo);
+router.put('/update/user', update);
 
 function memberInfo (req, res) {
   var token = getToken(req.headers);
@@ -21,12 +22,24 @@ function memberInfo (req, res) {
       if (!user) {
         return res.status(403).send({success: false, msg: 'Authentication failed. User not found.'});
       } else {
-        res.json({success: true, msg: 'Welcome in the member area ' + user.username + '!'});
+        // Code de Robin
+        // res.json({success: true,
+        //   msg: 'Welcome in the member area ' + user.username + '!',
+        //   user: user});
+        res.json({success: true, user: user});
       }
     });
   } else {
     return res.status(403).send({success: false, msg: 'No token provided.'});
   }
+};
+
+function update (req, res) {
+  User.update({"mail": req.body.mail}, {"mail" : req.body.newmail, "firstname": req.body.firstname, "lastname": req.body.lastname, "username": req.body.username, "birthdate": req.body.birthdate}, function (err) {
+    if (err) return next(err);
+    // NE PAS SUPPRIMER BUG SINON
+    res.json("Success")
+  });
 };
 
 getToken = function (headers) {

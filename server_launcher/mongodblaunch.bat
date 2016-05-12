@@ -1,6 +1,5 @@
-set MONGO_PATH="C:\Users\thiba\Desktop\Projet1\Mongo"
+set MONGO_PATH="C:\Users\Ghislain\Documents\Mongo"
 
 echo *** LAUNCHING MONGO DB ***
 
 mongod --dbpath %MONGO_PATH%&pause
-
