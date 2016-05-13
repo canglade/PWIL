@@ -118,14 +118,17 @@ angular.module('pwilApp')
       serviceDb.getTabTags($scope.userMail).success(function (tabTags) {
         console.log(tabTags);
         var chart = c3.generate({
-          bindto: '#barStat',
+          bindto: '#pieStat',
+          title: {
+            text: "Proportion de like distribués"
+          },
           data: {
             columns: [
               ['Rock', tabTags[0]],
               ['Rap', tabTags[1]],
               ['Electro', tabTags[2]]
             ],
-            type: 'donut'
+            type: 'pie'
           }
         });
       });
