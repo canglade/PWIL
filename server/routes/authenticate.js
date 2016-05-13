@@ -24,7 +24,7 @@ function authenticate (req, res) {
           // if user is found and password is right create a token
           var token = jwt.encode(user, config.secret);
           // return the information including token as JSON       
-          res.json({success: true, token: 'JWT ' + token, old_cluster: user.old_cluster});
+          res.json({success: true, token: 'JWT ' + token, old_cluster: user.old_cluster, username : user.username});
         } else {
           res.send({success: false, msg: 'Mot de passe erroné.'});
         }

@@ -363,3 +363,11 @@ ul
   list-style-type: none;
 }
 
+md-virtual-repeat-container {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 20vh;
+  border: solid 1px #ccc;
+  padding: 10px;
+}

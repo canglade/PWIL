@@ -8,7 +8,7 @@
  * Service in the pwilApp.
  */
 angular.module('pwilApp')
-  .service('AuthService', function($q, $http, API_ENDPOINT) {
+  .service('AuthService', function($q, $http, API_ENDPOINT,$rootScope) {
     var LOCAL_TOKEN_KEY = 'pwilIsAwesome';//'yourTokenKey';
     var isAuthenticated = false;
     var mail ='';
@@ -22,9 +22,13 @@ angular.module('pwilApp')
       }
     }
 
-    function storeUserCredentials(token,mail) {
+    function storeUserCredentials(token,mail,username) {
       window.localStorage.setItem(LOCAL_TOKEN_KEY, token);
-      window.localStorage.setItem('USER_MAIL', mail);   
+      window.localStorage.setItem('USER_MAIL', mail);
+      window.localStorage.setItem('USER_PSEUDO', username);
+      $rootScope.userMail = window.localStorage.getItem('USER_MAIL');
+      $rootScope.username = window.localStorage.getItem('USER_PSEUDO');
+      console.log(username);
       useCredentials(token);
     }
 
@@ -59,9 +63,9 @@ angular.module('pwilApp')
     var login = function(user) {
       return $q(function(resolve, reject) {
         $http.post(API_ENDPOINT.url + '/authenticate', user).then(function(result) {
-          if (result.data.success) {           
+          if (result.data.success) {
             old_cluster = result.data.old_cluster;
-            storeUserCredentials(result.data.token, user.mail);
+            storeUserCredentials(result.data.token, user.mail, result.data.username);
             resolve(result.data.msg);
           } else {
             reject(result.data.msg);

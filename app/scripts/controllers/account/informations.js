@@ -16,6 +16,9 @@ angular.module('pwilApp')
     $rootScope.activeAbout = "";
     $rootScope.activeConnection = "";
 
+    console.log($rootScope.username);
+    console.log($rootScope.userMail);
+
     $scope.user = {
       firstname: '',
       lastname: '',
@@ -100,6 +103,9 @@ angular.module('pwilApp')
         serviceDb.updateUser($scope.user,$scope.userMail).then(function (msg) {
           Flash.create('success', "Utilisateur modifié avec succès !");
           $rootScope.userMail = $scope.user.mail;
+          $rootScope.username =  $scope.user.username;
+          window.localStorage.setItem('USER_PSEUDO', $rootScope.username);
+          window.localStorage.setItem('USER_MAIL', $rootScope.userMai);
         }, function (errMsg) {
 
           $scope.registerResult = errMsg;
