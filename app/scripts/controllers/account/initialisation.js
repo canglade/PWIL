@@ -9,7 +9,7 @@
  */
 
 angular.module('pwilApp')
-  .controller('AccountInitialisationCtrl', function ($rootScope, $scope,$route, $sce, $state, $mdDialog, serviceDb) {
+  .controller('AccountInitialisationCtrl', function ($rootScope, $scope,$route, $sce, $state, $mdDialog, serviceDb, AuthService) {
     var increment = 0;
     var laSimilaire = "";
     var styles = [];
@@ -41,6 +41,7 @@ angular.module('pwilApp')
           $scope.albumFolder = "images/nosongs.png";
           $scope.preview_url = "";
           $scope.displayPlayer = false;
+          $scope.albumName = "";
         }
       });
     }
@@ -239,5 +240,13 @@ angular.module('pwilApp')
       });
       $scope.loadSong();
     };
-    $scope.AuthentificatedRedirection();
+
+    $scope.onArrival = function() {
+      if (AuthService.isAuthenticated()) {
+        $state.go('account.informations');
+      }
+    };
+
+      $scope.AuthentificatedRedirection();
+      $scope.onArrival();
   });

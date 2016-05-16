@@ -371,3 +371,39 @@ md-virtual-repeat-container {
   border: solid 1px #ccc;
   padding: 10px;
 }
+
+.useravatar{
+  margin-top: 2.5%;
+  margin-right: 5px;
+}
+.generic-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 38px;
+  background: transparent;
+  box-shadow: none;
+  position: relative;
+}
+.color {
+  display:block;
+  background: transparent;
+  border-radius: 38px;
+  height: 38px;
+}
+.name {
+  position: absolute;
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  top: 12px;
+  min-width: 38px;
+  text-align: center;
+}
+.img {
+  top: 1px;
+  width: 38px;
+  height: 38px;
+  background-size: contain;
+  border-radius: 38px;
+  position: absolute;
+}

@@ -22,6 +22,7 @@ angular.module('pwilApp')
     };
 
     $scope.login = function() {
+
       AuthService.login($scope.user).then(function(msg) {
         window.localStorage.setItem('SONGS_HISTO', JSON.stringify([]));
 
@@ -33,7 +34,7 @@ angular.module('pwilApp')
         if (AuthService.old_cluster() == -1)
           $state.go('account.initialisation');
         else
-          $state.go('account.informations');
+          $state.go('account.informations');       
       }, function(errMsg) {
         /*var alertPopup = $ionicPopup.alert({
           title: 'Login failed!',
@@ -47,6 +48,7 @@ angular.module('pwilApp')
     if(AuthService.isAuthenticated()) {
       //$state.go('outside');
       AuthService.logout();
+
 
       if (AuthService.isAuthenticated())
         $rootScope.isAuthenticated = true;

@@ -8,16 +8,13 @@
  * Controller of the pwilApp
  */
 angular.module('pwilApp')
-  .controller('AccountInformationsCtrl', function ($rootScope, $scope, AuthService, API_ENDPOINT, $http, $state, $mdDialog, Flash, serviceDb) {
+  .controller('AccountInformationsCtrl', function ($rootScope, $scope, AuthService, API_ENDPOINT, $http, $state, $mdDialog, Flash,serviceDb) {
     $rootScope.activeHome = "";
     $rootScope.activeSongs = "";
     $rootScope.activeAccount = "active";
     $rootScope.activeContacts = "";
     $rootScope.activeAbout = "";
     $rootScope.activeConnection = "";
-
-    console.log($rootScope.username);
-    console.log($rootScope.userMail);
 
     $scope.user = {
       firstname: '',
@@ -72,7 +69,6 @@ angular.module('pwilApp')
         .ok('Oui')
         .cancel('Non');
       $mdDialog.show(confirm).then(function() {
-        console.log($scope.userMail);
         serviceDb.reinitAccount($scope.userMail);
         $state.go('account.initialisation');
       }, function() {
@@ -85,44 +81,58 @@ angular.module('pwilApp')
       $state.go('outside.login');
     };
 
-    $scope.update = function(isValid) {
+    $scope.update = function(isValid, event) {
 
-      var m = parseInt($scope.birthdate.month, 10);
-      var d = parseInt($scope.birthdate.day, 10);
-      var y = parseInt($scope.birthdate.year, 10);
-      var concatBirthdate = new Date(y,m-1,d);
-      if (concatBirthdate.getFullYear() == y && concatBirthdate.getMonth() + 1 == m && concatBirthdate.getDate() == d) {
-        concatBirthdate.setDate(concatBirthdate.getDate()+1);
-        $scope.user.birthdate = concatBirthdate;
-      } else {
-        console.log('Invalid date');
-        isValid = false;
-      }
-      if (isValid) {
+      var confirm = $mdDialog.confirm()
+        .title('Voulez vous modifier les données de votre compte ?')
+        //.textContent('All of the banks have agreed to forgive you your debts.')
+        .ariaLabel('Lucky day')
+        .targetEvent(event)
+        .ok('Oui')
+        .cancel('Non');
+      $mdDialog.show(confirm).then(function() {
 
-        serviceDb.updateUser($scope.user,$scope.userMail).then(function (msg) {
-          Flash.create('success', "Utilisateur modifié avec succès !");
-          $rootScope.userMail = $scope.user.mail;
-          $rootScope.username =  $scope.user.username;
-          window.localStorage.setItem('USER_PSEUDO', $rootScope.username);
-          window.localStorage.setItem('USER_MAIL', $rootScope.userMai);
-        }, function (errMsg) {
+        var m = parseInt($scope.birthdate.month, 10);
+        var d = parseInt($scope.birthdate.day, 10);
+        var y = parseInt($scope.birthdate.year, 10);
+        var concatBirthdate = new Date(y,m-1,d);
+        if (concatBirthdate.getFullYear() == y && concatBirthdate.getMonth() + 1 == m && concatBirthdate.getDate() == d) {
+          concatBirthdate.setDate(concatBirthdate.getDate()+1);
+          $scope.user.birthdate = concatBirthdate;
+        } else {
+          console.log('Invalid date');
+          isValid = false;
+        }
+        if (isValid) {
 
-          $scope.registerResult = errMsg;
-          var message = '<strong>Attention!</strong> '+errMsg+'.';
+          serviceDb.updateUser($scope.user,$scope.userMail).then(function (msg) {
+            Flash.create('success', "Utilisateur modifié avec succès !");
+            $rootScope.userMail = $scope.user.mail;
+            $rootScope.username =  $scope.user.username;
+            window.localStorage.setItem('USER_PSEUDO', $rootScope.username);
+            window.localStorage.setItem('USER_MAIL', $rootScope.userMai);
+          }, function (errMsg) {
+
+            $scope.registerResult = errMsg;
+            var message = '<strong>Attention!</strong> '+errMsg+'.';
+            Flash.create('danger', message);
+          });
+        }
+        else {
+          $scope.registerResult = "Certains champs sont invalides"
+          var message = '<strong>Attention!</strong> Certains champs sont invalides.';
           Flash.create('danger', message);
-        });
-      }
-      else {
-        $scope.registerResult = "Certains champs sont invalides"
-        var message = '<strong>Attention!</strong> Certains champs sont invalides.';
-        Flash.create('danger', message);
-      }
+        }
+
+      }, function() {
+        //Annuler donc rien ne se passe
+      });
+
+
     };
 
     $scope.graph = function (){
       serviceDb.getTabTags($scope.userMail).success(function (tabTags) {
-        console.log(tabTags);
         var chart = c3.generate({
           bindto: '#pieStat',
           title: {

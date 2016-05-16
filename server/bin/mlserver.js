@@ -10,17 +10,7 @@ var jwt = require('jwt-simple');
 var config = require('./../config/database'); // get db config file
 var ml = require('./../machine_learning/musictastelearning');
 
-// pass passport for configuration
 require('./../config/passport')(passport);
-//ml.clustering();
-
-// Variables de routes
-var songs = require('./../routes/songs');
-var users = require('./../routes/users');
-var signup = require('./../routes/signup');
-var authenticate = require('./../routes/authenticate');
-var memberInfo = require('./../routes/memberInfo');
-var cluster = require('./../routes/cluster');
 
 var app = express();
 
@@ -38,23 +28,12 @@ app.use(logger('dev'));
 app.use(passport.initialize());
 app.use(cors());
 
-// Server's routes
-app.use('/songs', songs);
-app.use('/users', users);
-app.use('/cluster', cluster);
-// connect the api routes under /api/*
-app.use('/api', signup);
-app.use('/api', authenticate);
-app.use('/api', memberInfo);
+function callClustering() {
+  ml.clustering();
+  setTimeout( callClustering, 10000 );
+}
 
-app.all('*', function(req, res, next) {
-  res.set('Access-Control-Allow-Origin', '*');
-  res.set('Access-Control-Allow-Credentials', true);
-  res.set('Access-Control-Allow-Methods', 'GET, POST, DELETE, PUT');
-  res.set('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type');
-  if ('OPTIONS' == req.method) return res.send(200);
-  next();
-});
+callClustering();
 
 // Connexion BDD Mongo avec module mongoose
 var mongoose = require('mongoose');
@@ -67,7 +46,6 @@ mongoose.connect(config.database, function(err) {
     console.log('Connection successful  !');
   }
 });
-
 
 /// catch 404 and forwarding to error handler
 app.use(function(req, res, next) {
@@ -101,6 +79,6 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 // start server
-var server = app.listen(3000, function () {
+var server = app.listen(3003, function () {
   console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
 });

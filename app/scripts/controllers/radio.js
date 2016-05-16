@@ -42,6 +42,7 @@ angular.module('pwilApp')
           $scope.albumFolder = "images/nosongs.png";
           $scope.preview_url = "";
           $scope.displayPlayer = false;
+          $scope.albumName = "";
         }
       });
     }
