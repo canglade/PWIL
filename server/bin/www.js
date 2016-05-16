@@ -8,11 +8,9 @@ var cors = require('cors');
 var passport	= require('passport');
 var jwt = require('jwt-simple');
 var config = require('./../config/database'); // get db config file
-var ml = require('./../machine_learning/musictastelearning');
 
 // pass passport for configuration
 require('./../config/passport')(passport);
-//ml.clustering();
 
 // Variables de routes
 var songs = require('./../routes/songs');
@@ -20,7 +18,6 @@ var users = require('./../routes/users');
 var signup = require('./../routes/signup');
 var authenticate = require('./../routes/authenticate');
 var memberInfo = require('./../routes/memberInfo');
-var cluster = require('./../routes/cluster');
 
 var app = express();
 
@@ -41,7 +38,6 @@ app.use(cors());
 // Server's routes
 app.use('/songs', songs);
 app.use('/users', users);
-app.use('/cluster', cluster);
 // connect the api routes under /api/*
 app.use('/api', signup);
 app.use('/api', authenticate);

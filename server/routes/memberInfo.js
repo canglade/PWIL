@@ -16,7 +16,7 @@ function memberInfo (req, res) {
   if (token) {
     var decoded = jwt.decode(token, config.secret);
     User.findOne({
-      username: decoded.username
+      mail: decoded.mail
     }, function (err, user) {
       if (err) throw err;
 

@@ -1,5 +1,5 @@
 var express = require('express');
-var nbCluster = require('../config/machineLearning');
+var configMl = require('../config/machineLearning');
 var router = express.Router();
 var bodyParser = require('body-parser');
 var _ = require('lodash');
@@ -10,6 +10,7 @@ var ml = require('machine_learning');
 var math = require('mathjs');
 var utilisateurs = [];
 var nbStyles = 3;
+var nbCluster = configMl.clusterNumber;
 
 //fonction de clustering
 var clustering = function () {

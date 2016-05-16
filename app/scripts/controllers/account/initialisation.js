@@ -16,7 +16,7 @@ angular.module('pwilApp')
 
     $rootScope.activeHome = "";
     $rootScope.activeSongs = "";
-    $rootScope.activeAccount = "active";   
+    $rootScope.activeAccount = "active";
     $rootScope.activeConnection = "";
 
     $scope.currentPage = 1;
@@ -239,12 +239,12 @@ angular.module('pwilApp')
       $scope.loadSong();
     };
 
-    $scope.onArrival = function() {
-      if (AuthService.isAuthenticated()) {
+   /* $scope.onArrival = function() {
+      if (AuthService.isAuthenticated() && AuthService.old_cluster() != -1) {
         $state.go('account.informations');
       }
-    };
+    };*/
 
       $scope.AuthentificatedRedirection();
-      $scope.onArrival();
+     // $scope.onArrival();
   });

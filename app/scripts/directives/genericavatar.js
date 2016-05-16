@@ -2,7 +2,6 @@ angular
   .module("pwilApp").directive('useravatar', ["avatarService", function (avatarService) {
   var controller = function ($scope, $rootScope) {
     $rootScope.$watch("username", function (newval, oldval) {
-      console.log("gooo");
       $scope.ImageAvailable = false;
       if (!$scope.User.Avatar) {
         $scope.GenericAvatar = avatarService.getAvatar($scope.User);

@@ -10,7 +10,7 @@ Node JS & MongoDb
 
 Execute the script named "Install.bat"
 Now you will need to setup your MongoDb folder in the file server_launcher/mongodblaunch
-And finally launch the script "Launch.bat", PWIL will automaticly be opened in your favorite browser
+and finally launch the script "Launch.bat", PWIL will automaticly be opened in your favorite browser
 
 ## Build & development
 

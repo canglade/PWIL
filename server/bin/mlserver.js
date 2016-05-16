@@ -9,6 +9,8 @@ var passport	= require('passport');
 var jwt = require('jwt-simple');
 var config = require('./../config/database'); // get db config file
 var ml = require('./../machine_learning/musictastelearning');
+var configMl = require('../config/machineLearning');
+var cluster = require('./../routes/cluster');
 
 require('./../config/passport')(passport);
 
@@ -28,9 +30,13 @@ app.use(logger('dev'));
 app.use(passport.initialize());
 app.use(cors());
 
+app.use('/cluster', cluster);
+
+var timeToCalculateClusters = configMl.timeToCalculateClusters;
+
 function callClustering() {
   ml.clustering();
-  setTimeout( callClustering, 100000000 ); // 1sec=1000
+  setTimeout( callClustering, timeToCalculateClusters ); // 1sec=1000
 }
 
 callClustering();
@@ -79,6 +85,6 @@ app.use(function(err, req, res, next) {
 module.exports = app;
 
 // start server
-var server = app.listen(3003, function () {
+var server = app.listen(3001, function () {
   console.log('Server listening at http://' + server.address().address + ':' + server.address().port);
 });

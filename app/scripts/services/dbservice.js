@@ -137,7 +137,7 @@ angular.module('pwilApp')
       calculateClusters: function(){
         return  $http({
           method: 'GET',
-          url: SERVER.url + 'cluster/calculate/'
+          url: SERVER.ml + 'cluster/calculate/'
         });
       },
       reinitAccount: function(mail) {

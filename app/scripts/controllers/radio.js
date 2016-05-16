@@ -20,14 +20,11 @@ angular.module('pwilApp')
     $rootScope.activeAccount = "";
     $rootScope.activeConnection = "";
 
-    $scope.currentPage = 1;
-    $scope.totalPages = 0;
     $scope.isLoading = true;
 
     $scope.$on('$viewContentLoaded', function () {
       $scope.loadSong();
     });
-
 
     function loadPreview () {
       dbService.getSpotifyPreview($scope.song.title, $scope.song.artist).success(function (data) {
@@ -45,11 +42,7 @@ angular.module('pwilApp')
         }
       });
     }
-
-    $scope.calculate = function(){
-      dbService.calculate();
-    }
-
+    
     $scope.loadSong = function () {
       $scope.isLoading = true;
       $scope.mesTags = [];
@@ -66,7 +59,7 @@ angular.module('pwilApp')
           liste[i] = liste[i][0];
         }
         historique.unshift([data.title, data.artist]);
-        historique = historique.slice(0, 10);
+        historique = historique.slice(0, HISTORICAL.number);
         window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
         var tagMaj = [];
         for(var j = 0 ; j < liste.length ; j++)
@@ -84,6 +77,7 @@ angular.module('pwilApp')
     function firstToUpperCase( str ) {
       return str.substr(0, 1).toUpperCase() + str.substr(1);
     }
+
     //NextSong permet d'afficher les chansons correspondante au numéro de cluster de l'utilisateur
     $scope.nextsong = function () {
       var mail = $scope.userMail;
@@ -187,20 +181,17 @@ angular.module('pwilApp')
       var song = $scope.song;
       var mail = $scope.userMail;
 
-
       var data = "{ \"track_id\": " + "\"" + song.track_id + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
 
       //On initialise la liste de tags en enlevant le poids de chaque tag
       var tabTags = [];
-      if(song.tags.length < 10) {
+      if(song.tags.length < TAG.number) {
         for (var j = 0; j < song.tags.length; j++) {
-          console.log(song.tags[j][0]);
           tabTags.push(song.tags[j][0]);
         }
       }else{
-        for (var j = 0; j < 10; j++) {
-          console.log(song.tags[j][0]);
+        for (var j = 0; j < TAG.number; j++) {
           tabTags.push(song.tags[j][0]);
         }
       }
