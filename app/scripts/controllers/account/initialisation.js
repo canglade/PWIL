@@ -9,16 +9,14 @@
  */
 
 angular.module('pwilApp')
-  .controller('AccountInitialisationCtrl', function ($rootScope, $scope,$route, $sce, $state, $mdDialog, serviceDb, AuthService) {
+  .controller('AccountInitialisationCtrl', function ($rootScope, $scope,$route, $sce, $state, $mdDialog, dbService, AuthService) {
     var increment = 0;
     var laSimilaire = "";
     var styles = [];
 
     $rootScope.activeHome = "";
     $rootScope.activeSongs = "";
-    $rootScope.activeAccount = "active";
-    $rootScope.activeContacts = "";
-    $rootScope.activeAbout = "";
+    $rootScope.activeAccount = "active";   
     $rootScope.activeConnection = "";
 
     $scope.currentPage = 1;
@@ -30,7 +28,7 @@ angular.module('pwilApp')
     });
 
     $scope.loadPreview = function () {
-      serviceDb.getSpotifyPreview($scope.song.title, $scope.song.artist).success(function (data) {
+      dbService.getSpotifyPreview($scope.song.title, $scope.song.artist).success(function (data) {
         if (data.body.tracks.items.length > 0) {
           $scope.preview_url = $sce.trustAsResourceUrl(data.body.tracks.items[0].preview_url);
           $scope.albumFolder = $sce.trustAsResourceUrl(data.body.tracks.items[0].album.images[1].url);
@@ -55,7 +53,7 @@ angular.module('pwilApp')
           .ok('Ok')
           .cancel('Annuler');
         $mdDialog.show(confirm).then(function() {
-          serviceDb.calculateClusters();
+          dbService.calculateClusters();
           $state.go('account.informations');
         }, function() {
           //Annuler donc rien ne se passe
@@ -65,7 +63,7 @@ angular.module('pwilApp')
     $scope.loadSong = function () {
       $scope.isLoading = true;
       $scope.mesTags = [];
-      serviceDb.randSong().success(function (data) {
+      dbService.randSong().success(function (data) {
         $scope.song = data;
         $scope.proposition = "aleatoire";
         $scope.loadPreview();
@@ -84,7 +82,7 @@ angular.module('pwilApp')
     $scope.loadSimil = function () {
       $scope.loading = true;
       $scope.mesTags = [];
-      serviceDb.similSong(laSimilaire).success(function (data) {
+      dbService.similSong(laSimilaire).success(function (data) {
         if(data){
           $scope.song = data;
           $scope.proposition = "similaire";
@@ -144,7 +142,7 @@ angular.module('pwilApp')
         }
       }
 
-      serviceDb.getTabLikes(mail).success(function (tablikes) {
+      dbService.getTabLikes(mail).success(function (tablikes) {
         var exist = false;
         var dataStyles = "{ \"styles\": " + "\"" + styles + "\" "
           + ", \"userMail\": " + "\"" + mail + "\" } ";
@@ -156,16 +154,16 @@ angular.module('pwilApp')
             }
           }
           if (!exist) {
-            serviceDb.addLike(data).success(function (data) {});
+            dbService.addLike(data).success(function (data) {});
             if (styles.length != 0 )
-            {serviceDb.addTag(dataStyles).success(function (data) {});
+            {dbService.addTag(dataStyles).success(function (data) {});
             }
             styles=[];
           }
         }
       });
 
-      serviceDb.getTabDislikes(mail).success(function (tabdislikes) {
+      dbService.getTabDislikes(mail).success(function (tabdislikes) {
         var exist = false;
         if (tabdislikes) {
           for (var i = 0; i < tabdislikes.length; i++) {
@@ -175,7 +173,7 @@ angular.module('pwilApp')
             }
           }
           if (exist) {
-            serviceDb.removeSongDislike().success(function () {
+            dbService.removeSongDislike().success(function () {
             });
           }
         }
@@ -201,7 +199,7 @@ angular.module('pwilApp')
         + ", \"userMail\": " + "\"" + mail + "\" } ";
 
 
-      serviceDb.getTabDislikes(mail).success(function (tabdislikes) {
+      dbService.getTabDislikes(mail).success(function (tabdislikes) {
         var exist = false;
         if (tabdislikes) {
           for (var i = 0; i < tabdislikes.length; i++) {
@@ -215,13 +213,13 @@ angular.module('pwilApp')
           $scope.exist= exist;
 
           if (!exist) {
-            serviceDb.addDislike(data).success(function (data) {});
+            dbService.addDislike(data).success(function (data) {});
 
           }
         }
       });
 
-      serviceDb.getTabLikes(mail).success(function (tablikes) {
+      dbService.getTabLikes(mail).success(function (tablikes) {
         var exist = false;
         if (tablikes) {
           for (var i = 0; i < tablikes.length; i++) {
@@ -231,7 +229,7 @@ angular.module('pwilApp')
             }
           }
           if (exist) {
-            serviceDb.removeSongLike().success(function () {
+            dbService.removeSongLike().success(function () {
               $scope.removesonglike=exist;
               $scope.idtracksonglike=$scope.song.track_id;
             });

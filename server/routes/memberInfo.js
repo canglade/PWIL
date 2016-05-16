@@ -9,6 +9,7 @@ var jwt = require('jwt-simple');
 
 router.get('/memberinfo', memberInfo);
 router.put('/update/user', update);
+router.put('/update/user/password', updatePassword);
 
 function memberInfo (req, res) {
   var token = getToken(req.headers);
@@ -40,6 +41,25 @@ function update (req, res) {
     // NE PAS SUPPRIMER BUG SINON
     res.json("Success")
   });
+};
+
+function updatePassword (req, res) {
+  var password = req.body.password;
+  if ( typeof password !== 'undefined' && password ) {
+    bcrypt.genSalt(10, function (err, salt) {
+
+      bcrypt.hash(password, salt, function (err, hash) {
+
+        password = hash;
+        console.log('pwd : '+req.body.password+' VS '+hash);
+
+        User.update({"mail": req.body.mail}, {"password": password}, function (err) {
+          if (err) return next(err);
+          res.json("Success")
+        });
+      });
+    });
+  }
 };
 
 getToken = function (headers) {

@@ -8,12 +8,10 @@
  * Controller of the pwilApp
  */
 angular.module('pwilApp')
-  .controller('AccountInformationsCtrl', function ($rootScope, $scope, AuthService, API_ENDPOINT, $http, $state, $mdDialog, Flash,serviceDb) {
+  .controller('AccountInformationsCtrl', function ($rootScope, $scope, AuthService, API_ENDPOINT, $http, $state, $mdDialog, Flash,dbService) {
     $rootScope.activeHome = "";
     $rootScope.activeSongs = "";
     $rootScope.activeAccount = "active";
-    $rootScope.activeContacts = "";
-    $rootScope.activeAbout = "";
     $rootScope.activeConnection = "";
 
     $scope.user = {
@@ -21,6 +19,7 @@ angular.module('pwilApp')
       lastname: '',
       mail: '',
       password: '',
+      confirmpassword: '',
       username: '',
       birthdate:''
     };
@@ -40,11 +39,7 @@ angular.module('pwilApp')
       AuthService.logout();
     };
 
-    $scope.getInfo = function() {
-      // Code de Robin
-      // $http.get(API_ENDPOINT.url + '/memberinfo').then(function(result) {
-      //   $scope.memberinfo = result.data.msg;
-      // });
+    $scope.getInfo = function() {     
 
       $http.get(API_ENDPOINT.url + '/memberinfo').then(function(result) {
 
@@ -69,7 +64,7 @@ angular.module('pwilApp')
         .ok('Oui')
         .cancel('Non');
       $mdDialog.show(confirm).then(function() {
-        serviceDb.reinitAccount($scope.userMail);
+        dbService.reinitAccount($scope.userMail);
         $state.go('account.initialisation');
       }, function() {
         //Annuler donc rien ne se passe
@@ -105,7 +100,7 @@ angular.module('pwilApp')
         }
         if (isValid) {
 
-          serviceDb.updateUser($scope.user,$scope.userMail).then(function (msg) {
+          dbService.updateUser($scope.user,$scope.userMail).then(function (msg) {
             Flash.create('success', "Utilisateur modifié avec succès !");
             $rootScope.userMail = $scope.user.mail;
             $rootScope.username =  $scope.user.username;
@@ -131,8 +126,31 @@ angular.module('pwilApp')
 
     };
 
+    $scope.updatePassword = function(isValid, event) {
+      var confirm = $mdDialog.confirm()
+        .title('Voulez vous modifier votre mot de passe ?')
+        //.textContent('All of the banks have agreed to forgive you your debts.')
+        .ariaLabel('Lucky day')
+        .targetEvent(event)
+        .ok('Oui')
+        .cancel('Non');
+      $mdDialog.show(confirm).then(function() {
+        if (isValid) {
+          dbService.updateUserPassword($scope.user, $scope.userMail).then(function (msg) {
+            Flash.create('success', "Mot de passe modifié avec succès !");
+          });
+        }
+        else {
+          var message = '<strong>Attention!</strong> Certains champs sont invalides.';
+          Flash.create('danger', message);
+        }
+      }, function() {
+        //Annuler donc rien ne se passe
+      });
+    }
+
     $scope.graph = function (){
-      serviceDb.getTabTags($scope.userMail).success(function (tabTags) {
+      dbService.getTabTags($scope.userMail).success(function (tabTags) {
         var chart = c3.generate({
           bindto: '#pieStat',
           title: {

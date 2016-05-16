@@ -9,7 +9,7 @@
  */
 
 angular.module('pwilApp')
-  .controller('RadioCtrl', function ($rootScope, $scope,$route, $sce, serviceDb) {
+  .controller('RadioCtrl', function ($rootScope, $scope,$route, $sce, TAG, HISTORICAL, dbService) {
     var increment = 0;
     var laSimilaire = "";
     var styles = [];
@@ -18,8 +18,6 @@ angular.module('pwilApp')
     $rootScope.activeHome = "";
     $rootScope.activeSongs = "active";
     $rootScope.activeAccount = "";
-    $rootScope.activeContacts = "";
-    $rootScope.activeAbout = "";
     $rootScope.activeConnection = "";
 
     $scope.currentPage = 1;
@@ -30,8 +28,9 @@ angular.module('pwilApp')
       $scope.loadSong();
     });
 
-    $scope.loadPreview = function () {
-      serviceDb.getSpotifyPreview($scope.song.title, $scope.song.artist).success(function (data) {
+
+    function loadPreview () {
+      dbService.getSpotifyPreview($scope.song.title, $scope.song.artist).success(function (data) {
         if (data.body.tracks.items.length > 0) {
           $scope.preview_url = $sce.trustAsResourceUrl(data.body.tracks.items[0].preview_url);
           $scope.albumFolder = $sce.trustAsResourceUrl(data.body.tracks.items[0].album.images[1].url);
@@ -48,16 +47,16 @@ angular.module('pwilApp')
     }
 
     $scope.calculate = function(){
-      serviceDb.calculate();
+      dbService.calculate();
     }
 
     $scope.loadSong = function () {
       $scope.isLoading = true;
       $scope.mesTags = [];
-      serviceDb.randSong().success(function (data) {
+      dbService.randSong().success(function (data) {
         $scope.song = data;
         $scope.proposition = "aleatoire";
-        $scope.loadPreview();
+        loadPreview();
         $scope.isLoading = false;
         increment = 0;
         var tags = data.tags;
@@ -72,7 +71,7 @@ angular.module('pwilApp')
         var tagMaj = [];
         for(var j = 0 ; j < liste.length ; j++)
         {
-          if (liste[j].toString().length < 10)
+          if (liste[j].toString().length < TAG.length)
           {
             liste[j] = firstToUpperCase(liste[j]);
             tagMaj.push(liste[j]);
@@ -89,21 +88,21 @@ angular.module('pwilApp')
     $scope.nextsong = function () {
       var mail = $scope.userMail;
       //On récupére son cluster
-      serviceDb.getcluster(mail).success(function (data)
+      dbService.getcluster(mail).success(function (data)
       {
         var cluster = data;
         console.log(cluster);
         //on compte le nombre de chansons correspondante à ce cluster
-        serviceDb.countsong(cluster).success(function(nbSong)
+        dbService.countsong(cluster).success(function(nbSong)
           {
             //on appelle la fonction nextsong qui nous renvoi
             //une chanson aléatoire correspondante au cluster de l'utilisateur
-            serviceDb.nextsong(cluster,nbSong).success(function (data1)
+            dbService.nextsong(cluster,nbSong).success(function (data1)
             {
               $scope.song = data1[0];
 
               //afficher la pochette de l'album
-              $scope.loadPreview();
+              loadPreview();
 
               //Affichage sur l'interface de la liste des tags de la chanson
               var tags = data1[0].tags;
@@ -126,7 +125,7 @@ angular.module('pwilApp')
               var tagMaj = [];
               for(var j = 0 ; j < liste.length ; j++)
               {
-                if (liste[j].toString().length < 10)
+                if (liste[j].toString().length < TAG.length)
                 {
                   liste[j] = firstToUpperCase(liste[j]);
                   tagMaj.push(liste[j]);
@@ -147,11 +146,11 @@ angular.module('pwilApp')
     $scope.loadSimil = function () {
       $scope.loading = true;
       $scope.mesTags = [];
-      serviceDb.similSong(laSimilaire).success(function (data) {
+      dbService.similSong(laSimilaire).success(function (data) {
         if(data){
           $scope.song = data;
           $scope.proposition = "similaire";
-          $scope.loadPreview();
+          loadPreview();
           $scope.isLoading = false;
           var tags = data.tags;
           var liste = tags.slice(0, 5);
@@ -162,7 +161,7 @@ angular.module('pwilApp')
           var tagMaj = [];
           for(var j = 0 ; j < liste.length ; j++)
           {
-            if (liste[j].toString().length < 10)
+            if (liste[j].toString().length < TAG.length)
             {
               liste[j] = firstToUpperCase(liste[j]);
               tagMaj.push(liste[j]);
@@ -181,7 +180,6 @@ angular.module('pwilApp')
         }
       });
     };
-
 
     //Fonction Like permet de:
     //Récuperer la chanson que l'utilisateur aime puis de l'inserer dans son tableau tab_like
@@ -224,7 +222,7 @@ angular.module('pwilApp')
         }
       }
 
-      serviceDb.getTabLikes(mail).success(function (tablikes) {
+      dbService.getTabLikes(mail).success(function (tablikes) {
         var exist = false;
         var dataStyles = "{ \"styles\": " + "\"" + styles + "\" "
           + ", \"userMail\": " + "\"" + mail + "\" } ";
@@ -238,9 +236,9 @@ angular.module('pwilApp')
           }
           // si elle n'existe pas on l'ajoute dans le tab_like
           if (!exist) {
-            serviceDb.addLike(data).success(function (data) {});
+            dbService.addLike(data).success(function (data) {});
             if (styles.length != 0 )
-            {serviceDb.addTag(dataStyles).success(function (data) {});
+            {dbService.addTag(dataStyles).success(function (data) {});
             }
             styles=[];
           }
@@ -248,7 +246,7 @@ angular.module('pwilApp')
       });
 
       // Si la chanson existe dans le tab de dislike alors on la supprime
-      serviceDb.getTabDislikes(mail).success(function (tabdislikes) {
+      dbService.getTabDislikes(mail).success(function (tabdislikes) {
         var exist = false;
         if (tabdislikes) {
           for (var i = 0; i < tabdislikes.length; i++) {
@@ -258,7 +256,7 @@ angular.module('pwilApp')
             }
           }
           if (exist) {
-            serviceDb.removeSongDislike().success(function () {
+            dbService.removeSongDislike().success(function () {
             });
           }
         }
@@ -279,16 +277,16 @@ angular.module('pwilApp')
     // On affiche une chanson aléatoire qui n'appartient pas aux tags de l'utilisateur
     $scope.diversSong = function () {
       var mail = $scope.userMail;
-      serviceDb.getcluster(mail).success(function (data)
+      dbService.getcluster(mail).success(function (data)
       {
         var cluster = data;
         console.log(cluster);
-        serviceDb.countsong(cluster).success(function(nbSong)
+        dbService.countsong(cluster).success(function(nbSong)
           {
-            serviceDb.diversSong(cluster,nbSong).success(function (data1)
+            dbService.diversSong(cluster,nbSong).success(function (data1)
             {
               $scope.song = data1[0];
-              $scope.loadPreview();
+              loadPreview();
               var tags = data1[0].tags;
               var liste = [];
               if(tags.length >= 10) {
@@ -309,7 +307,7 @@ angular.module('pwilApp')
               var tagMaj = [];
               for(var j = 0 ; j < liste.length ; j++)
               {
-                if (liste[j].toString().length < 10)
+                if (liste[j].toString().length < TAG.length)
                 {
                   liste[j] = firstToUpperCase(liste[j]);
                   tagMaj.push(liste[j]);
@@ -334,12 +332,10 @@ angular.module('pwilApp')
       var song = $scope.song.track_id;
       var mail = $scope.userMail;
 
-
       var data = "{ \"track_id\": " + "\"" + song + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
 
-
-      serviceDb.getTabDislikes(mail).success(function (tabdislikes) {
+      dbService.getTabDislikes(mail).success(function (tabdislikes) {
         var exist = false;
         if (tabdislikes) {
           for (var i = 0; i < tabdislikes.length; i++) {
@@ -353,13 +349,12 @@ angular.module('pwilApp')
           $scope.exist= exist;
 
           if (!exist) {
-            serviceDb.addDislike(data).success(function (data) {});
-
+            dbService.addDislike(data).success(function (data) {});
           }
         }
       });
 
-      serviceDb.getTabLikes(mail).success(function (tablikes) {
+      dbService.getTabLikes(mail).success(function (tablikes) {
         var exist = false;
         if (tablikes) {
           for (var i = 0; i < tablikes.length; i++) {
@@ -369,7 +364,7 @@ angular.module('pwilApp')
             }
           }
           if (exist) {
-            serviceDb.removeSongLike().success(function () {
+            dbService.removeSongLike().success(function () {
               $scope.removesonglike=exist;
               $scope.idtracksonglike=$scope.song.track_id;
             });

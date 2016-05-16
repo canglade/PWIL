@@ -83,5 +83,39 @@
         <div id="pieStat"></div>
       </md-card-content>
     </md-card>
+    <md-card>
+      <md-card-title>
+        <md-card-title-text>
+          <span class="md-headline">Modifier votre mot de passe</span>
+        </md-card-title-text>
+      </md-card-title>
+
+      <md-card-content>
+        <form name="passwordForm">
+          <div>
+            <md-input-container class="md-block">
+              <label><i class="glyphicon glyphicon-lock" style="color:grey"></i> Nouveau mot de passe *</label>
+              <input type="password" name="password" ng-model="user.password" class="form-control" required>
+              <div ng-messages="passwordForm.password.$error" ng-show="passwordForm.password.$touched">
+                <div ng-messages-include="error-messages"></div>
+              </div>
+            </md-input-container>
+          </div>
+
+          <div>
+            <md-input-container class="md-block">
+              <label><i class="glyphicon glyphicon-lock" style="color:grey"></i> Confirmer le nouveau mot de passe *</label>
+              <input name="confirmPassword" type="password" ng-model="user.confirmpassword" class="form-control" compare-to="user.password" required>
+              <div ng-messages="passwordForm.confirmPassword.$error" ng-show="passwordForm.confirmPassword.$touched">
+                <div ng-messages-include="error-messages"></div>
+              </div>
+            </md-input-container>
+          </div>
+        </form>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button class="md-raised md-primary" ng-click="updatePassword(passwordForm.$valid, $event)">Modifier le mot de passe</md-button>
+        </md-card-actions>
+      </md-card-content>
+    </md-card>
   </div>
 </div>

@@ -30,7 +30,7 @@ app.use(cors());
 
 function callClustering() {
   ml.clustering();
-  setTimeout( callClustering, 10000 );
+  setTimeout( callClustering, 100000000 ); // 1sec=1000
 }
 
 callClustering();

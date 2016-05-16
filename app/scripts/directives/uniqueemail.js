@@ -1,9 +1,9 @@
 angular
-  .module("pwilApp").directive('uniqueEmail', function(serviceDb) {
+  .module("pwilApp").directive('uniqueEmail', function(dbService) {
 
   function exists (modelValue) {
     var result = false;
-    serviceDb.isEmailFree(modelValue).success(function (exist, next) {
+    dbService.isEmailFree(modelValue).success(function (exist, next) {
       /*if (exist) {
         console.log("Dispo");
         result = true;
@@ -45,7 +45,7 @@ angular
        /* var result = false;
 
         //return modelValue == scope.otherModelValue;
-        serviceDb.isEmailFree(modelValue).success(function (exists) {
+        dbService.isEmailFree(modelValue).success(function (exists) {
           if (exists) {
             console.log("Dispo");
             result = true;

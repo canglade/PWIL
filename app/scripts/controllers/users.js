@@ -8,7 +8,7 @@
  * Controller of the pwilApp
  */
 angular.module('pwilApp')
-  .controller('UsersCtrl', function ($scope, serviceDb) {
+  .controller('UsersCtrl', function ($scope, dbService) {
 
     $scope.createUser = function() {
 
@@ -24,14 +24,14 @@ angular.module('pwilApp')
 
       console.log(data);
 
-      serviceDb.createObject('users', data)
+      dbService.createObject('users', data)
         .success(function (data) {
           console.log(data);
           $scope.user.email = "";
           $scope.user.name ="";
           $scope.user.username ="";
 
-          serviceDb.getAllObjects('users')
+          dbService.getAllObjects('users')
             .success(function (data) {
               $scope.users = data;
             })
@@ -52,7 +52,7 @@ angular.module('pwilApp')
      // $scope.roles = ["Admin", "Manager", "Collaborateur"];
 
 
-      serviceDb.getAllObjects('users')
+      dbService.getAllObjects('users')
         .success(function (data) {
           $scope.users = data;
         })

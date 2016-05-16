@@ -11,8 +11,7 @@ angular.module('pwilApp')
   .controller('MainCtrl', function ($rootScope) {
     $rootScope.activeHome = "active";
     $rootScope.activeSongs = "";
-    $rootScope.activeAccount = "";
-    $rootScope.activeContacts = "";
-    $rootScope.activeAbout = "";
+    $rootScope.activeAccount = "";    
+    
     $rootScope.activeConnection = "";
   });

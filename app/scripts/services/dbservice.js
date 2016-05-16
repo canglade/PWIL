@@ -2,42 +2,42 @@
 
 /**
  * @ngdoc service
- * @name pwilApp.serviceDb
+ * @name pwilApp.dbService
  * @description
- * # serviceDb
+ * # dbService
  * Factory in the pwilApp.
  */
 angular.module('pwilApp')
-  .factory('serviceDb', function ($http) {
+  .factory('dbService', function ($http, SERVER) {
     return {
       getAllObjects: function(collection){
         return  $http({
           method: 'GET',
-          url: 'http://localhost:3000/' + collection
+          url: SERVER.url + collection
         });
       },
       createObject: function(collection, data){
         return  $http({
           method: 'POST',
-          url: 'http://localhost:3000/' + collection + '/',
+          url: SERVER.url + collection + '/',
           data: data,
           headers: { 'Content-Type': 'application/json' }
         });
       },
       randSong: function(){
-        return $http.get("http://localhost:3000/songs/rand");
+        return $http.get(SERVER.url +"songs/rand");
       },
       similSong: function(track){
         return  $http({
           method: 'GET',
-          url: 'http://localhost:3000/songs/simil',
+          url: SERVER.url + 'songs/simil',
           headers: {"track_id" : track}
         });
       },
       addLike: function(data){
         return $http({
           method: 'PUT',
-          url: 'http://localhost:3000/users/like',
+          url: SERVER.url + 'users/like',
           data: data,
           headers: { 'Content-Type': 'application/json' }
         });
@@ -45,7 +45,7 @@ angular.module('pwilApp')
       addDislike: function(data){
         return $http({
           method: 'PUT',
-          url: 'http://localhost:3000/users/dislike',
+          url: SERVER.url + 'users/dislike',
           data: data,
           headers: { 'Content-Type': 'application/json' }
         });
@@ -54,7 +54,7 @@ angular.module('pwilApp')
       getTabDislikes: function(mail){
         return  $http({
           method: 'GET',
-          url: 'http://localhost:3000/users/tabdislikes',
+          url: SERVER.url + 'users/tabdislikes',
           headers : { 'mail': mail }
         });
       },
@@ -62,7 +62,7 @@ angular.module('pwilApp')
       removeSongDislike: function(){
         return  $http({
           method: 'Put',
-          url: 'http://localhost:3000/users/removesongDislike',
+          url: SERVER.url + 'users/removesongDislike',
           headers : { 'Content-Type': 'application/json' }
         });
       },
@@ -70,7 +70,7 @@ angular.module('pwilApp')
       removeSongLike: function(){
         return  $http({
           method: 'Put',
-          url: 'http://localhost:3000/users/removesongLike',
+          url: SERVER.url + 'users/removesongLike',
           headers : { 'Content-Type': 'application/json' }
         });
       },
@@ -79,7 +79,7 @@ angular.module('pwilApp')
         return  $http({
           method: 'Put',
           data: styles,
-          url: 'http://localhost:3000/users/addTag',
+          url: SERVER.url + 'users/addTag',
           headers : { 'Content-Type': 'application/json' }
         });
       },
@@ -87,7 +87,7 @@ angular.module('pwilApp')
       isEmailFree: function(mail){
         return  $http({
           method: 'GET',
-          url: 'http://localhost:3000/users/email/free',
+          url: SERVER.url + 'users/email/free',
           headers : { 'mail': mail }
         });
       },
@@ -95,7 +95,7 @@ angular.module('pwilApp')
       getTabLikes: function(mail){
         return  $http({
           method: 'GET',
-          url: 'http://localhost:3000/users/tablikes',
+          url: SERVER.url + 'users/tablikes',
           headers : { 'mail': mail }
         });
       },
@@ -109,35 +109,35 @@ angular.module('pwilApp')
       nextsong: function(numcluster,nbsong){
         return  $http({
           method: 'GET',
-          url: 'http://localhost:3000/songs/nextsong',
+          url: SERVER.url + 'songs/nextsong',
           headers : { 'numcluster': numcluster , 'nbsong': nbsong}
         });
       },
       getcluster: function(mail){
         return  $http({
           method: 'GET',
-          url: 'http://localhost:3000/users/getcluster',
+          url: SERVER.url + 'users/getcluster',
           headers : { 'mail': mail }
         });
       },
       countsong: function(numcluster){
         return  $http({
           method: 'GET',
-          url: 'http://localhost:3000/songs/countsong',
+          url: SERVER.url + 'songs/countsong',
           headers : { 'numcluster': numcluster }
         });
       },
       diversSong: function(numcluster,nbsong) {
         return $http({
           method: 'GET',
-          url: 'http://localhost:3000/songs/diversSong',
+          url: SERVER.url + 'songs/diversSong',
           headers: {'numcluster': numcluster, 'nbsong': nbsong}
         });
       },
       calculateClusters: function(){
         return  $http({
           method: 'GET',
-          url: 'http://localhost:3000/cluster/calculate/'
+          url: SERVER.url + 'cluster/calculate/'
         });
       },
       reinitAccount: function(mail) {
@@ -150,15 +150,23 @@ angular.module('pwilApp')
       updateUser: function(user,mail){
         return  $http({
           method: 'PUT',
-          url: 'http://localhost:3000/api/update/user',
+          url: SERVER.url + 'api/update/user',
           data: {"mail" : mail,"newmail" : user.mail,"firstname" : user.firstname,"lastname" : user.lastname,"username" : user.username,"birthdate" : user.birthdate},
+          headers: { 'Content-Type': 'application/json' }
+        });
+      },
+      updateUserPassword: function(user,mail){
+        return  $http({
+          method: 'PUT',
+          url: SERVER.url + 'api/update/user/password',
+          data: {"mail" : mail,"password": user.password},
           headers: { 'Content-Type': 'application/json' }
         });
       },
       getTabTags: function(mail){
         return  $http({
           method: 'GET',
-          url: 'http://localhost:3000/users/getTabTags',
+          url: SERVER.url + 'users/getTabTags',
           headers : { 'mail': mail }
         });
       }
