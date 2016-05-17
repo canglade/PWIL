@@ -45,36 +45,35 @@ angular.module('pwilApp')
 
     //Ancienne fonction de chargement d'une chanson aléatoire
     /*$scope.loadSong = function () {
-      $scope.isLoading = true;
-      $scope.mesTags = [];
-      dbService.randSong().success(function (data) {
-        $scope.song = data;
-        $scope.proposition = "aleatoire";
-        loadPreview();
-        $scope.isLoading = false;
-        increment = 0;
-        var tags = data.tags;
-        var liste = tags.slice(0, 5);
-
-        for(var i =0;i<liste.length;i++){
-          liste[i] = liste[i][0];
-        }
-        historique.unshift([data.title, data.artist]);
-        historique = historique.slice(0, HISTORICAL.number);
-        window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
-        var tagMaj = [];
-        for(var j = 0 ; j < liste.length ; j++)
-        {
-          if (liste[j].toString().length < TAG.length)
-          {
-            liste[j] = firstToUpperCase(liste[j]);
-            tagMaj.push(liste[j]);
-          }
-        }
-        $scope.mesTags = tagMaj;
-        $scope.historique = historique;
-      });
-    };*/
+     $scope.isLoading = true;
+     $scope.mesTags = [];
+     dbService.randSong().success(function (data) {
+     $scope.song = data;
+     $scope.proposition = "aleatoire";
+     loadPreview();
+     $scope.isLoading = false;
+     increment = 0;
+     var tags = data.tags;
+     var liste = tags.slice(0, 5);
+     for(var i =0;i<liste.length;i++){
+     liste[i] = liste[i][0];
+     }
+     historique.unshift([data.title, data.artist]);
+     historique = historique.slice(0, HISTORICAL.number);
+     window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
+     var tagMaj = [];
+     for(var j = 0 ; j < liste.length ; j++)
+     {
+     if (liste[j].toString().length < TAG.length)
+     {
+     liste[j] = firstToUpperCase(liste[j]);
+     tagMaj.push(liste[j]);
+     }
+     }
+     $scope.mesTags = tagMaj;
+     $scope.historique = historique;
+     });
+     };*/
 
     //Transforme la première lettre en majuscule, utile pour l'affichage des tags
     function firstToUpperCase( str ) {
@@ -318,7 +317,7 @@ angular.module('pwilApp')
               historique = historique.slice(0, 10);
               window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
               $scope.historique = historique;
-              });
+            });
           }
         );
       });

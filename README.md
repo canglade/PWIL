@@ -1,6 +1,6 @@
 # PWIL
 
-Predict What you like
+Predict What I like
 
 # Prerequisites
 
