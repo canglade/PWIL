@@ -22,10 +22,12 @@ angular.module('pwilApp')
 
     $scope.isLoading = true;
 
+    // Au chargement de la page
     $scope.$on('$viewContentLoaded', function () {
       $scope.nextsong();
     });
 
+    //Chargement de la musique depuis l'API Spotify
     function loadPreview () {
       dbService.getSpotifyPreview($scope.song.title, $scope.song.artist).success(function (data) {
         if (data.body.tracks.items.length > 0) {
@@ -43,6 +45,7 @@ angular.module('pwilApp')
       });
     }
 
+    // Sauvegarde des 10 dernières chansons écoutées
     function saveHistorical (data) {
       historique.unshift([data[0].title, data[0].artist]);
       historique = historique.slice(0, HISTORICAL.number);
@@ -138,10 +141,6 @@ angular.module('pwilApp')
               }
               $scope.mesTags = tagMaj;
               //mise à jour de l'historique des chansons
-              /*historique.unshift([data1[0].title, data1[0].artist]);
-              historique = historique.slice(0, 10);
-              window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
-              $scope.historique = historique;*/
               saveHistorical(data1);
             });
           }
@@ -177,10 +176,6 @@ angular.module('pwilApp')
           }
           $scope.mesTags = tagMaj;
 
-         /* historique.unshift([data.title, data.artist]);
-          historique = historique.slice(0, 10);
-          window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
-          $scope.historique = historique;*/
           saveHistorical(data1);
         }
         else{
@@ -325,10 +320,6 @@ angular.module('pwilApp')
               }
               $scope.mesTags = tagMaj;
 
-              /*historique.unshift([data1[0].title, data1[0].artist]);
-              historique = historique.slice(0, 10);
-              window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
-              $scope.historique = historique;*/
               saveHistorical(data1);
             });
           }
