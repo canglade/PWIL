@@ -39,7 +39,7 @@ angular.module('pwilApp')
       AuthService.logout();
     };
 
-    $scope.getInfo = function() {     
+    $scope.getInfo = function() {
 
       $http.get(API_ENDPOINT.url + '/memberinfo').then(function(result) {
 
@@ -105,7 +105,7 @@ angular.module('pwilApp')
             $rootScope.userMail = $scope.user.mail;
             $rootScope.username =  $scope.user.username;
             window.localStorage.setItem('USER_PSEUDO', $rootScope.username);
-            window.localStorage.setItem('USER_MAIL', $rootScope.userMai);
+            window.localStorage.setItem('USER_MAIL', $rootScope.userMail);
           }, function (errMsg) {
 
             $scope.registerResult = errMsg;
