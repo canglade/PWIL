@@ -46,10 +46,13 @@
         <ul class="nav navbar-nav navbar-left">
           <li class="{{activeHome}}"><a href="#/">Accueil</a></li>
           <li class="{{activeSongs}}"><a ng-href="#/radio" ng-show="isAuthenticated">Radio</a></li>
-
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li class="useravatar" user="userDetails" ng-show="isAuthenticated"> </li>
+          <li ng-show="isAuthenticated">
+            <small>
+              <ng-letter-avatar dynamic="true" data="{{username}}"></ng-letter-avatar>
+            </small>
+          </li>
           <li class="{{activeAccount}}"><a ng-href="#/account/informations" ng-show="isAuthenticated">{{username}}</a></li>
           <li class="{{activeConnection}}"><a ng-href="#/connection" ng-show="!isAuthenticated">Connexion <i class="glyphicon glyphicon-log-in" style="color:green"></i></a></li>
           <li ><a ng-href="#/connection" ng-show="isAuthenticated">Déconnexion <i class="glyphicon glyphicon-off" style="color:red"></i></a></li>
@@ -101,6 +104,7 @@
 <script src="bower_components/d3/d3.js"></script>
 <script src="bower_components/c3/c3.js"></script>
 <script src="bower_components/c3-angular/c3-angular.min.js"></script>
+<script src="bower_components/ng-letter-avatar/ngletteravatar.js"></script>
 <!-- endbower -->
 <!-- endbuild -->
 
@@ -128,12 +132,10 @@
 <script src="scripts/services/userservice.js"></script>
 <script src="scripts/controllers/contact.js"></script>
 <script src="scripts/services/authservice.js"></script>
-<script src="scripts/services/avatarfactory.js"></script>
 
 <script src="scripts/directives/enterkeypress.js"></script>
 <script src="scripts/directives/compareto.js"></script>
 <script src="scripts/directives/uniqueemail.js"></script>
-<script src="scripts/directives/genericavatar.js"></script>
 <!-- endbuild -->
 
 <script type="text/ng-template" id="error-messages">

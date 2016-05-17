@@ -27,12 +27,7 @@ angular.module('pwilApp')
       window.localStorage.setItem('USER_MAIL', mail);
       window.localStorage.setItem('USER_PSEUDO', username);
       $rootScope.userMail = window.localStorage.getItem('USER_MAIL');
-      $rootScope.username = window.localStorage.getItem('USER_PSEUDO');
-      $rootScope.userDetails =
-      {
-        Name: $rootScope.username,
-        Avatar: null // or "http://link.to.img.jpg"
-      };
+      $rootScope.username = window.localStorage.getItem('USER_PSEUDO');      
       useCredentials(token);
     }
 

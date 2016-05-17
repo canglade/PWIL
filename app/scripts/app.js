@@ -15,7 +15,8 @@ angular
     'ngMaterial',
     'ngMessages',
     'ngFlash',
-    'ui.router'
+    'ui.router',
+    'ngLetterAvatar'
   ])
   .config(function ($stateProvider,$routeProvider) {
     $routeProvider
@@ -116,13 +117,6 @@ angular
     $rootScope.userMail = window.localStorage.getItem('USER_MAIL');
     $rootScope.username = window.localStorage.getItem('USER_PSEUDO');
     $rootScope.historique = JSON.parse(window.localStorage.getItem('SONGS_HISTO'));
-
-    $rootScope.userDetails =
-    {
-      Name: $rootScope.username,
-      Avatar: null // or "http://link.to.img.jpg"
-    };
-
 
     $rootScope.AuthentificatedRedirection = function() {
       //$scope.memberinfo = AuthService.isAuthenticated();
