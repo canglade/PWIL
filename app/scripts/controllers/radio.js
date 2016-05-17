@@ -84,6 +84,7 @@ angular.module('pwilApp')
     //NextSong permet d'afficher les chansons correspondante au numéro de cluster de l'utilisateur
     $scope.nextsong = function () {
       var mail = $scope.userMail;
+      increment =0;
       //On récupére son cluster
       dbService.getcluster(mail).success(function (data)
       {
@@ -130,7 +131,7 @@ angular.module('pwilApp')
                 }
               }
               $scope.mesTags = tagMaj;
-
+              //mise à jour de l'historique des chansons
               historique.unshift([data1[0].title, data1[0].artist]);
               historique = historique.slice(0, 10);
               window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
@@ -141,6 +142,8 @@ angular.module('pwilApp')
       });
     };
 
+    //Fonction qui charge une chanson similaire à la courante (appelée si l'utilisateur like)
+    //Si l'utilisateur like une nouvelle fois, on avance dans le tableau des similaires
     $scope.loadSimil = function () {
       $scope.loading = true;
       $scope.mesTags = [];
@@ -201,6 +204,7 @@ angular.module('pwilApp')
       }
 
       //On parcours les tags pour retrouver les chaines de caractère rap, rock, electro, hiphop...
+      //Puis on récupère le style de la chanson dans le tableau de tags, on met à jour la chanson et l'utilisateur
       for (var i=0 ; i< tabTags.length; i++)
       {
         tabTags[i] = tabTags[i].trim();

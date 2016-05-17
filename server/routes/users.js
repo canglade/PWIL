@@ -87,13 +87,14 @@ function isUserMailFree(req, res, next) {
   });
 };
 
-//fonction serveur requete, resultat de la req et l'étape suivante
+//fonction d'ajout de like pour l'utilisateur
 function addLike(req, res, next) {
   console.log("chanson : " + req.body.track_id);
   console.log("mail : " + req.body.userMail);
   var track = req.body.track_id;
   var mail = req.body.userMail;
-
+  
+//récupère l'utilisateur
   User.findOne({"mail": mail}, function (err, user) {
     if (err) return next(err);
     // NE PAS SUPPRIMER BUG SINON
@@ -103,6 +104,7 @@ function addLike(req, res, next) {
     res.json(req.body);
   });
 
+  //mise à jour du tableau de likes (on ajoute le track_id de la chanson qu'il a liké)
   function updateUser(mail){
     User.update({"mail": mail}, {$push: {tab_likes: track}}, function (err) {
       if (err) return next(err);
@@ -110,7 +112,8 @@ function addLike(req, res, next) {
     });
   }
 
-  //fonction d'update de la chanson
+  //fonction d'update de la chanson (on met à jour le tableau de like pour dire à la chanson : 
+  //"un utilisateur du cluster X t'a liké"  => tab_likes(0,10,20)
   function updateSong(track, cluster){
     Songs.findOne({"track_id": track}, function (err, song) {
       if (err) return next(err);
@@ -141,7 +144,8 @@ function addLike(req, res, next) {
       // NE PAS SUPPRIMER BUG SINON
     });
   }
-
+  
+  //Mise à jour du cluster de la chanson 
   function updateClusterSong(track, likes) {
     var somme = 0;
     var seuil = 100/nbCluster;
@@ -151,13 +155,15 @@ function addLike(req, res, next) {
     for(var i =0;i<likes.length;i++){
       somme = somme + likes[i];
     }
-
+    //Si on a au moins 100 likes au total sur cette chanson :
     if(somme > 100){
       console.log("Track : " + track + " Likes : " + likes);
       for(var i = 0;i<likes.length;i++){
         var pourcentage = (likes[i]/somme)*100;
         pourcentage = Math.trunc(pourcentage);
         console.log(pourcentage);
+        //Pour chaque nombre de likes d'un cluster, si la valeur est supérieure au seuil fixé, alors on ajoute ce cluster 
+        //dans la liste des clusters possibles pour cette chanson => tab_tags(numCluster,numCluster,numCluster)
         if(pourcentage>=seuil){choix.push(i);}
       }
       Songs.update({"track_id": track}, {$set: {tag: choix}}, function (err) {
@@ -169,6 +175,7 @@ function addLike(req, res, next) {
 
 };
 
+//Fonction de dislike qui ajoute le track_id dans le tab_dislike de l'utilisateur
 function addDislike(req, res, next) {
   console.log("chanson : " + req.body.track_id);
   console.log("mail : " + req.body.userMail);
@@ -181,7 +188,8 @@ function addDislike(req, res, next) {
   });
 };
 
-
+//On regarde les tags renvoyés depuis la chanson. On incrémente la valeur du tableau de l'utilisateur correspond au style liké
+// tab_like(0,5,32) j'ai aimé 0 rock 5 rap 32 electro
 function addTag(req, res, next) {
   var mail = req.body.userMail;
   var tags = req.body.styles.split(",");

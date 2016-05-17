@@ -97,6 +97,10 @@ var clustering = function () {
           //mise à jour des songs
           console.log("On change de cluster");
 
+          //on va parcourir la liste des tab_likes de l'utilisateur
+          //on fait le compte des chansons qu'il a liké 
+          //on décremente le compteur du cluster 
+          //on l'affecte au nouveau cluster
           for(var i = 0;i < user.tab_likes.length;i++){
             updateSongs(user.tab_likes[i], cluster, user.old_cluster);
           }
@@ -125,12 +129,14 @@ var clustering = function () {
         }
       });
     }
-
+    
+    //Fonction de mise à jour des chansons likées par l'utilisateur au moment du changement du nombre de clusters
     function updateSongs(track, cluster, old_cluster){
       Songs.findOne({"track_id": track}, function (err, song) {
         if (err) return next(err);
         // NE PAS SUPPRIMER BUG SINON
-
+        
+        //On met à jour le tableau de likes de la chanson (on rajoute une case au tab_like)
         var likes = song.tab_like;
         if(likes.length !== nbCluster){
           var newSize = nbCluster-likes.length;
@@ -138,7 +144,8 @@ var clustering = function () {
             likes.push(0);
           }
         }
-
+        
+        //on enlève ses anciens likes pour les associer au nouveau cluster
         likes[old_cluster] = likes[old_cluster] - 1;
         likes[cluster] = likes[cluster] + 1;
         console.log("modif de la chanson :" + track);
