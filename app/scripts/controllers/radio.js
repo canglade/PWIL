@@ -23,7 +23,7 @@ angular.module('pwilApp')
     $scope.isLoading = true;
 
     $scope.$on('$viewContentLoaded', function () {
-      $scope.loadSong();
+      $scope.nextsong();
     });
 
     function loadPreview () {
@@ -42,8 +42,9 @@ angular.module('pwilApp')
         }
       });
     }
-    
-    $scope.loadSong = function () {
+
+    //Ancienne fonction de chargement d'une chanson aléatoire
+    /*$scope.loadSong = function () {
       $scope.isLoading = true;
       $scope.mesTags = [];
       dbService.randSong().success(function (data) {
@@ -73,7 +74,9 @@ angular.module('pwilApp')
         $scope.mesTags = tagMaj;
         $scope.historique = historique;
       });
-    };
+    };*/
+
+    //Transforme la première lettre en majuscule, utile pour l'affichage des tags
     function firstToUpperCase( str ) {
       return str.substr(0, 1).toUpperCase() + str.substr(1);
     }
@@ -97,6 +100,7 @@ angular.module('pwilApp')
 
               //afficher la pochette de l'album
               loadPreview();
+              $scope.isLoading = false;
 
               //Affichage sur l'interface de la liste des tags de la chanson
               var tags = data1[0].tags;
@@ -170,7 +174,7 @@ angular.module('pwilApp')
         }
         else{
           increment =0;
-          $scope.loadSong();
+          $scope.nextsong();
         }
       });
     };
@@ -260,7 +264,7 @@ angular.module('pwilApp')
       }
       else
       {
-        $scope.loadSong();
+        $scope.nextsong();
       }
     };
 
@@ -362,7 +366,7 @@ angular.module('pwilApp')
           }
         }
       });
-      $scope.loadSong();
+      $scope.nextsong();
     };
     $scope.AuthentificatedRedirection();
   });
