@@ -43,6 +43,13 @@ angular.module('pwilApp')
       });
     }
 
+    function saveHistorical (data) {
+      historique.unshift([data[0].title, data[0].artist]);
+      historique = historique.slice(0, HISTORICAL.number);
+      window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
+      $scope.historique = historique;
+    }
+
     //Ancienne fonction de chargement d'une chanson aléatoire
     /*$scope.loadSong = function () {
      $scope.isLoading = true;
@@ -131,10 +138,11 @@ angular.module('pwilApp')
               }
               $scope.mesTags = tagMaj;
               //mise à jour de l'historique des chansons
-              historique.unshift([data1[0].title, data1[0].artist]);
+              /*historique.unshift([data1[0].title, data1[0].artist]);
               historique = historique.slice(0, 10);
               window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
-              $scope.historique = historique;
+              $scope.historique = historique;*/
+              saveHistorical(data1);
             });
           }
         );
@@ -169,10 +177,11 @@ angular.module('pwilApp')
           }
           $scope.mesTags = tagMaj;
 
-          historique.unshift([data.title, data.artist]);
+         /* historique.unshift([data.title, data.artist]);
           historique = historique.slice(0, 10);
           window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
-          $scope.historique = historique;
+          $scope.historique = historique;*/
+          saveHistorical(data1);
         }
         else{
           increment =0;
@@ -201,6 +210,9 @@ angular.module('pwilApp')
           tabTags.push(song.tags[j][0]);
         }
       }
+
+      // On affiche la chanson en vert dans l'historique l'utilisateur l'ayant aimé
+      $scope.historique = historique[0].push("green");
 
       //On parcours les tags pour retrouver les chaines de caractère rap, rock, electro, hiphop...
       //Puis on récupère le style de la chanson dans le tableau de tags, on met à jour la chanson et l'utilisateur
@@ -313,10 +325,11 @@ angular.module('pwilApp')
               }
               $scope.mesTags = tagMaj;
 
-              historique.unshift([data1[0].title, data1[0].artist]);
+              /*historique.unshift([data1[0].title, data1[0].artist]);
               historique = historique.slice(0, 10);
               window.localStorage.setItem('SONGS_HISTO', JSON.stringify(historique));
-              $scope.historique = historique;
+              $scope.historique = historique;*/
+              saveHistorical(data1);
             });
           }
         );
@@ -332,6 +345,9 @@ angular.module('pwilApp')
 
       var data = "{ \"track_id\": " + "\"" + song + "\" "
         + ", \"userMail\": " + "\"" + mail + "\" } ";
+
+      // On affiche la chanson en vert dans l'historique l'utilisateur ne l'ayant pas aimé
+      $scope.historique = historique[0].push("red");
 
       dbService.getTabDislikes(mail).success(function (tabdislikes) {
         var exist = false;
